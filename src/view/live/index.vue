@@ -1,69 +1,85 @@
 <template>
-  <div class="goods">
-    Hello
+  <div class="live">
+    <video-player
+      class="video-player vjs-custom-skin"
+      ref="videoPlayer"
+      :options="playerOptions"
+      :playsinline="true"
+      @ready="playerReadied"
+    ></video-player>
+    <van-notice-bar
+      class="noticebar"
+      color="#1989fa"
+      background="#ecf9ff"
+    >欢迎观看本场直播！点击右上角“•••”发送给亲朋好友、微信群、分享到朋友圈，让更多的朋友来观看直播、参与互动、分享精彩！商务直播适用：新品发布、营销会议、行业会议、峰会年会、室外观摩、农产推广等活动。一条农资直播合作热线：17719825376</van-notice-bar>
+
+    <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff">
+      <van-tab title="聊天室">聊天室</van-tab>
+      <van-tab title="现场图集">现场图集</van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-import {
-  Tag,
-  Col,
-  Icon,
-  Cell,
-  CellGroup,
-  Swipe,
-  Toast,
-  SwipeItem,
-  GoodsAction,
-  GoodsActionIcon,
-  GoodsActionButton
-} from 'vant';
-
+import "video.js/dist/video-js.css";
+import { videoPlayer } from "vue-video-player";
+import "videojs-contrib-hls";
+import { NoticeBar, Tab, Tabs } from "vant";
 export default {
   components: {
-    [Tag.name]: Tag,
-    [Col.name]: Col,
-    [Icon.name]: Icon,
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup,
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem,
-    [GoodsAction.name]: GoodsAction,
-    [GoodsActionIcon.name]: GoodsActionIcon,
-    [GoodsActionButton.name]: GoodsActionButton
+    videoPlayer,
+    [NoticeBar.name]: NoticeBar,
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs
   },
 
   data() {
     return {
-      goods: {
-        title: '美国伽力果（约680g/3个）',
-        price: 2680,
-        express: '免运费',
-        remain: 19,
-        thumb: [
-          'https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg',
-          'https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg'
-        ]
-      }
+      playerOptions: {
+        // videojs options
+        muted: false, // 默认情况下将会消除任何音频。
+        language: "zh-CN",
+        sources: [
+          {
+            withCredentials: false,
+            type: "application/x-mpegURL",
+            src: "http://live.huobaowang.com/live/test.m3u8" //这是hls流
+          }
+        ],
+        controlBar: {
+          timeDivider: false,
+          durationDisplay: false
+        },
+        flash: { hls: { withCredentials: false } },
+        html5: { hls: { withCredentials: false } },
+        width: document.documentElement.clientWidth,
+        autoplay: true, //如果true,浏览器准备好时开始回放
+        preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+        fluid: true,
+        notSupportedMessage: "此视频暂无法播放，请稍后再试",
+        poster: "http://m.3456.tv/images/2019huodong.jpg" // 你的封面地址
+      },
+      active: 2
     };
   },
 
   methods: {
-    formatPrice() {
-      return '¥' + (this.goods.price / 100).toFixed(2);
-    },
-
-    onClickCart() {
-      this.$router.push('cart');
-    },
-
-    sorry() {
-      Toast('暂无后续逻辑~');
+    playerReadied(player) {
+      player.tech({ IWillNotUseThisInPlugins: true }).hls;
+      player.tech_.hls.xhr.beforeRequest = function(options) {
+        // console.log(options)
+        return options;
+      };
     }
   }
 };
 </script>
 
 <style lang="less">
-
+.live {
+  width: 100%;
+}
+.noticebar {
+  padding: 0px;
+}
 </style>
