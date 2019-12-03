@@ -87,14 +87,11 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style scoped>
 .live {
   width: 100%;
 }
 .noticebar {
   padding: 0px;
-}
-.content {
-  height: 100%;
 }
 </style>
