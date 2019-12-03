@@ -1,26 +1,27 @@
 <template>
-  <div class="live">
-    <video-player
-      class="video-player vjs-custom-skin"
-      ref="videoPlayer"
-      :options="playerOptions"
-      :playsinline="true"
-      @ready="playerReadied"
-    ></video-player>
-    <van-notice-bar
-      class="noticebar"
-      color="#1989fa"
-      background="#ecf9ff"
-    >欢迎观看本场直播！点击右上角“•••”发送给亲朋好友、微信群、分享到朋友圈，让更多的朋友来观看直播、参与互动、分享精彩！商务直播适用：新品发布、营销会议、行业会议、峰会年会、室外观摩、农产推广等活动。火爆网直播合作热线：17719825376</van-notice-bar>
-
-    <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff">
+  <div class="wrapper">
+    <div class="live" ref="live">
+      <video-player
+        class="video-player vjs-custom-skin"
+        ref="videoPlayer"
+        :options="playerOptions"
+        :playsinline="true"
+        @ready="playerReadied"
+      ></video-player>
+      <van-notice-bar
+        class="noticebar"
+        color="#1989fa"
+        background="#ecf9ff"
+      >欢迎观看本场直播！点击右上角“•••”发送给亲朋好友、微信群、分享到朋友圈，让更多的朋友来观看直播、参与互动、分享精彩！商务直播适用：新品发布、营销会议、行业会议、峰会年会、室外观摩、农产推广等活动。火爆网直播合作热线：17719825376</van-notice-bar>
+    </div>
+    <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff" swipeable>
       <van-tab title="聊天室">
-        <div class="content">
+        <div class="tab-content">
           <chat />
         </div>
       </van-tab>
       <van-tab title="现场图集">
-        <div class="content">
+        <div class="tab-content" :style="contentStyleObj">
           <image-total></image-total>
         </div>
       </van-tab>
@@ -36,6 +37,7 @@ import { NoticeBar, Tab, Tabs } from "vant";
 import chat from "./chat";
 import imageTotal from "./imageTotal";
 export default {
+  name: "live",
   components: {
     videoPlayer,
     [NoticeBar.name]: NoticeBar,
@@ -55,7 +57,7 @@ export default {
           {
             withCredentials: false,
             type: "application/x-mpegURL",
-            src: "http://live.huobaowang.com/live/test.m3u8" //这是hls流
+            src: "" //这是hls流http://live.huobaowang.com/live/text1.m3u8
           }
         ],
         controlBar: {
@@ -71,7 +73,10 @@ export default {
         notSupportedMessage: "此视频暂无法播放，请稍后再试",
         poster: "http://m.3456.tv/images/2019huodong.jpg" // 你的封面地址
       },
-      active: 2
+      active: 1,
+      contentStyleObj: {
+        height: ""
+      }
     };
   },
 
@@ -82,7 +87,15 @@ export default {
         // console.log(options)
         return options;
       };
+    },
+    setContentHeight() {
+      let livehight = this.$refs.live.offsetHeight;
+      this.contentStyleObj.height =
+        window.innerHeight - (livehight + 44) + "px";
     }
+  },
+  mounted() {
+    this.setContentHeight();
   }
 };
 </script>

@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper" ref="wrapper">
     <div class="content">
-      <div class="conimge" v-for="item in imageData" v-bind:key="item">
+      <div class="conimge" v-for="(item, index) in imageData" v-bind:key="index">
         <!-- <img :src="item" /> -->
-        <van-image width="100%" height="100%" fit="cover" :src="item" />
+        <van-image width="100%" height="100%" fit="cover" :src="item" @click="handImgClick(index)" />
       </div>
     </div>
   </div>
@@ -11,12 +11,13 @@
 
 <script>
 import { api_GetLiveBroadCastInfo } from "@/api/api";
-import { Image } from "vant";
-import BScroll from "better-scroll";
+import { Image, ImagePreview } from "vant";
+import Bscroll from "better-scroll";
 export default {
   name: "imageTotal",
   components: {
-    [Image.name]: Image
+    [Image.name]: Image,
+    [ImagePreview.name]: ImagePreview
   },
 
   data() {
@@ -31,22 +32,45 @@ export default {
     };
   },
   methods: {
-    GetData() {
+    handImgClick(index) {
+      ImagePreview({
+        images: this.imageData,
+        startPosition: index,
+        onClose() {
+          // do something
+        }
+      });
+    },
+    loadData() {
       //this.listLoading = true;
       api_GetLiveBroadCastInfo(this.requestParams).then(respone => {
-
         respone.result.forEach(element => {
           this.imageData = element.listPicture.concat(this.imageData);
         });
-
         this.$nextTick(() => {
-          this.scroll = new BScroll(this.$refs.wrapper, {});
+          if (!this.scroll) {
+            this.scroll = new Bscroll(this.$refs.wrapper, {
+              scrollY: true,
+              scrollX: false,
+              mouseWheel: true,
+              click: true,
+              taps: true
+            });
+            this.scroll.on("touchend", pos => {
+              // 下拉动作
+              if (pos.y > 50) {
+                this.loadData();
+              }
+            });
+          } else {
+            this.scroll.refresh();
+          }
         });
       });
     }
   },
   created() {
-    this.GetData();
+    this.loadData();
   },
   mounted() {}
 };
@@ -57,7 +81,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .conimge {
   width: 33.33%;
@@ -69,7 +93,7 @@ export default {
 }
 .wrapper {
   width: 100%;
-  height: 373px;
+  height: 100%;
 }
 /* img {
   width: 100%;
