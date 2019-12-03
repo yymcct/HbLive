@@ -11,11 +11,19 @@
       class="noticebar"
       color="#1989fa"
       background="#ecf9ff"
-    >欢迎观看本场直播！点击右上角“•••”发送给亲朋好友、微信群、分享到朋友圈，让更多的朋友来观看直播、参与互动、分享精彩！商务直播适用：新品发布、营销会议、行业会议、峰会年会、室外观摩、农产推广等活动。一条农资直播合作热线：17719825376</van-notice-bar>
+    >欢迎观看本场直播！点击右上角“•••”发送给亲朋好友、微信群、分享到朋友圈，让更多的朋友来观看直播、参与互动、分享精彩！商务直播适用：新品发布、营销会议、行业会议、峰会年会、室外观摩、农产推广等活动。火爆网直播合作热线：17719825376</van-notice-bar>
 
     <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff">
-      <van-tab title="聊天室">聊天室</van-tab>
-      <van-tab title="现场图集">现场图集</van-tab>
+      <van-tab title="聊天室">
+        <div class="content">
+          <chat />
+        </div>
+      </van-tab>
+      <van-tab title="现场图集">
+        <div class="content">
+          <image-total></image-total>
+        </div>
+      </van-tab>
     </van-tabs>
   </div>
 </template>
@@ -25,12 +33,16 @@ import "video.js/dist/video-js.css";
 import { videoPlayer } from "vue-video-player";
 import "videojs-contrib-hls";
 import { NoticeBar, Tab, Tabs } from "vant";
+import chat from "./chat";
+import imageTotal from "./imageTotal";
 export default {
   components: {
     videoPlayer,
     [NoticeBar.name]: NoticeBar,
     [Tab.name]: Tab,
-    [Tabs.name]: Tabs
+    [Tabs.name]: Tabs,
+    chat,
+    imageTotal
   },
 
   data() {
@@ -81,5 +93,8 @@ export default {
 }
 .noticebar {
   padding: 0px;
+}
+.content {
+  height: 100%;
 }
 </style>
