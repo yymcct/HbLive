@@ -57,7 +57,7 @@ export default {
           {
             withCredentials: false,
             type: "application/x-mpegURL",
-            src: "" //这是hls流http://live.huobaowang.com/live/text1.m3u8
+            src: "http://live.huobaowang.com/live/text1.m3u8" //这是hls流
           }
         ],
         controlBar: {
@@ -73,7 +73,7 @@ export default {
         notSupportedMessage: "此视频暂无法播放，请稍后再试",
         poster: "http://m.3456.tv/images/2019huodong.jpg" // 你的封面地址
       },
-      active: 1,
+      active: 0,
       contentStyleObj: {
         height: ""
       }
