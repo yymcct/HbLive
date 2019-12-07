@@ -23,8 +23,8 @@
         <van-button type="info" size="normal" :disabled="!light">发送</van-button>
       </div>
       <div class="input">
-
         <van-field
+          :disabled="!enableInput"
           v-model="inputmessage"
           maxlength="100"
           clearable
@@ -54,6 +54,8 @@ export default {
 
   data() {
     return {
+      path: "wss://localhost:44374/ws/",
+      socket: "",
       chattingStyleObj: {
         height: ""
       },
@@ -109,8 +111,9 @@ export default {
           self: false
         }
       ],
+      enableInput: true, //是否禁言
       inputmessage: "", //输入的文本内容
-      light: false //输入框不为空时，input下边框变色
+      light: false //输入框不为空时，使能发送按钮
     };
   },
   methods: {
@@ -132,19 +135,58 @@ export default {
       //   user_id: this.userInfo.id,
       //   content: this.inputmessage
       // });
+      this.socketsend({
+        date: "2015-11-09 09:57:08",
+        loc: "江西省南昌市",
+        from: "microzz",
+        avatarUrl: `http://m.3456.tv/images/2019yuan.png`,
+        content: this.inputmessage,
+        self: true
+      });
       this.inputmessage = "";
       this.light = false;
-      // this.$nextTick(() => {
-      //   window.scrollTo(
-      //     0,
-      //     this.$refs.groupHeight.offsetHeight - window.innerHeight
-      //   );
-      // });
+    },
+    /*websocket*/
+    socketInit: function() {
+      if (typeof WebSocket === "undefined") {
+        this.enableInput = false;
+      } else {
+        // 实例化socket
+        this.socket = new WebSocket(this.path);
+        // 监听socket连接
+        this.socket.onopen = this.socketopen;
+        // 监听socket错误信息
+        this.socket.onerror = this.socketerror;
+        // 监听socket消息
+        this.socket.onmessage = this.socketgetMessage;
+      }
+    },
+    socketopen: function() {
+      console.log("socket连接成功");
+    },
+    socketerror: function() {
+      console.log("连接错误");
+    },
+    socketgetMessage: function(msg) {
+      console.log(msg.data);
+      this.chatMsgs.push(JSON.parse(msg.data));
+      this.$nextTick(() => {
+        this.scroll.refresh();
+        console.log(this.$refs.chattingContent.offsetHeight);
+        this.scroll.scrollTo(0, 250-this.$refs.chattingContent.offsetHeight, 700);
+      });
+    },
+    socketsend: function(params) {
+      this.socket.send(JSON.stringify(params));
+    },
+    socketclose: function() {
+      console.log("socket已经关闭");
     }
   },
 
   mounted() {
     this.setchattingHeight();
+    this.socketInit();
     this.$nextTick(() => {
       this.scroll = new Bscroll(this.$refs.chatting, {
         scrollY: true,
@@ -155,6 +197,9 @@ export default {
         startY: -999
       });
     });
+  },
+  destroyed() {
+    this.socket.onclose = this.close;
   }
 };
 </script>
