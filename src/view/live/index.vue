@@ -16,7 +16,7 @@
     </div>
     <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff" swipeable>
       <van-tab title="聊天室">
-        <div class="tab-content">
+        <div class="tab-content" :style="contentStyleObj">
           <chat />
         </div>
       </van-tab>
