@@ -41,6 +41,7 @@
 <script>
 import { Row, Col, Image, ImagePreview, Field, Button } from "vant";
 import Bscroll from "better-scroll";
+import { api_GetWebWxUserInfo } from "@/api/api";
 export default {
   name: "chat",
   components: {
@@ -173,7 +174,11 @@ export default {
       this.$nextTick(() => {
         this.scroll.refresh();
         console.log(this.$refs.chattingContent.offsetHeight);
-        this.scroll.scrollTo(0, 250-this.$refs.chattingContent.offsetHeight, 700);
+        this.scroll.scrollTo(
+          0,
+          250 - this.$refs.chattingContent.offsetHeight,
+          700
+        );
       });
     },
     socketsend: function(params) {
@@ -181,6 +186,49 @@ export default {
     },
     socketclose: function() {
       console.log("socket已经关闭");
+    },
+
+    /*获取微信用户ID*/
+    getWxUserInfo() {
+      let wxUser = localStorage.getItem("wxUserInfo");
+      if (!wxUser) {
+        this.getCode();
+      }
+
+      return JSON.parse(wxUser);
+    },
+    getCode() {
+      // 非静默授权，第一次有弹框
+      let local = window.location.href; // 获取页面url
+      let appid = "wxd1e722c69feb8990";
+      let code = this.getUrlCode().code; // 截取code
+      if (code == null || code === "") {
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(
+          local
+        )}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
+      } else {
+        api_GetWebWxUserInfo({ code: code }).then(res => {
+          console.log(res.result);
+          localStorage.setItem("wxUserInfo", JSON.stringify(res.result));
+          return res.result;
+        });
+      }
+
+      return null;
+    },
+    getUrlCode() {
+      // 截取url中的code方法
+      var url = location.search;
+      this.winUrl = url;
+      var theRequest = new Object();
+      if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
+        }
+      }
+      return theRequest;
     }
   },
 
@@ -197,6 +245,8 @@ export default {
         startY: -999
       });
     });
+
+    this.getWxUserInfo();
   },
   destroyed() {
     this.socket.onclose = this.close;

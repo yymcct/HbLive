@@ -4,7 +4,7 @@ import { removeToken } from './auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://192.168.0.34',//process.env.VUE_APP_BASE_API,
+ // baseURL: 'http://localhost:8222',//process.env.VUE_APP_BASE_API,
   headers: { 'Content-Type': 'application/json' },
   timeout: 5000 * 2 // request timeout
 })

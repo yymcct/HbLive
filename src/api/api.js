@@ -16,8 +16,8 @@ export const requestLogin = (username, password) => {
         url: `${process.env.VUE_APP_BASE_API}/connect/token`,
         method: 'post',
         data: qs.stringify(login),
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
-})
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
 };
 
 export const getUser = () => request.get('/manager/Member/GetUser');
@@ -25,3 +25,9 @@ export const getUser = () => request.get('/manager/Member/GetUser');
 //会议
 export const api_GetLiveBroadCastInfo = (params) => request.get('/api/LiveBroadCast/GetLiveBroadCastInfo', { params: params });
 
+//获取微信分享连接
+export const api_GetWxShareContent = (params) => request.get('/api/v0.1/LiveBroadcast/GetWxShareContent', { params: params });
+//获取用户信息
+export const api_GetWebWxUserInfo = (params) => request.get('/api/v0.1/LiveBroadcast/GetWebWxUserInfo', { params: params });
+
+`                                                                                       `
