@@ -6,13 +6,20 @@ Vue.use(Router);
 const routes = [
   {
     path: '*',
-    redirect: '/live'
+    redirect: '/liveBroadCast'
   },
   {
     name: 'goods',
     component: () => import('./view/goods'),
     meta: {
       title: '商品详情'
+    }
+  },
+  {
+    name: 'liveBroadCast',
+    component: () => import('./view/liveBroadCast/list'),
+    meta: {
+      title: '直播列表'
     }
   },
   {

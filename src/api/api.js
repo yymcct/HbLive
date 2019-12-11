@@ -22,6 +22,9 @@ export const requestLogin = (username, password) => {
 
 export const getUser = () => request.get('/manager/Member/GetUser');
 
+//获取直播列表
+export const api_GetLiveBroadCast = (params) => request.get('/api/LiveBroadCast/GetLiveBroadCast', { params: params });
+
 //会议
 export const api_GetLiveBroadCastInfo = (params) => request.get('/api/LiveBroadCast/GetLiveBroadCastInfo', { params: params });
 

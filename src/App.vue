@@ -11,12 +11,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "common/scss/index.scss";
 body {
   font-size: 16px;
   background-color: #f8f8f8;
   -webkit-font-smoothing: antialiased;
-    margin: 0;
+  margin: 0;
   padding: 0;
 }
 </style>
