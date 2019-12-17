@@ -36,7 +36,7 @@ import "video.js/dist/video-js.css";
 import { videoPlayer } from "vue-video-player";
 import "videojs-contrib-hls";
 import { NoticeBar, Tab, Tabs } from "vant";
-import chat from "./chat";
+// import chat from "./chat";
 import imageTotal from "./imageTotal";
 export default {
   name: "live",
@@ -45,7 +45,7 @@ export default {
     [NoticeBar.name]: NoticeBar,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    chat,
+    // chat,
     imageTotal
   },
 

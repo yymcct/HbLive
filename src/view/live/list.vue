@@ -1,8 +1,15 @@
 <template>
   <div class="wapper">
-    <scroll class="scroll" :data="liveBroadCasts" pulldown @pulldown="pulldown">
-      <div>
-        <div v-for="iteam in liveBroadCasts" :key="iteam.id" class="iteam">
+    <scroll
+      class="scroll"
+      :data="liveBroadCasts"
+      pullup
+      @scrollToEnd="scrollToEnd"
+      pulldown
+      @pulldown="pulldown"
+    >
+      <div v-for="iteam in liveBroadCasts" :key="iteam.id" class="iteam">
+        <router-link :to="{name: 'live', params: {id: iteam.id }}">
           <!-- <img src alt /> -->
           <div class="iteam-banner" style="height:100%;">
             <img :src="iteam.banner" />
@@ -12,7 +19,7 @@
             </div>
           </div>
           <p>{{iteam.title}}</p>
-        </div>
+        </router-link>
       </div>
     </scroll>
   </div>
@@ -26,7 +33,8 @@ export default {
   props: [""],
   data() {
     return {
-      liveBroadCasts: []
+      liveBroadCasts: [],
+      page: 1
     };
   },
 
@@ -37,18 +45,30 @@ export default {
   beforeMount() {},
 
   mounted() {
-    api_GetLiveBroadCast({
-      Sorts: "-id",
-      Page: 1,
-      PageSize: 10
-    }).then(res => {
-      this.liveBroadCasts = res.result;
-    });
+    this.getDataByPage(this.page);
   },
 
   methods: {
+    // 上拉加载
+    scrollToEnd() {
+      this.page++;
+      this.getDataByPage(this.page);
+    },
+    // 下拉刷新
     pulldown() {
-      console.log("aaaa");
+      // this.page = 1;
+      // this.liveBroadCasts = [];
+      // this.getDataByPage(this.page);
+    },
+    getDataByPage(page) {
+      api_GetLiveBroadCast({
+        page: page,
+        pageSize: 10,
+        filters: "",
+        sorts: "-id"
+      }).then(res => {
+        this.liveBroadCasts = this.liveBroadCasts.concat(res.result);
+      });
     }
   },
 
@@ -59,7 +79,7 @@ export default {
 .wapper {
   .scroll {
     width: 100%;
-    height: 50vh;
+    height: 100vh;
     overflow: hidden;
     .iteam {
       margin-left: 10px;

@@ -1,6 +1,8 @@
 <template>
   <div ref="wrapper">
-    <slot></slot>
+    <div>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -76,8 +78,7 @@ export default {
     }
   },
   data() {
-    return {
-    };
+    return {};
   },
 
   components: {},
@@ -170,18 +171,5 @@ export default {
 };
 </script>
 <style lang='' scoped>
-.pullDown{
-    position: absolute;
-    top:0;
-    left:0;
-}
 
-    .pullDown-enter-active{
-        transition:all 0.2s;
-    }
-
-    .pullDown-enter, .pullDown-leave-active{
-        transform:translateY(-100%);
-        transition:all 0.2s;
-    }
 </style>
