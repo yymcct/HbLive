@@ -18,7 +18,16 @@
       </van-tab>-->
       <template v-for="iteam in live.liveColumns">
         <van-tab :title="iteam.name" v-bind:key="iteam.id">
-          <images-wall v-bind:style="contentStyleObj" :liveColumnId="iteam.id"></images-wall>
+          <images-wall
+            v-if="iteam.hbLive_LiveColumnType==0"
+            v-bind:style="contentStyleObj"
+            :liveColumnId="iteam.id"
+          ></images-wall>
+          <rich-text
+            v-else-if="iteam.hbLive_LiveColumnType==1"
+            v-bind:style="contentStyleObj"
+            :liveColumnId="iteam.id"
+          ></rich-text>
         </van-tab>
       </template>
     </van-tabs>
@@ -31,8 +40,8 @@ import wx from "weixin-js-sdk";
 import { NoticeBar, Tab, Tabs } from "vant";
 // import chat from "./chat";
 import VideoPlayer from "./videoPlayer";
-//import imageTotal from "./imageTotal";
 import ImagesWall from "./imagesWall";
+import RichText from "./richText";
 export default {
   name: "LiveIndex",
   components: {
@@ -41,8 +50,8 @@ export default {
     [Tabs.name]: Tabs,
     // chat,
     VideoPlayer,
-    ImagesWall
-    // imageTotal
+    ImagesWall,
+    RichText
   },
 
   data() {
@@ -58,13 +67,13 @@ export default {
 
   methods: {
     setContentHeight() {
-      // let livehight = document.getElementById('live').clientHeight;
-      // let tmphight = window.innerHeight - (livehight + 44) + "px";
-      // if (this.contentStyleObj.height != tmphight) {
-      //   console.log(livehight);
-      //   console.log(window.innerHeight);
-      //   this.contentStyleObj.height = tmphight;
-      // }
+      let livehight = document.getElementById('live').clientHeight;
+      let tmphight = window.innerHeight - (livehight + 44) + "px";
+      if (this.contentStyleObj.height != tmphight) {
+        console.log(livehight);
+        console.log(window.innerHeight);
+        this.contentStyleObj.height = tmphight;
+      }
     },
     GetLive() {
       api_GetLiveDetails({ id: this.$route.params.id }).then(res => {

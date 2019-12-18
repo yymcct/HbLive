@@ -2,16 +2,14 @@
   <div class="wapper">
     <scroll class="scroll" :data="lives" pullup @scrollToEnd="scrollToEnd">
       <div v-for="iteam in lives" :key="iteam.id" class="iteam">
-        <router-link :to="{name: 'live', params: {id: iteam.id }}">
-          <div class="iteam-banner" style="height:100%;">
-            <img :src="iteam.banner" />
-            <div class="watch">
-              <i class="iconfont icon-watch"></i>
-              {{iteam.hits}}
-            </div>
+        <div class="iteam-banner" style="height:100%;" @click="gotoLive(iteam.id)">
+          <img :src="iteam.banner" />
+          <div class="watch">
+            <i class="iconfont icon-watch"></i>
+            {{iteam.hits}}
           </div>
-          <p>{{iteam.title}}</p>
-        </router-link>
+        </div>
+        <p>{{iteam.title}}</p>
       </div>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
@@ -38,6 +36,9 @@ export default {
   },
 
   methods: {
+    gotoLive(id) {
+      this.$router.push("/live/" + id);
+    },
     scrollToEnd() {
       if (!this.isEnd) {
         this.page++;

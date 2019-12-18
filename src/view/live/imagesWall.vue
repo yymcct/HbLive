@@ -49,7 +49,7 @@ export default {
     getDataByPage(page) {
       api_GetHbLiveLiveColumnContent({
         page: page,
-        pageSize: 10,
+        pageSize: 30,
         filters: `HbLive_LiveColumnId==${this.liveColumnId}`,
         sorts: "id"
       }).then(res => {
@@ -94,7 +94,7 @@ export default {
         margin-bottom: 10px;
       }
     }
-
+// 
     .nomore {
       color: #666;
       text-align: center;
