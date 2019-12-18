@@ -64,7 +64,8 @@ export default {
 .wapper {
   .scroll {
     width: 100%;
-    height: 100vh;
+    // height: 100vh;
+    height: 100%;
     overflow: hidden;
     .iteam {
       margin-left: 10px;
@@ -93,7 +94,8 @@ export default {
     .nomore {
       color: #666;
       text-align: center;
-      margin: 20px;
+      margin-top: 20px;
+      margin-bottom: 50px;
     }
   }
 }

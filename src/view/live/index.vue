@@ -1,105 +1,89 @@
 <template>
   <div class="wrapper">
-    <div class="live" ref="live">
+    <div class="live" id="live">
       <video-player
-        class="video-player vjs-custom-skin"
-        ref="videoPlayer"
-        :options="playerOptions"
-        :playsinline="true"
-        @ready="playerReadied"
+        :started="live.liveStarted"
+        :banner="live.banner"
+        :pullStreamAddress="live.pullStreamAddress"
+        :hits="live.hits"
       ></video-player>
-      <van-notice-bar
-        class="noticebar"
-        color="#1989fa"
-        background="#ecf9ff"
-      >欢迎观看本场直播！点击右上角“•••”发送给亲朋好友、微信群、分享到朋友圈，让更多的朋友来观看直播、参与互动、分享精彩！商务直播适用：新品发布、营销会议、行业会议、峰会年会、室外观摩、农产推广等活动。火爆网直播合作热线：17719825376</van-notice-bar>
+      <van-notice-bar class="noticebar" color="#1989fa" background="#ecf9ff">{{live.description}}</van-notice-bar>
     </div>
+
     <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff" swipeable>
-      <van-tab title="聊天室">
+      <!-- <van-tab title="聊天室">
         <div class="tab-content" :style="contentStyleObj">
           <chat />
         </div>
-      </van-tab>
-      <van-tab title="现场图集">
-        <div class="tab-content" :style="contentStyleObj">
-          <image-total></image-total>
-        </div>
-      </van-tab>
+      </van-tab>-->
+      <template v-for="iteam in live.liveColumns">
+        <van-tab :title="iteam.name" v-bind:key="iteam.id">
+          <photo-wall v-bind:style="contentStyleObj"></photo-wall>
+        </van-tab>
+      </template>
     </van-tabs>
   </div>
 </template>
 
 <script>
-import { api_GetWxShareContent } from "@/api/api";
+import { api_GetLiveDetails, api_GetWxShareContent } from "@/api/api";
 import wx from "weixin-js-sdk";
-import "video.js/dist/video-js.css";
-import { videoPlayer } from "vue-video-player";
-import "videojs-contrib-hls";
 import { NoticeBar, Tab, Tabs } from "vant";
 // import chat from "./chat";
-import imageTotal from "./imageTotal";
+import VideoPlayer from "./videoPlayer";
+//import imageTotal from "./imageTotal";
+import PhotoWall from "./photoWall";
 export default {
-  name: "live",
+  name: "LiveIndex",
   components: {
-    videoPlayer,
     [NoticeBar.name]: NoticeBar,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
     // chat,
-    imageTotal
+    VideoPlayer,
+    PhotoWall
+    // imageTotal
   },
 
   data() {
     return {
-      playerOptions: {
-        // videojs options
-        muted: false, // 默认情况下将会消除任何音频。
-        language: "zh-CN",
-        sources: [
-          {
-            withCredentials: false,
-            type: "application/x-mpegURL",
-            src: "http://live.huobaowang.com/live/text1.m3u8" //这是hls流
-          }
-        ],
-        controlBar: {
-          timeDivider: false,
-          durationDisplay: false
-        },
-        flash: { hls: { withCredentials: false } },
-        html5: { hls: { withCredentials: false } },
-        width: document.documentElement.clientWidth,
-        autoplay: true, //如果true,浏览器准备好时开始回放
-        preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        fluid: true,
-        notSupportedMessage: "此视频暂无法播放，请稍后再试",
-        poster: "http://m.3456.tv/images/2019huodong.jpg" // 你的封面地址
-      },
+      live: null,
+
       active: 0,
       contentStyleObj: {
-        height: ""
+        height: "370px"
       }
     };
   },
 
   methods: {
-    playerReadied(player) {
-      player.tech({ IWillNotUseThisInPlugins: true }).hls;
-      player.tech_.hls.xhr.beforeRequest = function(options) {
-        // console.log(options)
-        return options;
-      };
-    },
     setContentHeight() {
-      let livehight = this.$refs.live.offsetHeight;
-      this.contentStyleObj.height =
-        window.innerHeight - (livehight + 44) + "px";
+      // let livehight = document.getElementById('live').clientHeight;
+      // let tmphight = window.innerHeight - (livehight + 44) + "px";
+      // if (this.contentStyleObj.height != tmphight) {
+      //   console.log(livehight);
+      //   console.log(window.innerHeight);
+      //   this.contentStyleObj.height = tmphight;
+      // }
+    },
+    GetLive() {
+      api_GetLiveDetails({ id: this.$route.params.id }).then(res => {
+        this.live = res.result;
+        this.$nextTick(() => {
+          this.setContentHeight();
+        });
+      });
     }
   },
   mounted() {
-    console.log("haha");
-    console.log(this.$route.query);
-    this.setContentHeight();
+    this.GetLive();
+    // this.$nextTick(() => {
+    //   this.setContentHeight();
+    // });
+    // let _this =this;
+    // setInterval(() => {
+    //   _this.setContentHeight();
+    // }, 1000);
     api_GetWxShareContent({ url: location.href.split("#")[0] }) //向服务端提供授权url参数，并且不需要#后面的部分
       .then(res => {
         console.log(res);
@@ -149,6 +133,11 @@ export default {
           });
         });
       });
+  },
+  watch: {
+    $route() {
+      this.GetLive();
+    }
   }
 };
 </script>

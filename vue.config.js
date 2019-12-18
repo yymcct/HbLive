@@ -5,6 +5,6 @@ module.exports = {
     devServer: {
         port: 80,
         disableHostCheck: true,
-        proxy: 'http://192.168.0.34'
+        proxy: 'http://localhost:8222' //'http://192.168.0.34'
     }
 }

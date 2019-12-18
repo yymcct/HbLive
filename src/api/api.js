@@ -23,10 +23,17 @@ export const requestLogin = (username, password) => {
 export const getUser = () => request.get('/manager/Member/GetUser');
 
 //获取直播列表
-export const api_GetLiveBroadCast = (params) => request.get('/api/LiveBroadCast/GetLiveBroadCast', { params: params });
+export const api_GetLives = (params) => request.get('/api/hblive/HbLive/GetLives', { params: params });
 
-//会议
-export const api_GetLiveBroadCastInfo = (params) => request.get('/api/LiveBroadCast/GetLiveBroadCastInfo', { params: params });
+//获取直播详情
+export const api_GetLiveDetails = (params) => request.get('/api/hblive/HbLive/GetLiveDetails', { params: params });
+
+//获取直播栏目
+export const api_GetHbLiveLiveColumn = (params) => request.get('/api/hblive/HbLive/GetHbLiveLiveColumn', { params: params });
+
+//获取直播栏目下内容
+export const api_GetHbLiveLiveColumnContent = (params) => request.get('/api/hblive/HbLive/GetHbLiveLiveColumnContent', { params: params });
+
 
 //获取微信分享连接
 export const api_GetWxShareContent = (params) => request.get('/api/v0.1/LiveBroadcast/GetWxShareContent', { params: params });
