@@ -7,12 +7,12 @@
             v-bind:class="{'group-one':iteam.pictures.length==1,'group-two':iteam.pictures.length==2, 'group-three':iteam.pictures.length==3}"
           >
             <div v-for="(img, index) in iteam.pictures" :key="index">
-              <img :src="img" />
+              <img :src="img" @click="handImgClick(img)" />
             </div>
           </div>
           <p v-if="iteam.content">{{iteam.content}}</p>
         </div>
-      </template>     
+      </template>
       <div class="nomore" v-show="images.length==0 || isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
@@ -21,11 +21,13 @@
 <script>
 import { api_GetHbLiveLiveColumnContent } from "@/api/api";
 import scroll from "@/base/scroll/scroll";
+import { ImagePreview ,Loading } from "vant";
 export default {
   name: "ImagesWall",
   data() {
     return {
       images: [],
+      imagesPreview: [],
       page: 1,
       isEnd: false
     };
@@ -33,13 +35,28 @@ export default {
   props: {
     liveColumnId: Number
   },
-  components: { scroll },
+  components: {
+    scroll,
+    [ImagePreview.name]: ImagePreview,
+    [Loading.name]: Loading
+  },
 
   mounted() {
     this.getDataByPage(this.page);
   },
 
   methods: {
+    handImgClick(img) {
+      let index = this.imagesPreview.indexOf(img);
+      ImagePreview({
+        images: this.imagesPreview,
+        startPosition: index,
+        showIndicators:true,
+        onClose() {
+          // do something
+        }
+      });
+    },
     scrollToEnd() {
       if (!this.isEnd) {
         this.page++;
@@ -54,6 +71,11 @@ export default {
         sorts: "id"
       }).then(res => {
         this.images = this.images.concat(res.result);
+        for (let i = 0; i < res.result.length; i++) {
+          this.imagesPreview = this.imagesPreview.concat(
+            res.result[0].pictures
+          );
+        }
         if (this.images.length >= res.total) {
           this.isEnd = true;
         }
@@ -94,7 +116,7 @@ export default {
         margin-bottom: 10px;
       }
     }
-// 
+    //
     .nomore {
       color: #666;
       text-align: center;
