@@ -18,7 +18,7 @@
       </van-tab>-->
       <template v-for="iteam in live.liveColumns">
         <van-tab :title="iteam.name" v-bind:key="iteam.id">
-          <photo-wall v-bind:style="contentStyleObj"></photo-wall>
+          <images-wall v-bind:style="contentStyleObj" :liveColumnId="iteam.id"></images-wall>
         </van-tab>
       </template>
     </van-tabs>
@@ -32,7 +32,7 @@ import { NoticeBar, Tab, Tabs } from "vant";
 // import chat from "./chat";
 import VideoPlayer from "./videoPlayer";
 //import imageTotal from "./imageTotal";
-import PhotoWall from "./photoWall";
+import ImagesWall from "./imagesWall";
 export default {
   name: "LiveIndex",
   components: {
@@ -41,7 +41,7 @@ export default {
     [Tabs.name]: Tabs,
     // chat,
     VideoPlayer,
-    PhotoWall
+    ImagesWall
     // imageTotal
   },
 
