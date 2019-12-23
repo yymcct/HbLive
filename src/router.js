@@ -6,7 +6,7 @@ Vue.use(Router);
 const routes = [
   {
     path: '*',
-    redirect: '/livelist'
+    redirect: '/index'
   },
   {
     path: '/goods',
@@ -29,7 +29,15 @@ const routes = [
     meta: {
       title: '直播'
     }
-  }
+  },
+  /*小程序 */
+  {
+    path: '/index',
+    component: () => import('./view/index/index'),
+    meta: {
+      title: '直播列表'
+    }
+  },
 ];
 
 // add route path
