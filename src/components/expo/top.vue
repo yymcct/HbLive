@@ -21,12 +21,17 @@ export default {
   },
   data() {
     return {
-      meeting: null
+      meeting: {
+        banner: "",
+        sortName: "",
+        address: "",
+        beginDate: "",
+        endDate: "",
+        companyCount: 0,
+        hit: 0
+      }
     };
   },
-
-  components: {},
-
   mounted() {
     this.getMeeting();
   },

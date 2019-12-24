@@ -2,7 +2,7 @@
   <div>
     <hb-layout :active="0">
       <div class="box">
-        <expo-top :meetingId="curMeetingId"></expo-top>
+        <expo-top :meetingId="meetingId"></expo-top>
       </div>
     </hb-layout>
   </div>
@@ -13,12 +13,10 @@ import HbLayout from "@/components/layout/hbLayout";
 import ExpoTop from "@/components/expo/top";
 export default {
   name: "",
-  props: {
-    meetingId: Number
-  },
+  props: {},
   data() {
     return {
-      curMeetingId :1,
+      meetingId: 1
     };
   },
 
@@ -37,7 +35,11 @@ export default {
 
   methods: {},
 
-  watch: {}
+  watch: {
+    $route() {
+      this.meetingId = this.$route.params.id;
+    }
+  }
 };
 </script>
 <style lang='' scoped>
