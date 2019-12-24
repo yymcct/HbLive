@@ -8,13 +8,23 @@ const routes = [
     path: '*',
     redirect: '/index'
   },
+  /*小程序 */
   {
-    path: '/goods',
-    component: () => import('./view/goods'),
+    path: '/index',
+    component: () => import('./view/index/index'),
     meta: {
-      title: '商品详情'
+      title: '直播列表'
     }
   },
+  {
+    name: 'expo',
+    path: '/expo/:id',
+    component: () => import('./view/expo/index'),
+    meta: {
+      title: '展商名录'
+    }
+  },
+  /*小程序结束 */
   {
     path: '/livelist',
     component: () => import('./view/live/list'),
@@ -30,14 +40,7 @@ const routes = [
       title: '直播'
     }
   },
-  /*小程序 */
-  {
-    path: '/index',
-    component: () => import('./view/index/index'),
-    meta: {
-      title: '直播列表'
-    }
-  },
+
 ];
 
 // add route path

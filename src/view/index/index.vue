@@ -6,7 +6,11 @@
     <scroll class="scroll" :data="Meeting" pullup @scrollToEnd="scrollToEnd">
       <div class="now">
         <template v-for="item in Meeting">
-          <div class="list" :key="item.id" @click="MeetingInfo(item.id, item.sortName)">
+          <div
+            class="list"
+            :key="item.id"
+            @click="$router.push({ name: 'expo', params: { userId: item.id }})"
+          >
             <div class="pic">
               <img :src="item.coverPictureUrl" />
             </div>
@@ -103,15 +107,15 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        margin: 10px 0;
-        font-size: 11pt;
+        margin: 5px 0;
+        font-size: 15px;
         font-weight: bold;
-        margin-left: 10px;
+        margin-left: 5px;
       }
       .date {
-        font-size: 10pt;
+        font-size: 13px;
         color: #666;
-        margin: 10px 0;
+        margin: 5px 0;
       }
     }
   }
@@ -119,7 +123,8 @@ export default {
   .nomore {
     color: #666;
     text-align: center;
-    margin: 20px;
+    font-size: 13px;
+    margin: 10px;
   }
 }
 </style>
