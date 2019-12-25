@@ -1,6 +1,6 @@
 <template>
   <div>
-    <scroll class="tuijian" scrollX :data="companys" @scrollToEnd="scrollToEnd">
+    <scroll  class="tuijian" scrollX :data="companys" @scrollToEnd="scrollToEnd">
       <template v-for="item in companys">
         <div class="tuijian-com" bindtap="goCom" :key="item.id">
           <div class="com-top">
@@ -102,6 +102,7 @@ export default {
   flex-direction: row;
   padding: 15px 0;
   background: #f8f8f8;
+  overflow: hidden;
   .tuijian-com {
     display: inline-block;
     background: #e5ebf3;
