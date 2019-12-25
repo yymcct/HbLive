@@ -6,15 +6,17 @@
           :src="require('@/assets/images/expo/huangguan.png')"
           class="huangguan"
           v-show="index<10"
+          v-if="showTop"
         />
         <div class="con">
           <div class="con-left">
-            <span v-show="index<10">NO.{{index+1}}</span>
+            <span v-if="showTop" v-show="index<10">NO.{{index+1}}</span>
             <img :src="item.photo" class="logo" />
             <img
               :src="require('@/assets/images/expo/jiaobiao.png')"
               class="jiaobiao"
               v-show="index<10"
+              v-if="showTop"
             />
           </div>
           <div class="con-right">
@@ -57,7 +59,11 @@
 export default {
   name: "MeetingCompany",
   props: {
-    companys: Array
+    companys: Array,
+    showTop: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {};

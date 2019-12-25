@@ -2,14 +2,19 @@
   <div>
     <hb-layout :active="0">
       <div class="box">
-        <div ref="mexpotop">
+        <div ref="mexpotop" v-show="topShow">
           <expo-top :meetingId="meetingId"></expo-top>
         </div>
-        <div ref="mtoptuijian">
+
+        <div ref="mtoptuijian" @click="test">
           <top-tuijian :meetingId="meetingId"></top-tuijian>
         </div>
         <div>
-          <expo-content :meetingId="meetingId" :height="contentStyleObj.height"></expo-content>
+          <expo-content
+            :meetingId="meetingId"
+            :height="contentStyleObj.height"
+            @scrollLiveTop="scrollLiveTop"
+          ></expo-content>
         </div>
       </div>
     </hb-layout>
@@ -30,7 +35,8 @@ export default {
       meetingId: 1,
       contentStyleObj: {
         height: "370px"
-      }
+      },
+      topShow: true
     };
   },
 
@@ -51,7 +57,7 @@ export default {
     this.meetingId = 1;
     setInterval(() => {
       this.setContentHeight();
-    }, 2000);
+    }, 500);
   },
 
   methods: {
@@ -60,11 +66,17 @@ export default {
       var toptuijianHight = this.$refs.mtoptuijian.offsetHeight;
       var tmphight =
         window.innerHeight - expotopHight - toptuijianHight - 50 + "px";
-        console.log(expotopHight);
-        console.log(toptuijianHight);
+      // console.log(expotopHight);
+      //console.log(toptuijianHight);
       if (this.contentStyleObj.height != tmphight) {
         this.contentStyleObj.height = tmphight;
       }
+    },
+    scrollLiveTop(r) {
+      this.topShow = r;
+    },
+    test() {
+      this.topShow = !this.topShow;
     }
   },
 
@@ -75,5 +87,5 @@ export default {
   }
 };
 </script>
-<style lang='' scoped>
+<style lang='scss' scoped>
 </style>

@@ -100,7 +100,7 @@ export default {
   white-space: nowrap;
   display: flex;
   flex-direction: row;
-  padding: 15px 0;
+  padding: 10px 0;
   background: #f8f8f8;
   overflow: hidden;
   .tuijian-com {

@@ -9,3 +9,4 @@ export const api_GetMeeting = (params) => request.get('/api/meeting/Meeting/GetM
 export const api_GetCompanyByTopRecommend = (params) => request.get('/api/meeting/Company/GetCompanyByTopRecommend', { params: params });
 export const api_GetMeetingArea = (params) => request.get('/api/meeting/MeetingArea/GetArea', { params: params });
 export const api_GetMeetingAreaCompany = (params) => request.get('/api/meeting/Company/GetCompany', { params: params });
+export const api_GetGetCompanyByRecommend = (params) => request.get('/api/meeting/Company/GetCompanyByRecommend', { params: params });

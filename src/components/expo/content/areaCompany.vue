@@ -7,6 +7,7 @@
       @scrollToEnd="scrollToEnd"
       listenScroll
       @scroll="scroll"
+      :probeType="probeType"
     >
       <company :companys="companys"></company>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
@@ -17,7 +18,7 @@
 <script>
 import scroll from "@/components/scroll/scroll";
 import { api_GetMeetingAreaCompany } from "@/api/meetingApi";
-import company from "@/components/expo/company";
+import company from "@/components/expo/content/company";
 export default {
   name: "reaCompany",
   props: {
@@ -25,6 +26,7 @@ export default {
   },
   data() {
     return {
+      probeType: 2,
       companys: [],
       page: 1,
       isEnd: false
@@ -47,9 +49,14 @@ export default {
         this.getMeetingAreaCompanys();
       }
     },
-    scroll(x, y) {
-      console.log(x);
-      console.log(y);
+    scroll(p) {
+      console.log(p);
+      if (p.y < -50) {
+        this.$emit("scrollLiveTop", false);
+      }
+      if (p.y > 0) {
+        this.$emit("scrollLiveTop", true);
+      }
     },
     getMeetingAreaCompanys() {
       api_GetMeetingAreaCompany({
