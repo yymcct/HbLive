@@ -24,6 +24,13 @@ const routes = [
       title: '展商名录'
     }
   },
+  {
+    path: '/expo/pro/:id',
+    component: () => import('./view/expo/pro'),
+    meta: {
+      title: '展商名录'
+    }
+  },
   /*小程序结束 */
   {
     path: '/livelist',
@@ -48,7 +55,10 @@ routes.forEach(route => {
   route.path = route.path || '/' + (route.name || '');
 });
 
-const router = new Router({ routes });
+const router = new Router({
+  mode: 'history',
+  routes: routes
+});
 
 router.beforeEach((to, from, next) => {
   const title = to.meta && to.meta.title;

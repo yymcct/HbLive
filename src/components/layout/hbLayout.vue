@@ -3,8 +3,8 @@
     <div>
       <slot></slot>
     </div>
-    <van-tabbar v-model="activeNum" active-color="#07c160">
-      <van-tabbar-item to="/livelist">
+    <van-tabbar v-model="activeNum" active-color="#07c160" route>
+      <van-tabbar-item to="/expo/1">
         <span>展商</span>
         <img
           class="tabbar-img"
@@ -13,7 +13,7 @@
           :src="!props.active ? require('@/assets/images/expo/home.png') : require('@/assets/images/expo/home2.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item to="/livelist">
+      <van-tabbar-item to="/expo/pro/1">
         <span>展品</span>
         <img
           class="tabbar-img"
