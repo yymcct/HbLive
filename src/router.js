@@ -26,9 +26,16 @@ const routes = [
   },
   {
     path: '/expo/pro/:id',
-    component: () => import('./view/expo/pro'),
+    component: () => import('./view/expo/proList'),
     meta: {
-      title: '展商名录'
+      title: '展品名录'
+    }
+  },
+  {
+    path: '/expo/company/:meetingId-:companyId',
+    component: () => import('./view/expo/company/company'),
+    meta: {
+      title: '参展企业'
     }
   },
   /*小程序结束 */
@@ -56,7 +63,6 @@ routes.forEach(route => {
 });
 
 const router = new Router({
-  mode: 'history',
   routes: routes
 });
 

@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper">
     <template v-for="(item,index) in companys">
-      <div style="position: relative;" v-bind:key="index">
+      <div
+        style="position: relative;"
+        v-bind:key="index"
+        @click="$router.push({ path: `/expo/company/${meetingId}-${item.id}`})"
+      >
         <img
           :src="require('@/assets/images/expo/huangguan.png')"
           class="huangguan"
@@ -59,6 +63,7 @@
 export default {
   name: "MeetingCompany",
   props: {
+    meetingId:Number,
     companys: Array,
     showTop: {
       type: Boolean,

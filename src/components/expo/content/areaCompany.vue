@@ -9,7 +9,7 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <company :companys="companys"></company>
+      <company :companys="companys" :meetingId="meetingId"></company>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
@@ -22,6 +22,7 @@ import company from "@/components/expo/content/company";
 export default {
   name: "reaCompany",
   props: {
+    meetingId: Number,
     meetingAreaId: Number
   },
   data() {

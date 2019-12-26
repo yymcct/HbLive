@@ -12,6 +12,7 @@
       <template v-for="iteam in meetingTypes">
         <van-tab :title="iteam.name" v-bind:key="iteam.id" class="tab">
           <area-company
+            :meetingId="meetingId"
             :meetingAreaId="iteam.id"
             class="company"
             :style="{height:height}"

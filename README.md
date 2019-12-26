@@ -40,3 +40,16 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 https://www.cnblogs.com/lbnnbs/p/7518934.html
 
 /images ->  require('@/assets/images/expo/zhibo.png')
+
+
+
+## 连接 
+@click="$router.push({ path: `/expo/company/${item.id}`})"
+
+watch: {
+$route() {
+    this.meetingId = this.$route.params.id;
+}
+}
+
+this.companyId = this.$route.params.id;
