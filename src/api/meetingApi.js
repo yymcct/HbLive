@@ -22,3 +22,9 @@ export const api_GetProductByIteam = (params) => request.get('/api/meeting/Produ
 export const api_GetCompanyReplys = (params) => request.get('/api/meeting/Company/GetCompanyReplys',  { params: params });
 export const api_PostMeetingHits = (params) => request.post('/api/meeting/Meeting/PostMeetingHits', params);
 export const api_PostCompanyReply = (params) => request.post('/api/meeting/Company/PostCompanyReply', params);
+
+//产品详情页
+export const api_PostCompanyMemberHits = (params) => request.post('/api/meeting/Product/PostProductMemberHits', params);
+export const api_GetProductContent = (params) => request.get('/api/meeting/Product/GetProductContent',  { params: params });
+export const api_GetProductReplys = (params) => request.get('/api/meeting/Product/GetProductReplys',  { params: params });
+export const api_GetCompanyOtherProduct = (params) => request.get('/api/meeting/Product/GetCompanyOtherProduct',  { params: params });
