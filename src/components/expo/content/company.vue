@@ -84,10 +84,11 @@ export default {
 </script>
 <style lang='scss' scoped>
 .wrapper {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   padding: 0 1%;
   height: 100%;
+  background-color: white;
   .huangguan {
     position: absolute;
     width: 16.5px;
