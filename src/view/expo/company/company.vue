@@ -18,9 +18,9 @@
       <div class="desctitle">公司简介</div>
       <div class="desccon">
         <div>
-          {{company.description}}...
+          {{company.description.substring(0,100)}}......
           <span
-            @click="Dialog.alert({title: '公司介绍', message: company.description})"
+            @click="$dialog.alert({title: '公司介绍', message: company.description})"
           >展开</span>
         </div>
       </div>
@@ -61,7 +61,7 @@
         <span class="biaoti">留言榜</span>
         <span class="liuyancount">共{{company.replyCount}}条</span>
       </div>
-      <div class="liyuanforme" id="liuyan">
+      <div class="liyuanforme" id="liuyan" v-if="userinfo">
         <img :src="userinfo.photo" />
         <input
           name="liuyancon"
@@ -94,10 +94,8 @@
     <div class="zancount">共{{company.thumbsUpCount}}人点赞</div>
     <div class="comdescription">
       <template v-for="(item, index) in zannick">
-        <div :key="index">
-          <span v-if="index==zannick.length-1">{{item}}</span>
-          <span v-else>{{item}},</span>
-        </div>
+        <span v-if="index==zannick.length-1" :key="index">{{item}}</span>
+        <span v-else :key="index">{{item}},</span>
       </template>
     </div>
     <div class="see" @click="getComThumbsUpMemberNick()" v-if="zannickPage>0">
@@ -105,6 +103,24 @@
       <img :src="require('@/assets/images/expo/heijiantou.png')" />
     </div>
     <div class="create">免费创建一个火爆云展邀请函</div>
+    <!-- 底部 -->
+    <div class="foot">
+      <a class="kefu" :href="'tel:'+company.phone">
+        <img :src="require('@/assets/images/expo/kefu.png')" />
+        <span>客服</span>
+      </a>
+      <div class="zhanshang" @click="$router.push({ path: `/expo/${meetingId}`})">
+        <img :src="require('@/assets/images/expo/zhanshang.png')" />
+        <span>展商名录</span>
+      </div>
+      <div class="goliuyan">给TA留言</div>
+      <div class="accept">接收邀请</div>
+    </div>
+    <!-- 访客 -->
+    <div class="hits">
+      <span>访客</span>
+      <span>{{company.hit}}人</span>
+    </div>
   </div>
 </template>
 
@@ -118,7 +134,7 @@ import {
   api_PostMeetingHits,
   api_PostCompanyReply
 } from "@/api/meetingApi";
-import { Toast } from "vant";
+
 export default {
   name: "Company",
   props: [""],
@@ -139,7 +155,7 @@ export default {
     };
   },
 
-  components: { [Toast.name]: Toast },
+  components: {},
 
   computed: {},
 
@@ -242,7 +258,7 @@ export default {
     //提交公司评论
     postCompanyReply() {
       if (!this.liuyanContent.trim()) {
-        Toast("内容不能为空!");
+        this.$toast("内容不能为空!");
         return;
       }
       api_PostCompanyReply({
@@ -250,7 +266,7 @@ export default {
         content: this.liuyanContent,
         meetingid: this.meetingId
       }).then(() => {
-        Toast("提交成功!");
+        this.$toast("提交成功!");
         this.getCompanyReplys();
         this.getCompanyContent();
       });
@@ -361,6 +377,8 @@ export default {
         color: #343434;
         text-indent: 25px;
         text-align: left;
+        line-height: 22px;
+        text-indent: 2em;
       }
       span {
         font-size: 16px;
@@ -620,6 +638,73 @@ export default {
     font-weight: bold;
     color: #999;
     text-align: center;
+  }
+  .foot {
+    width: 100%;
+    height: 55px;
+    background: #fff;
+    border-top: 1px solid #e6e6e6;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    img {
+      width: 25px;
+      height: 25px;
+    }
+    span {
+      font-size: 12px;
+      color: #999;
+    }
+    .kefu {
+      width: 24.9%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 0.5px solid #e6e6e6;
+    }
+    .zhanshang {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .goliuyan {
+      width: 25%;
+      line-height: 55px;
+      text-align: center;
+      background: #ff2f12;
+      font-size: 13px;
+      color: #fff;
+    }
+    .accept {
+      width: 25%;
+      line-height: 55px;
+      text-align: center;
+      background: #fea501;
+      font-size: 13px;
+      color: #fff;
+    }
+  }
+  .hits {
+    position: fixed;
+    right: 5%;
+    top: 25%;
+    z-index: 999;
+    background: #000;
+    opacity: 0.3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    padding: 7.5px 15px;
+    span {
+      color: #fff;
+      font-size: 11px;
+    }
   }
 }
 </style>
