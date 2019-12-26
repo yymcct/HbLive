@@ -1,6 +1,6 @@
 import request from '../utils/request'
 
-
+//export const api_postMeeting = (params) => request.post('/manager/Meeting/PostMeeting', params);
 
 
 //获取直播列表
@@ -14,3 +14,11 @@ export const api_GetGetCompanyByRecommend = (params) => request.get('/api/meetin
 export const api_GetMeetingAreaProduct = (params) => request.get('/api/meeting/Product/GetProductByIteam', { params: params });
 export const api_GetProductByRecommend = (params) => request.get('/api/meeting/Product/GetProductByIteam', { params: params });
 
+//公司详情页
+export const api_PostCompanyMemberHits = (params) => request.post('/api/meeting/Company/PostCompanyMemberHits', params);
+export const api_GetCompanyContent = (params) => request.get('/api/meeting/Company/GetCompanyContent',  { params: params });
+export const api_GetComThumbsUpMemberNick = (params) => request.get('/api/meeting/Company/GetComThumbsUpMemberNick',  { params: params });
+export const api_GetProductByIteam = (params) => request.get('/api/meeting/Product/GetProductByIteam',  { params: params });
+export const api_GetCompanyReplys = (params) => request.get('/api/meeting/Company/GetCompanyReplys',  { params: params });
+export const api_PostMeetingHits = (params) => request.post('/api/meeting/Meeting/PostMeetingHits', params);
+export const api_PostCompanyReply = (params) => request.post('/api/meeting/Company/PostCompanyReply', params);
