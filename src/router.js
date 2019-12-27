@@ -18,14 +18,7 @@ const routes = [
       title: '直播列表'
     }
   },
-  {
-    name: 'expo',
-    path: '/expo/:id',
-    component: () => import('./view/expo/index'),
-    meta: {
-      title: '展商名录'
-    }
-  },
+
   {
     path: '/expo/pro/:id',
     component: () => import('./view/expo/proList'),
@@ -45,6 +38,21 @@ const routes = [
     component: () => import('./view/expo/product/product'),
     meta: {
       title: '参展产品'
+    }
+  },
+  {
+    path: '/expo/shortmsg',
+    component: () => import('./view/expo/shortmsgList'),
+    meta: {
+      title: '动态'
+    }
+  },
+  {
+    name: 'expo',
+    path: '/expo/:id',
+    component: () => import('./view/expo/index'),
+    meta: {
+      title: '展商名录'
     }
   },
   /*小程序结束 */
