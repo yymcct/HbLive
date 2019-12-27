@@ -35,7 +35,11 @@
             </div>
             <div class="pic-con">
               <template v-for="pro in item.productListDtos">
-                <img :key="pro.id" :src="pro.pic" />
+                <img
+                  :key="pro.id"
+                  :src="pro.pic"
+                  @click.stop="$router.push({ path: `/expo/product/${meetingId}-${pro.id}`})"
+                />
               </template>
             </div>
             <div class="con-right-bottom">
@@ -63,7 +67,7 @@
 export default {
   name: "MeetingCompany",
   props: {
-    meetingId:Number,
+    meetingId: Number,
     companys: Array,
     showTop: {
       type: Boolean,

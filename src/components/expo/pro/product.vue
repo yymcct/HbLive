@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper">
     <template v-for="(item,index) in products">
-      <div class="procon" :key="index">
+      <div
+        class="procon"
+        :key="index"
+        @click.stop="$router.push({ path: `/expo/product/${meetingId}-${item.id}`})"
+      >
         <img :src="item.pic" class="proimg" />
         <div class="procon-name">{{item.name}}</div>
         <div class="procon-bottom">
@@ -27,6 +31,7 @@
 export default {
   name: "MeetingProduct",
   props: {
+    meetingId: Number,
     products: Array,
     showTop: {
       type: Boolean,
@@ -60,7 +65,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  flex-flow:center ;
+  flex-flow: center;
   .procon {
     position: relative;
     width: 46%;

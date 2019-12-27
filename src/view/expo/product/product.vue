@@ -1,10 +1,10 @@
 <template>
-  <div>heheh</div>
+  <div>product{{meetingId}}-{{productId}}</div>
 </template>
 
 <script>
 import {
-  api_PostCompanyMemberHits,
+  api_PostProductMemberHits,
   api_GetProductContent,
   api_GetCompanyContent,
   api_GetProductReplys,
@@ -31,12 +31,15 @@ export default {
 
   beforeMount() {},
 
-  mounted() {},
+  mounted() {
+    this.meetingId = this.$route.params.meetingId;
+    this.productId = this.$route.params.productId;
+  },
 
   methods: {
     // 点赞
-    postCompanyMemberHits() {
-      api_PostCompanyMemberHits({
+    PostProductMemberHits() {
+      api_PostProductMemberHits({
         meetingId: this.meetingId,
         id: this.productId
       });

@@ -1,8 +1,12 @@
 <template>
   <div>
-    <scroll  class="tuijian" scrollX :data="companys" @scrollToEnd="scrollToEnd">
+    <scroll class="tuijian" scrollX :data="companys" @scrollToEnd="scrollToEnd">
       <template v-for="item in companys">
-        <div class="tuijian-com" bindtap="goCom" :key="item.id">
+        <div
+          class="tuijian-com"
+          :key="item.id"
+          @click="$router.push({ path: `/expo/company/${meetingId}-${item.id}`})"
+        >
           <div class="com-top">
             <div class="com-top-left">
               <img :src="item.photo" />
@@ -31,7 +35,11 @@
               </div>
             </div>
             <div class="com-bottom-right">
-              <img v-if="item.productListDtos.length>0" :src="item.productListDtos[0].pic" />
+              <img
+                v-if="item.productListDtos.length>0"
+                :src="item.productListDtos[0].pic"
+                @click.stop="$router.push({ path: `/expo/product/${meetingId}-${item.productListDtos[0].id}`})"
+              />
             </div>
           </div>
         </div>

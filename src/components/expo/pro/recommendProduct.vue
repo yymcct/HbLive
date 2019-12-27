@@ -9,7 +9,7 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <product :products="products" showTop></product>
+      <product :products="products" :meetingId="meetingId" showTop></product>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>

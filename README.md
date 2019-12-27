@@ -47,7 +47,9 @@ https://www.cnblogs.com/lbnnbs/p/7518934.html
 
 import { api_GetMeetingList } from "@/api/meetingApi";
 
-@click="$router.push({ path: `/expo/company/${item.id}`})"
+@click="$router.push({ path: `/expo/company/${meetingId}-${item.id}`})"
+
+ @click.stop="$router.push({ path: `/expo/product/${meetingId}-${pro.id}`})"
 
 watch: {
 $route() {

@@ -38,6 +38,13 @@ const routes = [
       title: '参展企业'
     }
   },
+  {
+    path: '/expo/product/:meetingId-:productId',
+    component: () => import('./view/expo/product/product'),
+    meta: {
+      title: '参展产品'
+    }
+  },
   /*小程序结束 */
   {
     path: '/livelist',
