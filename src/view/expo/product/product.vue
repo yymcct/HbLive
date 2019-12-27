@@ -98,7 +98,7 @@
           <img :src="require('@/assets/images/expo/liuyan-f.png')" />
           <span>留言</span>
         </div>
-         <router-link class="foot-list" :to="`/expo/pro/${meetingId}`">
+        <router-link class="foot-list" :to="`/expo/pro/${meetingId}`">
           <img :src="require('@/assets/images/expo/zhanpin-f.png')" />
           <span>展品</span>
         </router-link>
@@ -127,9 +127,14 @@ export default {
         pic: "",
         name: "",
         hit: 0,
-        description: ""
+        description: "",
+        memberDtos: []
       },
-      company: null,
+      company: {
+        photo: "",
+        name: "",
+        meetingPlace: ""
+      },
       liuyan: [], //产品评论
       prolist: [], //其他产品
       userinfo: null

@@ -63,7 +63,7 @@ export default {
         Filters: `ProMeetingID==${this.meetingId},ProMeetingAreaID==${this.meetingAreaId}`,
         Sorts: "-id",
         Page: this.page,
-        PageSize: 20
+        PageSize: 10
       }).then(res => {
         if (res.result.length == 0) {
           this.isEnd = true;

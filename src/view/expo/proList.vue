@@ -2,7 +2,7 @@
   <div>
     <hb-layout :active="1">
       <div class="box">
-        <div ref="mexpotop" v-show="topShow">
+        <div ref="expotop" v-show="topShow">
           <expo-top :meetingId="meetingId"></expo-top>
         </div>
         <div>
@@ -31,7 +31,8 @@ export default {
       contentStyleObj: {
         height: "370px"
       },
-      topShow: true
+      topShow: true,
+      timer: 0
     };
   },
 
@@ -49,18 +50,15 @@ export default {
 
   mounted() {
     this.meetingId = 1;
-    setInterval(() => {
+    this.timer = setInterval(() => {
       this.setContentHeight();
-    }, 500);
+    }, 100);
   },
 
   methods: {
     setContentHeight() {
-      var expotopHight = this.$refs.mexpotop.offsetHeight;
-      var tmphight =
-        window.innerHeight - expotopHight  - 50 + "px";
-      // console.log(expotopHight);
-      //console.log(toptuijianHight);
+      let expotopHight = this.$refs.expotop.offsetHeight;
+      let tmphight = window.innerHeight - expotopHight - 50 + "px";
       if (this.contentStyleObj.height != tmphight) {
         this.contentStyleObj.height = tmphight;
       }
@@ -68,15 +66,15 @@ export default {
     scrollLiveTop(r) {
       this.topShow = r;
     },
-    test() {
-      this.topShow = !this.topShow;
-    }
   },
 
   watch: {
     $route() {
       this.meetingId = this.$route.params.id;
     }
+  },
+  destroyed() {
+    window.clearInterval(this.timer);
   }
 };
 </script>

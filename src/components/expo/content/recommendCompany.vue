@@ -50,7 +50,6 @@ export default {
       }
     },
     scroll(p) {
-      console.log(p);
       if (p.y < -50) {
         this.$emit("scrollLiveTop", false);
       }
