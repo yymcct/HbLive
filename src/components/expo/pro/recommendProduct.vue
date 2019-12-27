@@ -37,9 +37,9 @@ export default {
     scroll,
     product
   },
-
+  created() {this.getProductByRecommend();},
   mounted() {
-    this.getProductByRecommend();
+    
   },
 
   methods: {

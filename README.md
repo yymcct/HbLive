@@ -39,7 +39,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 0.8em
 https://www.cnblogs.com/lbnnbs/p/7518934.html
 
-/images ->  require('@/assets/images/expo/zhibo.png')
+/images ->  "require('@/assets/images/expo/zhibo.png')"
 
 
 

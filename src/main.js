@@ -9,6 +9,7 @@ Vue.config.productionTip = false
 Vue.use(Dialog);
 Vue.use(Toast);
 
+
 new Vue({
   router,
   render: h => h(App),
