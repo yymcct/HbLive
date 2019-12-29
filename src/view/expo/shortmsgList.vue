@@ -88,6 +88,13 @@ export default {
   mounted() {
     this.getMeetingShortMsg();
     this.postMeetingHits();
+    this.$globalFun.wxShare(location.href.split("#")[0], {
+      title: `火爆云展动态`,
+      desc: `火爆云展动态`,
+      link: location.href,
+      imgUrl: "https://m.1988.tv/images/bg.jpg",
+      success: function() {}
+    });
   },
 
   methods: {

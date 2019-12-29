@@ -143,7 +143,11 @@ export default {
       userinfo: null,
       meetingId: 0,
       companyId: 0,
-      company: null,
+      company: {
+        photo:'',
+        name:'',
+        meetingPlace:'',
+      },
       memberpic: [], //点赞用户图片
       memberpicPage: 1,
       zannick: [], //点赞用户昵称
@@ -164,7 +168,15 @@ export default {
   mounted() {
     this.meetingId = this.$route.params.meetingId;
     this.companyId = this.$route.params.companyId;
-    this.getCompanyContent();
+    this.getCompanyContent((res)=>{
+      this.$globalFun.wxShare(location.href.split("#")[0], {
+        title: res.name,
+        desc: res.description.substring(0,100),
+        link: location.href,
+        imgUrl: res.photo,
+        success: function() {}
+      });
+    });
     this.getComThumbsUpMemberPic();
     this.getComThumbsUpMemberNick();
     this.getCompanyProduct();
@@ -182,12 +194,15 @@ export default {
       });
     },
     // 获取公司详情
-    getCompanyContent() {
+    getCompanyContent(callback) {
       api_GetCompanyContent({
         meetingId: this.meetingId,
         Id: this.companyId
       }).then(res => {
         this.company = res.result;
+        if (callback) {
+          callback(this.company);
+        }
       });
     },
     //获取点赞用户图像

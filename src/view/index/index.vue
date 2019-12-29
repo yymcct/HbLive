@@ -41,19 +41,13 @@ export default {
 
   mounted() {
     this.getMeetingListByPage(this.page);
-    // wx.config({
-    //   debug: true, // 开启调试模式,
-    //   appId: "wxd1e722c69feb8990", // 必填，企业号的唯一标识，此处填写企业号corpid
-    //   timestamp: "wxd1e722c69feb8990", // 必填，生成签名的时间戳
-    //   nonceStr: "wxd1e722c69feb8990", // 必填，生成签名的随机串
-    //   signature: "wxd1e722c69feb8990", // 必填，签名，见附录1
-    //   jsApiList: [
-    //     "updateAppMessageShareData",
-    //     "updateTimelineShareData",
-    //     "openLocation",
-    //     "getLocation"
-    //   ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    // });
+    this.$globalFun.wxShare(location.href.split("#")[0], {
+      title: `火爆云展`,
+      desc: `提供全国最新行业展会信息，详细介绍展会时间、地点、场馆、展商及更多展会相关服务`,
+      link: location.href,
+      imgUrl: "https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg",
+      success: function() {}
+    });
   },
 
   methods: {
@@ -77,18 +71,7 @@ export default {
       });
     },
 
-    MeetingInfo: function() {
-      //   var id = e.currentTarget.dataset.id;
-      //   var name = e.currentTarget.dataset.name;
-      //   getApp().globalData.meetingid = id;
-      //   getApp().globalData.meetingname = name;
-      //   wx.switchTab({
-      //     url: "/pages/expo/index/index",
-      //     success: function(res) {},
-      //     fail: function(res) {},
-      //     complete: function(res) {}
-      //   });
-    }
+    MeetingInfo: function() {}
   },
 
   watch: {}

@@ -61,3 +61,12 @@ this.companyId = this.$route.params.id;
 
 
 Toast('提交成功!');
+
+## 微信分享
+this.$globalFun.wxShare(location.href.split("#")[0], {
+        title: this.meeting.sortName,
+        desc: `${this.meeting.beginDate}至${this.meeting.endDate},${this.meeting.companyCount}家展商 | ${this.meeting.hit}位访问者`,
+        link: location.href,
+        imgUrl: this.meeting.banner,
+        success: function() {}
+    });

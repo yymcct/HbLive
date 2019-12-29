@@ -13,7 +13,7 @@ export function wxShare(url, shareData) {
             jsApiList: [
                 'onMenuShareTimeline',
                 'onMenuShareAppMessage',
-                'onMenuShareQQ', 
+                'onMenuShareQQ',
                 'onMenuShareQZone'
             ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
@@ -22,6 +22,12 @@ export function wxShare(url, shareData) {
             // Vue.prototype.$wx = wx
 
             if (shareData) {
+                let msg = shareData.desc;
+                msg = msg.replace(/<\/?[^>]*>/g, ''); //去除HTML Tag
+                msg = msg.replace(/[|]*\n/, '') //去除行尾空格
+                msg = msg.replace(/&npsp;/ig, ''); //去掉npsp
+                shareData.desc = msg;
+               
                 // 注册分享自定义的信息
                 wx.onMenuShareTimeline(shareData);
                 wx.onMenuShareAppMessage(shareData);
@@ -29,7 +35,7 @@ export function wxShare(url, shareData) {
                 wx.onMenuShareQZone(shareData);
             }
 
-         
+
         })
 
         wx.error(function () {

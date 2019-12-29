@@ -150,11 +150,20 @@ export default {
   mounted() {
     this.meetingId = this.$route.params.meetingId;
     this.productId = this.$route.params.productId;
-    this.PostProductMemberHits();
-    this.getProductContent();
+
+    this.getProductContent(res => {
+      this.$globalFun.wxShare(location.href.split("#")[0], {
+        title: res.name,
+        desc: res.description,
+        link: location.href,
+        imgUrl: res.pic,
+        success: function() {}
+      });
+    });
     this.getProductReplys();
     this.getCompanyOtherProduct();
     this.postMeetingHits();
+    this.PostProductMemberHits();
   },
 
   methods: {
@@ -166,12 +175,15 @@ export default {
       });
     },
     //获取产品详情
-    getProductContent() {
+    getProductContent(callback) {
       api_GetProductContent({
         meetingId: this.meetingId,
         id: this.productId
       }).then(res => {
         this.product = res.result;
+        if (callback) {
+          callback(this.product);
+        }
       });
     },
     // 获取公司详情
