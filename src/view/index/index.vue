@@ -27,6 +27,7 @@
 <script>
 import { api_GetMeetingList } from "@/api/meetingApi";
 import scroll from "@/base/scroll/scroll";
+
 export default {
   name: "Index",
   data() {
@@ -40,6 +41,19 @@ export default {
 
   mounted() {
     this.getMeetingListByPage(this.page);
+    // wx.config({
+    //   debug: true, // 开启调试模式,
+    //   appId: "wxd1e722c69feb8990", // 必填，企业号的唯一标识，此处填写企业号corpid
+    //   timestamp: "wxd1e722c69feb8990", // 必填，生成签名的时间戳
+    //   nonceStr: "wxd1e722c69feb8990", // 必填，生成签名的随机串
+    //   signature: "wxd1e722c69feb8990", // 必填，签名，见附录1
+    //   jsApiList: [
+    //     "updateAppMessageShareData",
+    //     "updateTimelineShareData",
+    //     "openLocation",
+    //     "getLocation"
+    //   ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    // });
   },
 
   methods: {

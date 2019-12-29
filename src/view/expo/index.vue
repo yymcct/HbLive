@@ -6,7 +6,7 @@
           <expo-top :meetingId="meetingId"></expo-top>
         </div>
 
-        <div ref="toptuijian" @click="test">
+        <div ref="toptuijian" >
           <top-tuijian :meetingId="meetingId"></top-tuijian>
         </div>
         <div>
@@ -50,10 +50,7 @@ export default {
     ExpoContent
   },
 
-  computed: {},
-
-  beforeMount() {},
-
+ 
   mounted() {
     this.meetingId = 1;
     this.timer = setInterval(() => {
@@ -73,9 +70,6 @@ export default {
     },
     scrollLiveTop(r) {
       this.topShow = r;
-    },
-    test() {
-      this.topShow = !this.topShow;
     }
   },
 

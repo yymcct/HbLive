@@ -35,9 +35,6 @@ export const api_GetHbLiveLiveColumn = (params) => request.get('/api/hblive/HbLi
 export const api_GetHbLiveLiveColumnContent = (params) => request.get('/api/hblive/HbLive/GetHbLiveLiveColumnContent', { params: params });
 
 
-//获取微信分享连接
-export const api_GetWxShareContent = (params) => request.get('/api/v0.1/LiveBroadcast/GetWxShareContent', { params: params });
-//获取用户信息
-export const api_GetWebWxUserInfo = (params) => request.get('/api/v0.1/LiveBroadcast/GetWebWxUserInfo', { params: params });
+
 
 `                                                                                       `
