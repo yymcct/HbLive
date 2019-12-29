@@ -1,36 +1,35 @@
 import { api_GetWxConfig } from '@/api/weixin';
-import wx from "weixin-js-sdk";
+import wx from "weixin-js-sdk/index";
 
-//const wx = require('weixin-js-sdk')
-export function wxShare(url, updateAppMessageShareData, updateTimelineShareData) {
+//var wx = require('weixin-js-sdk/index')
+export function wxShare(url, shareData) {
     api_GetWxConfig({ url: url }).then(res => {
-        console.log(res);
-    
-        console.log(wx);
         wx.config({
-            debug: true, // 开启调试模式,
+            debug: false, // 开启调试模式,
             appId: res.result.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
-            timestamp: res.result.timestamp, // 必填，生成签名的时间戳
+            timestamp: res.result.timeStamp, // 必填，生成签名的时间戳
             nonceStr: res.result.nonceStr, // 必填，生成签名的随机串
-            signature: res.result.signature, // 必填，签名，见附录1
+            signature: res.result.signaTure, // 必填，签名，见附录1
             jsApiList: [
-                'updateTimelineShareData',
-                'updateAppMessageShareData'
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ', 
+                'onMenuShareQZone'
             ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
 
         wx.ready(function () {
             // Vue.prototype.$wx = wx
 
-            if (updateAppMessageShareData) {
+            if (shareData) {
                 // 注册分享自定义的信息
-                wx.updateAppMessageShareData(updateAppMessageShareData)
+                wx.onMenuShareTimeline(shareData);
+                wx.onMenuShareAppMessage(shareData);
+                wx.onMenuShareQQ(shareData);
+                wx.onMenuShareQZone(shareData);
             }
 
-            if (updateTimelineShareData) {
-                // 注册朋友圈自定义的信息
-                wx.updateTimelineShareData(updateTimelineShareData)
-            }
+         
         })
 
         wx.error(function () {

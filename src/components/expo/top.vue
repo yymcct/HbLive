@@ -40,20 +40,14 @@ export default {
     getMeeting() {
       api_GetMeeting({ meetingid: this.meetingId }).then(res => {
         this.meeting = res.result;
-        let shareData = {
+
+        this.$globalFun.wxShare(location.href.split("#")[0], {
           title: this.meeting.sortName,
           desc: `${this.meeting.beginDate}至${this.meeting.endDate},${this.meeting.companyCount}家展商 | ${this.meeting.hit}位访问者`,
           link: location.href,
           imgUrl: this.meeting.banner,
-          success: function() {
-            // 设置成功
-          }
-        };
-        this.$globalFun.wxShare(
-          location.href.split("#")[0],
-          shareData,
-          shareData
-        );
+          success: function() {}
+        });
       });
     }
   },
