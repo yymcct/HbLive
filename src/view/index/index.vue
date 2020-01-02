@@ -45,7 +45,8 @@ export default {
       title: `火爆云展`,
       desc: `提供全国最新行业展会信息，详细介绍展会时间、地点、场馆、展商及更多展会相关服务`,
       link: location.href,
-      imgUrl: "https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg",
+      imgUrl:
+        "https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg",
       success: function() {}
     });
   },
@@ -70,6 +71,7 @@ export default {
         this.Meeting = this.Meeting.concat(res.result);
       });
     },
+    
 
     MeetingInfo: function() {}
   },

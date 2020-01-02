@@ -6,10 +6,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 const routes = [
-  {
-    path: '*',
-    redirect: '/expo/1'
-  },
+
   /*小程序 */
   {
     path: '/index',
@@ -48,14 +45,28 @@ const routes = [
     }
   },
   {
-    name: 'expo',
     path: '/expo/:id',
     component: () => import('./view/expo/index'),
     meta: {
       title: '展商名录'
     }
   },
-  /*小程序结束 */
+  /*用户管理*/
+  {
+    path: '/user/login',
+    component: () => import('./view/user/login/index'),
+    meta: {
+      title: '登录'
+    }
+  },
+  {
+    path: '/user/login/weixin',
+    component: () => import('./view/user/login/weixin'),
+    meta: {
+      title: '微信登录'
+    }
+  },
+  /*直播*/
   {
     path: '/livelist',
     component: () => import('./view/live/list'),
@@ -71,7 +82,17 @@ const routes = [
       title: '直播'
     }
   },
-
+  {
+    path: '/indextest',
+    component: () => import('./view/index/indextest'),
+    meta: {
+      title: '直播'
+    }
+  },
+  {
+    path: '*',
+    redirect: '/index'
+  },
 ];
 
 // add route path
