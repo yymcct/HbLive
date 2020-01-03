@@ -6,11 +6,7 @@
     <scroll class="scroll" :data="Meeting" pullup @scrollToEnd="scrollToEnd">
       <div class="now">
         <template v-for="item in Meeting">
-          <div
-            class="list"
-            :key="item.id"
-            @click="$router.push({ name: 'expo', params: { userId: item.id }})"
-          >
+          <div class="list" :key="item.id" @click="$router.push(`expo/${item.id}`)">
             <div class="pic">
               <img :src="item.coverPictureUrl" />
             </div>
@@ -71,7 +67,6 @@ export default {
         this.Meeting = this.Meeting.concat(res.result);
       });
     },
-    
 
     MeetingInfo: function() {}
   },

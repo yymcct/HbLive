@@ -39,9 +39,16 @@ const routes = [
   },
   {
     path: '/expo/shortmsg',
-    component: () => import('./view/expo/shortmsgList'),
+    component: () => import('./view/expo/shortMsg/shortmsgList'),
     meta: {
       title: '动态'
+    }
+  },
+  {
+    path: '/expo/shortmsg/post',
+    component: () => import('./view/expo/shortMsg/postShortMsg'),
+    meta: {
+      title: '发布动态'
     }
   },
   {

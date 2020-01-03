@@ -57,6 +57,9 @@
         <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
       </scroll>
     </hb-layout>
+    <div class="fabu" @click="postShortMsg">
+      <img :src="require('@/assets/images/expo/post-white.png')" />
+    </div>
   </div>
 </template>
 
@@ -65,7 +68,7 @@ import hbLayout from "@/components/layout/hbLayout";
 import scroll from "@/components/scroll/scroll";
 import { api_GetMeetingShortMsg, api_PostMeetingHits } from "@/api/meetingApi";
 export default {
-  name: "ShortMsg",
+  name: "ShortMsgList",
   props: [""],
   data() {
     return {
@@ -87,7 +90,7 @@ export default {
 
   mounted() {
     this.getMeetingShortMsg();
-    this.postMeetingHits();
+  //  this.$globalFun.userInfoAPI.ifLogin(this.postMeetingHits, false);
     this.$globalFun.wxShare(location.href.split("#")[0], {
       title: `火爆云展动态`,
       desc: `火爆云展动态`,
@@ -121,6 +124,12 @@ export default {
     postMeetingHits() {
       api_PostMeetingHits({
         id: this.meetingId
+      });
+    },
+    //发布动态
+    postShortMsg() {
+      this.$globalFun.userInfoAPI.ifLogin(() => {
+        this.$router.push('/expo/shortmsg/post');
       });
     }
   },
@@ -280,6 +289,21 @@ export default {
           }
         }
       }
+    }
+  }
+  .fabu {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    z-index: 9;
+    right: 15px;
+    bottom: 90px;
+    background: #09bb07;
+    border-radius: 50%;
+    img {
+      width: 30px;
+      height: 30px;
+      margin: 10px 10px;
     }
   }
 }

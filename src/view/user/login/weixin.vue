@@ -26,9 +26,12 @@ export default {
     } else {
       api_loginByWeixin(code).then(res => {
         userInfoAPI.set(res.result);
-        const from = sessionStorage.getItem("wechatFrom") || "/index";
-        //const { pathname, search, hash } = window.location;
-        this.$router.push(from);
+        const from = userInfoAPI.getLoginFrom();
+        if (from) {
+          window.location.href = from;
+        } else {
+          this.$router.path("/index");
+        }
       });
     }
   },

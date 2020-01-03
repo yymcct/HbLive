@@ -51,6 +51,8 @@ import { api_GetMeetingList } from "@/api/meetingApi";
 
  @click.stop="$router.push({ path: `/expo/product/${meetingId}-${pro.id}`})"
 
+this.$router.go(n)
+
 watch: {
 $route() {
     this.meetingId = this.$route.params.id;
@@ -70,3 +72,5 @@ this.$globalFun.wxShare(location.href.split("#")[0], {
         imgUrl: this.meeting.banner,
         success: function() {}
     });
+## 检查是否登录
+this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);

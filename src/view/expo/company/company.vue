@@ -144,9 +144,9 @@ export default {
       meetingId: 0,
       companyId: 0,
       company: {
-        photo:'',
-        name:'',
-        meetingPlace:'',
+        photo: "",
+        name: "",
+        meetingPlace: ""
       },
       memberpic: [], //点赞用户图片
       memberpicPage: 1,
@@ -168,10 +168,10 @@ export default {
   mounted() {
     this.meetingId = this.$route.params.meetingId;
     this.companyId = this.$route.params.companyId;
-    this.getCompanyContent((res)=>{
+    this.getCompanyContent(res => {
       this.$globalFun.wxShare(location.href.split("#")[0], {
         title: res.name,
-        desc: res.description.substring(0,100),
+        desc: res.description.substring(0, 100),
         link: location.href,
         imgUrl: res.photo,
         success: function() {}
@@ -181,7 +181,7 @@ export default {
     this.getComThumbsUpMemberNick();
     this.getCompanyProduct();
     this.getCompanyReplys();
-    this.postCompanyMemberHits();
+    this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
     this.postMeetingHits();
   },
 

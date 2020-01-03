@@ -31,7 +31,7 @@
           <div class="liyuanforme">
             <img v-if="userinfo" :src="userinfo.photo" />
             <input name="liuyancon" placeholder="我也要说一句" placeholder-class="placeholdeers" />
-            <button class="submit">提交</button>
+            <button class="submit" >提交</button>
           </div>
           <div class="commentlist" v-for="(item, index) in liuyan" :key="index">
             <div class="commentlist-top">
