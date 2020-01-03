@@ -78,7 +78,6 @@ export default {
       this.btnPosting = true;
       api_PostImgWithWater(this.fileList)
         .then(res => {
-          console.log(res);
           let imgStr = this.$globalFun.other.ImagesPathToStr(res.result.files);
           return imgStr;
         })
@@ -86,17 +85,17 @@ export default {
           this.shortMsg.picture = res;
           return api_PostShortMsg(this.shortMsg);
         })
-        .then(
-          () => {
-            this.btnPosting = false;
-            this.$toast("发布成功");
-            this.$router.push("/expo/shortmsg");
-          },
-          err => {
-            this.btnPosting = false;
-            this.$toast(err);
-          }
-        );
+        .then(() => {
+          this.$toast("发布成功");
+          this.$router.push("/expo/shortmsg");
+        })
+        .catch(() => {
+          this.btnPosting = false;
+        })
+        .finally(() => {
+          this.btnPosting = false;
+          this.$router.push("/expo/shortmsg");
+        });
     }
   },
 

@@ -11,8 +11,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     const userInfo = userInfoAPI.get();
-    console.log("userInfo");
-    console.log(userInfo);
     if (userInfo) {
       config.headers['Authorization'] = `${userInfo.token_type} ${userInfo.access_token}`;
     }
@@ -31,12 +29,13 @@ service.interceptors.response.use(
     }
     else if (res.statusCode !== 200) {
       Toast(res.msg || 'Error:' + res.statusCode);
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.msg || 'Error'))
     } else {
       return res
     }
   },
   error => {
+    console.log("")
     var msg = String(error);
     if (msg.indexOf("400") != -1)
       msg = '账号或密码错误,或没有权限!';
@@ -45,7 +44,7 @@ service.interceptors.response.use(
 
     Toast(msg);
 
-    return Promise.reject(error)
+    return Promise.reject(new Error(error))
   }
 )
 

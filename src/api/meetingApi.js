@@ -1,25 +1,43 @@
 import request from '@/utils/request'
 import { userInfoAPI } from '@/utils/auth'
+import Compressor from 'compressorjs';
 //export const api_postMeeting = (params) => request.post('/manager/Meeting/PostMeeting', params);
 
 //上传图片
 export const api_PostImgWithWater = (params) => {
-    
-    let param = new FormData();
-    params.map(iteam=>{
-        let file = iteam.file;
-        param.append('file', file);
-    })
-
-    const userInfo = userInfoAPI.get();
-    let config = {
-        headers: [
-            { "Content-Type": "multipart/form-data" },
-            { 'Authorization': `${userInfo.token_type} ${userInfo.access_token}` }
-        ],
+    const _compress = (file) => {
+        return new Promise((resolve, reject) => {
+            new Compressor(file, {
+                quality: 0.5,
+                success(result) {
+                    resolve(result);
+                },
+                error(error) {
+                    reject(error);
+                }
+            });
+        });
     };
 
-    return request.post('/api/meeting/FileUpload/PostFilesWithWater', param, config);
+    const promises = params.map(iteam => {
+        return _compress(iteam.file)
+    })
+
+    return Promise.all(promises).then(res => {
+        const userInfo = userInfoAPI.get();
+        let fromdata = new FormData();
+        res.map(iteam => {
+            fromdata.append('file', iteam, iteam.name);
+        });
+        let config = {
+            headers: [
+                { "Content-Type": "multipart/form-data" },
+                { 'Authorization': `${userInfo.token_type} ${userInfo.access_token}` }
+            ],
+        };
+
+        return request.post('/api/meeting/FileUpload/PostFilesWithWater', fromdata, config);
+    })
 }
 //获取直播列表
 export const api_GetMeetingList = (params) => request.get('/api/meeting/Meeting/GetMeetingList', { params: params });
