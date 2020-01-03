@@ -2,7 +2,7 @@ import 'amfe-flexible';
 import Vue from 'vue'
 import App from './App.vue'
 import { router } from './router';
-import { Field, Dialog, Toast, Loading, Uploader, Checkbox, Button, NavBar } from "vant";
+import { Field, Dialog, Toast, Loading, Uploader, Checkbox, Button, NavBar, Image, ImagePreview } from "vant";
 import globalFun from '@/utils/globalFun'
 
 Vue.config.productionTip = false
@@ -15,6 +15,8 @@ Vue.use(Loading);
 Vue.use(Checkbox);
 Vue.use(Button);
 Vue.use(NavBar);
+Vue.use(Image);
+Vue.use(ImagePreview);
 
 Vue.prototype.$globalFun = globalFun;
 

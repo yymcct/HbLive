@@ -24,7 +24,14 @@
                   <span class="des">{{item.content}}</span>
                 </div>
                 <div class="detail-con-pic" v-if="item.picture">
-                  <img v-for="(url, index) in item.listPicture" :key="index" :src="url" />
+                  <van-image
+                    class="pic"
+                    v-for="(url, index) in item.listPicture"
+                    :key="index"
+                    :src="url"
+                    @click="handImagePreview(url)"
+                    fit="cover"
+                  />
                   <div class="more" v-if="item.listPicture.length>3">+ {{item.listPicture.length-3}}</div>
                 </div>
                 <div class="detail-con-pic" v-if="item.video">
@@ -67,6 +74,7 @@
 import hbLayout from "@/components/layout/hbLayout";
 import scroll from "@/components/scroll/scroll";
 import { api_GetMeetingShortMsg, api_PostMeetingHits } from "@/api/meetingApi";
+import { ImagePreview } from "vant";
 export default {
   name: "ShortMsgList",
   props: [""],
@@ -75,7 +83,8 @@ export default {
       shortMsg: [],
       page: 1,
       isEnd: false,
-      userinfo: null
+      userinfo: null,
+      imagePreview: []
     };
   },
 
@@ -90,7 +99,7 @@ export default {
 
   mounted() {
     this.getMeetingShortMsg();
-  //  this.$globalFun.userInfoAPI.ifLogin(this.postMeetingHits, false);
+    //  this.$globalFun.userInfoAPI.ifLogin(this.postMeetingHits, false);
     this.$globalFun.wxShare(location.href.split("#")[0], {
       title: `火爆云展动态`,
       desc: `火爆云展动态`,
@@ -118,6 +127,9 @@ export default {
           this.isEnd = true;
         }
         this.shortMsg = this.shortMsg.concat(res.result);
+        res.result.map(item => {
+          this.imagePreview = this.imagePreview.concat(item.listPicture);
+        });
       });
     },
     //点赞会议
@@ -129,7 +141,18 @@ export default {
     //发布动态
     postShortMsg() {
       this.$globalFun.userInfoAPI.ifLogin(() => {
-        this.$router.push('/expo/shortmsg/post');
+        this.$router.push("/expo/shortmsg/post");
+      });
+    },
+    handImagePreview(img) {
+      let index = this.imagePreview.indexOf(img);
+      ImagePreview({
+        images: this.imagePreview,
+        startPosition: index,
+        showIndicators: true,
+        onClose() {
+          // do something
+        }
       });
     }
   },
@@ -238,7 +261,7 @@ export default {
             display: flex;
             justify-content: flex-start;
             margin: 10px auto;
-            img {
+            .pic {
               width: 30%;
               height: 100px;
               margin-left: 2%;
