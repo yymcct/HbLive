@@ -4,6 +4,7 @@ import App from './App.vue'
 import { router } from './router';
 import { Field, Dialog, Toast, Loading, Uploader, Checkbox, Button, NavBar, Image, ImagePreview } from "vant";
 import globalFun from '@/utils/globalFun'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -22,5 +23,6 @@ Vue.prototype.$globalFun = globalFun;
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
