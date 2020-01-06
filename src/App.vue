@@ -1,18 +1,28 @@
 <template>
   <div id="app">
     <router-view />
-    
   </div>
 </template>
 
 <script>
 export default {
   name: "app",
-  components: {}
+  components: {},
+  mounted() {
+  },
+  watch: {
+    $route: function() {
+      if (this.$route.query.mId) {
+         const id = this.$route.query.mId;
+         console.log(id);
+         this.$store.dispatch("meeting/meetingId", id);
+      }
+    }
+  }
 };
 </script>
 
-<style lang="scss">
+<style>
 @import "common/scss/index.scss";
 body {
   font-size: 16px;
