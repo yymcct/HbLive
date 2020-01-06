@@ -57,7 +57,7 @@ export default {
         Filters: `MeetingId==${this.meetingId}`,
         Sorts: "BeginTime"
       }).then(res => {
-        this.lives = res.result.result;
+        this.lives = res.result;
       });
     }
   }

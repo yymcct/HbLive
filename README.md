@@ -41,16 +41,12 @@ https://www.cnblogs.com/lbnnbs/p/7518934.html
 
 /images ->  "require('@/assets/images/expo/zhibo.png')"
 
-
-
-## 连接 
-
+## API
 import { api_GetMeetingList } from "@/api/meetingApi";
 
+## 路由
 @click="$router.push({ path: `/expo/company/${meetingId}-${item.id}`})"
-
- @click.stop="$router.push({ path: `/expo/product/${meetingId}-${pro.id}`})"
-
+@click.stop="$router.push({ path: `/expo/product/${meetingId}-${pro.id}`})"
 this.$router.go(n)
 
 watch: {
@@ -60,9 +56,6 @@ $route() {
 }
 
 this.companyId = this.$route.params.id;
-
-
-Toast('提交成功!');
 
 ## 微信分享
 this.$globalFun.wxShare(location.href.split("#")[0], {
