@@ -1,6 +1,14 @@
 <template>
   <div class="wapper">
-    <scroll class="scroll" :data="lives" pullup @scrollToEnd="scrollToEnd">
+    <scroll
+      class="scroll"
+      :data="lives"
+      pullup
+      @scrollToEnd="scrollToEnd"
+      listenScroll
+      @scroll="scroll"
+      :probeType="probeType"
+    >
       <template v-for="iteam in images">
         <div class="images-group" :key="iteam.id">
           <div
@@ -29,7 +37,8 @@ export default {
       images: [],
       imagesPreview: [],
       page: 1,
-      isEnd: false
+      isEnd: false,
+      probeType: 2
     };
   },
   props: {
@@ -61,6 +70,14 @@ export default {
         this.getDataByPage(this.page);
       }
     },
+    scroll(p) {
+      if (p.y < -50) {
+        this.$emit("scrollLiveTop", false);
+      }
+      if (p.y > 0) {
+        this.$emit("scrollLiveTop", true);
+      }
+    },
     getDataByPage(page) {
       api_GetLiveBroadCastInfo({
         page: page,
@@ -70,7 +87,9 @@ export default {
       }).then(res => {
         this.images = this.images.concat(res.result);
         for (let i = 0; i < res.result.length; i++) {
-          this.imagesPreview = this.imagesPreview.concat(res.result[i].listPicture);
+          this.imagesPreview = this.imagesPreview.concat(
+            res.result[i].listPicture
+          );
         }
         if (this.images.length >= res.total) {
           this.isEnd = true;
@@ -82,12 +101,13 @@ export default {
 </script>
 <style lang='scss' scoped>
 .wapper {
+  height: 100%;
   .scroll {
     width: 100%;
     height: 100%;
     overflow: hidden;
     .images-group {
-       .group-one {
+      .group-one {
         display: flex;
         div {
           width: 100%;

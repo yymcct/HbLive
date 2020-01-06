@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div v-if="showNavBar">
+    <div v-if="showNavBar" ref="navBar">
       <van-nav-bar title="火爆直播" left-arrow @click-left="$router.push(`/expo/${meetingId}/live`)" />
     </div>
 
-    <div class="live" id="live">
+    <div class="live" ref="videoPlayer" v-show="topShow">
       <video-player :banner="live.banner" :hits="live.hits" />
     </div>
 
-    <div class="desc">
+    <div class="desc" ref="desc">
       <div class="name">{{live.title}}</div>
       <div class="hits">
         <div class="hits-l">
@@ -27,7 +27,7 @@
         <span>{{live.address}}</span>
       </div>
     </div>
-  
+
     <div class="imgwall">
       <van-tabs v-model="active" animated title-active-color="#0084ff" color="#0084ff" swipeable>
         <template v-for="iteam in liveColumns">
@@ -35,8 +35,10 @@
             <images-wall
               v-if="iteam.typeTypeInLiveBroadCast==0 || iteam.typeTypeInLiveBroadCast==1"
               :liveColumnId="iteam.id"
+              :height="tabContentHigh"
+              :style="{height:tabContentHigh}"
+              @scrollLiveTop="scrollLiveTop"
             ></images-wall>
-
           </van-tab>
         </template>
       </van-tabs>
@@ -58,7 +60,8 @@ export default {
     showNavBar: {
       default: true,
       type: Boolean
-    }
+    },
+    height: Number
   },
   data() {
     return {
@@ -72,11 +75,14 @@ export default {
         address: ""
       },
       liveColumns: [],
-      active: 0
+      active: 0,
+      tabContentHigh: "375px",
+      timer: 0,
+      topShow: true
     };
   },
 
-  components: { VideoPlayer,imagesWall }, //
+  components: { VideoPlayer, imagesWall }, //
 
   computed: {
     ...mapGetters({
@@ -105,11 +111,34 @@ export default {
       .then(res => {
         this.liveColumns = res.result;
       });
+
+    this.timer = setInterval(() => {
+      this.setContentHeight();
+    }, 100);
   },
 
-  methods: {},
+  methods: {
+    setContentHeight() {
+      let tmphight =
+        window.innerHeight -
+        this.$refs.navBar.offsetHeight -
+        this.$refs.videoPlayer.offsetHeight -
+        this.$refs.desc.offsetHeight -
+        50 +
+        "px";
+      if (this.tabContentHigh != tmphight) {
+        this.tabContentHigh = tmphight;
+      }
+    },
+    scrollLiveTop(r) {
+      this.topShow = r;
+    }
+  },
 
-  watch: {}
+  watch: {},
+  destroyed() {
+    window.clearInterval(this.timer);
+  }
 };
 </script>
 <style lang='scss' scoped>
