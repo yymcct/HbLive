@@ -4,9 +4,9 @@
       <template v-for="iteam in images">
         <div class="images-group" :key="iteam.id">
           <div
-            v-bind:class="{'group-one':iteam.pictures.length==1,'group-two':iteam.pictures.length==2, 'group-three':iteam.pictures.length==3}"
+            v-bind:class="{'group-one':iteam.listPicture.length==1,'group-two':iteam.listPicture.length==2, 'group-three':iteam.listPicture.length==3}"
           >
-            <div v-for="(img, index) in iteam.pictures" :key="index">
+            <div v-for="(img, index) in iteam.listPicture" :key="index">
               <img :src="img" @click="handImgClick(img)" />
             </div>
           </div>
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { api_GetHbLiveLiveColumnContent } from "@/api/api";
+import { ImagePreview } from "vant";
+import { api_GetLiveBroadCastInfo } from "@/api/meetingApi";
 import scroll from "@/base/scroll/scroll";
-import { ImagePreview ,Loading } from "vant";
 export default {
   name: "ImagesWall",
   data() {
@@ -36,9 +36,7 @@ export default {
     liveColumnId: Number
   },
   components: {
-    scroll,
-    [ImagePreview.name]: ImagePreview,
-    [Loading.name]: Loading
+    scroll
   },
 
   mounted() {
@@ -51,7 +49,7 @@ export default {
       ImagePreview({
         images: this.imagesPreview,
         startPosition: index,
-        showIndicators:true,
+        showIndicators: true,
         onClose() {
           // do something
         }
@@ -64,17 +62,15 @@ export default {
       }
     },
     getDataByPage(page) {
-      api_GetHbLiveLiveColumnContent({
+      api_GetLiveBroadCastInfo({
         page: page,
-        pageSize: 30,
-        filters: `HbLive_LiveColumnId==${this.liveColumnId}`,
-        sorts: "id"
+        pageSize: 20,
+        filters: `LiveBroadCastId==${this.liveColumnId}`,
+        sorts: "-id"
       }).then(res => {
         this.images = this.images.concat(res.result);
         for (let i = 0; i < res.result.length; i++) {
-          this.imagesPreview = this.imagesPreview.concat(
-            res.result[0].pictures
-          );
+          this.imagesPreview = this.imagesPreview.concat(res.result[i].listPicture);
         }
         if (this.images.length >= res.total) {
           this.isEnd = true;
@@ -91,6 +87,16 @@ export default {
     height: 100%;
     overflow: hidden;
     .images-group {
+       .group-one {
+        display: flex;
+        div {
+          width: 100%;
+          padding: 2px;
+          img {
+            width: 100%;
+          }
+        }
+      }
       .group-two {
         display: flex;
         div {
@@ -112,6 +118,7 @@ export default {
         }
       }
       p {
+        font-size: 14px;
         text-indent: 2em;
         margin-bottom: 10px;
       }

@@ -39,6 +39,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 0.8em
 https://www.cnblogs.com/lbnnbs/p/7518934.html
 
+## 图片
 /images ->  "require('@/assets/images/expo/zhibo.png')"
 
 ## API
@@ -54,6 +55,10 @@ $route() {
     this.meetingId = this.$route.params.id;
 }
 }
+
+<router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+
+router.push({ path: `/user/${userId}` })
 
 this.companyId = this.$route.params.id;
 

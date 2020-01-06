@@ -1,24 +1,29 @@
 <template>
   <div class="wrapper">
     <hb-layout :active="3">
-      <div>
+      <div v-if="lives.length==1">
+        <live :showNavBar="false"></live>
+      </div>
+      <div v-else>
         <div class="box">
           <div class="banner">
             <img :src="require('@/assets/images/zhibo/banner.jpg')" />
           </div>
           <div class="now">
             <template v-for="(item,index) in lives">
-              <div class="list" :key="index">
-                <div class="pic">
-                  <img :src="item.banner" />
+              <router-link :to="{ path:`/expo/${meetingId}/live/${item.id}` }" :key="index">
+                <div class="list">
+                  <div class="pic">
+                    <img :src="item.banner" />
+                  </div>
+                  <div class="name">
+                    <img :src="require('@/assets/images/zhibo/now.gif')" />
+                    <span>【图片直播】{{item.title}}</span>
+                  </div>
+                  <div class="date">开始时间：{{item.beginTime}}</div>
+                  <div class="hits">{{item.hits}}人次观看</div>
                 </div>
-                <div class="name">
-                  <img :src="require('@/assets/images/zhibo/now.gif')" />
-                  <span>【图片直播】{{item.title}}</span>
-                </div>
-                <div class="date">开始时间：{{item.beginTime}}</div>
-                <div class="hits">{{item.hits}}人次观看</div>
-              </div>
+              </router-link>
             </template>
           </div>
         </div>
@@ -30,6 +35,7 @@
 <script>
 import { api_GetLiveBroadCast } from "@/api/meetingApi";
 import hbLayout from "@/components/layout/hbLayout";
+import live from "./live";
 //import { mapGetters } from "vuex";
 export default {
   name: "LiveIndex",
@@ -40,7 +46,7 @@ export default {
     };
   },
 
-  components: { hbLayout },
+  components: { hbLayout, live },
 
   computed: {},
 
@@ -94,6 +100,7 @@ export default {
           font-size: 11pt;
           font-weight: bold;
           margin-left: 5px;
+          color: black;
         }
       }
       .date {

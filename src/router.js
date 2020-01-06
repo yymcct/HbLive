@@ -62,6 +62,13 @@ const routes = [
     }
   },
   {
+    path: '/expo/:meetingId/live/:liveId',
+    component: () => import('./view/expo/live/live'),
+    meta: {
+      title: '火爆直播'
+    }
+  },
+  {
     path: '/expo/:id',
     component: () => import('./view/expo/index'),
     meta: {

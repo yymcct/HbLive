@@ -71,3 +71,5 @@ export const api_PostShortMsg = (params) => request.post('/api/meeting/ShortMsg/
 
 //直播
 export const api_GetLiveBroadCast = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCast', { params: params });
+export const api_GetLiveBroadCastInfoType = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCastInfoType', { params: params });
+export const api_GetLiveBroadCastInfo = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCastInfo', { params: params });

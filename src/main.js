@@ -2,7 +2,7 @@ import 'amfe-flexible';
 import Vue from 'vue'
 import App from './App.vue'
 import { router } from './router';
-import { Field, Dialog, Toast, Loading, Uploader, Checkbox, Button, NavBar, Image, ImagePreview } from "vant";
+import { Field, Dialog, Toast, Loading, Uploader, Checkbox, Button, NavBar, Image, ImagePreview, Tab, Tabs} from "vant";
 import globalFun from '@/utils/globalFun'
 import store from './store'
 
@@ -18,6 +18,8 @@ Vue.use(Button);
 Vue.use(NavBar);
 Vue.use(Image);
 Vue.use(ImagePreview);
+Vue.use(Tab);
+Vue.use(Tabs);
 
 Vue.prototype.$globalFun = globalFun;
 

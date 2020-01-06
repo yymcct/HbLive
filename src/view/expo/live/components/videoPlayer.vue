@@ -26,10 +26,22 @@ import "videojs-contrib-hls";
 export default {
   name: "VideoPlayer",
   props: {
-    started: Boolean,
-    banner: String,
-    pullStreamAddress: String,
-    hits: Number
+    started: {
+      default: false,
+      type: Boolean
+    },
+    banner: {
+      default: "",
+      type: String
+    },
+    pullStreamAddress: {
+      default: "",
+      type: String
+    },
+    hits: {
+      default: 0,
+      type: Number
+    }
   },
   data() {
     return {

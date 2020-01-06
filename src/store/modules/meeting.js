@@ -29,7 +29,7 @@ export default {
         meetingId(context, mId) {    
             context.commit('meetingId', mId);       
             api_GetMeeting({ meetingid: mId }).then(res => {
-                context.commit('setMeeting', res);
+                context.commit('setMeeting', res.result);
             });
         }
     }
