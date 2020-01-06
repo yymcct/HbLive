@@ -15,7 +15,7 @@ const routes = [
       title: '直播列表'
     }
   },
-
+  /*展商名录 */
   {
     path: '/expo/pro/:id',
     component: () => import('./view/expo/proList'),
@@ -37,6 +37,8 @@ const routes = [
       title: '参展产品'
     }
   },
+
+  // 动态
   {
     path: '/expo/shortmsg',
     component: () => import('./view/expo/shortMsg/shortmsgList'),
@@ -49,6 +51,14 @@ const routes = [
     component: () => import('./view/expo/shortMsg/postShortMsg'),
     meta: {
       title: '发布动态'
+    }
+  },
+  // 直播列表
+  {
+    path: '/expo/:meetingId/live',
+    component: () => import('./view/expo/live/index'),
+    meta: {
+      title: '火爆直播'
     }
   },
   {
@@ -73,32 +83,9 @@ const routes = [
       title: '微信登录'
     }
   },
-  /*直播*/
-  {
-    path: '/livelist',
-    component: () => import('./view/live/list'),
-    meta: {
-      title: '直播列表'
-    }
-  },
-  {
-    name: "live",
-    path: '/live/:id',
-    component: () => import('./view/live/index'),
-    meta: {
-      title: '直播'
-    }
-  },
-  {
-    path: '/indextest',
-    component: () => import('./view/index/indextest'),
-    meta: {
-      title: '直播'
-    }
-  },
   {
     path: '*',
-    redirect: '/index'
+    redirect: '/expo/live'
   },
 ];
 

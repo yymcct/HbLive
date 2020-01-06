@@ -8,15 +8,14 @@
 export default {
   name: "app",
   components: {},
-  mounted() {
-  },
-  watch: {
-    $route: function() {
-      if (this.$route.query.mId) {
-         const id = this.$route.query.mId;
-         console.log(id);
-         this.$store.dispatch("meeting/meetingId", id);
-      }
+  created() {
+    console.log('父组件 读取query:')
+    console.log(this.$route);
+    if (this.$route.query.mId) {
+      const id = this.$route.query.mId;      
+      this.$store.dispatch("meeting/meetingId", id);
+      console.log("父组件已经设定了"+id);
+      console.log("父组件已经设定了"+this.$store.getters['meeting/meetingId']);
     }
   }
 };

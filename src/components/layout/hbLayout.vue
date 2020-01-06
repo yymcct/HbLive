@@ -31,7 +31,7 @@
           :src="!props.active ? require('@/assets/images/expo/dongtai.png') : require('@/assets/images/expo/dongtai1.png')"
         />
       </van-tabbar-item>
-      <!--  <van-tabbar-item to="/livelist">
+      <van-tabbar-item to="/expo/1/live">
         <span>直播</span>
         <img
           class="tabbar-img"
@@ -40,7 +40,7 @@
           :src="!props.active ? require('@/assets/images/expo/zhibo.png') : require('@/assets/images/expo/zhibo2.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item icon="user-o" to="/livelist">
+      <!--  <van-tabbar-item icon="user-o" to="/livelist">
         <span>我的</span>
         <img
           class="tabbar-img"

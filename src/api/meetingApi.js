@@ -68,3 +68,6 @@ export const api_GetCompanyOtherProduct = (params) => request.get('/api/meeting/
 //动态
 export const api_GetMeetingShortMsg = (params) => request.get('/api/meeting/ShortMsg/GetShortMsg', { params: params });
 export const api_PostShortMsg = (params) => request.post('/api/meeting/ShortMsg/PostShortMsg', params);
+
+//直播
+export const api_GetLiveBroadCast = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCast', { params: params });

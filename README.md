@@ -74,3 +74,10 @@ this.$globalFun.wxShare(location.href.split("#")[0], {
     });
 ## 检查是否登录
 this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
+
+## 引用vuex
+import { mapGetters } from 'vuex'
+...mapGetters([
+      'meeting/meeting',
+      // ...
+    ])
