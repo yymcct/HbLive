@@ -95,7 +95,7 @@ export default {
   }
 };
 </script>
-<style lang='scss' scoped>
+// <style lang='scss' scoped>
 .tuijian {
   white-space: nowrap;
   display: flex;
@@ -128,7 +128,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: start;
+        justify-content: flex-start;
         padding-left: 5px;
         font-size: 16px;
         .address {
