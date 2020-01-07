@@ -40,7 +40,7 @@
           :src="!props.active ? require('@/assets/images/expo/zhibo.png') : require('@/assets/images/expo/zhibo2.png')"
         />
       </van-tabbar-item>
-      <!--  <van-tabbar-item icon="user-o" to="/livelist">
+       <van-tabbar-item  to="/expo/user">
         <span>我的</span>
         <img
           class="tabbar-img"
@@ -48,7 +48,7 @@
           slot-scope="props"
           :src="!props.active ? require('@/assets/images/expo/my.png') : require('@/assets/images/expo/my2.png')"
         />
-      </van-tabbar-item>-->
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

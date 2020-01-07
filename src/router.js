@@ -68,14 +68,14 @@ const routes = [
       title: '火爆直播'
     }
   },
+  /*用户管理*/
   {
-    path: '/expo/:id',
-    component: () => import('./view/expo/index'),
+    path: '/expo/user',
+    component: () => import('./view/expo/user/index'),
     meta: {
-      title: '展商名录'
+      title: '登录'
     }
   },
-  /*用户管理*/
   {
     path: '/user/login',
     component: () => import('./view/user/login/index'),
@@ -93,6 +93,13 @@ const routes = [
   {
     path: '*',
     redirect: '/expo/live'
+  },
+  {
+    path: '/expo/:id',
+    component: () => import('./view/expo/index'),
+    meta: {
+      title: '展商名录'
+    }
   },
 ];
 
