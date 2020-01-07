@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="showNavBar" ref="navBar">
+    <div v-show="showNavBar" ref="navBar">
       <van-nav-bar title="火爆直播" left-arrow @click-left="$router.push(`/expo/${meetingId}/live`)" />
     </div>
 
@@ -35,7 +35,6 @@
             <images-wall
               v-if="iteam.typeTypeInLiveBroadCast==0 || iteam.typeTypeInLiveBroadCast==1"
               :liveColumnId="iteam.id"
-              :height="tabContentHigh"
               :style="{height:tabContentHigh}"
               @scrollLiveTop="scrollLiveTop"
             ></images-wall>
@@ -57,11 +56,14 @@ import imagesWall from "./components/imagesWall";
 export default {
   name: "Live",
   props: {
+    pliveId: {
+      default: 0,
+      type: Number
+    },
     showNavBar: {
       default: true,
       type: Boolean
-    },
-    height: Number
+    }
   },
   data() {
     return {
@@ -94,7 +96,10 @@ export default {
 
   mounted() {
     this.meetingId = this.$route.params.meetingId;
-    this.liveId = this.$route.params.liveId;
+
+    this.liveId =
+      this.pliveId != 0 ? this.pliveId : this.$route.params.liveId;
+
     api_GetLiveBroadCast({
       Filters: `id==${this.liveId}`
     })

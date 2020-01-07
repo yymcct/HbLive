@@ -2,7 +2,7 @@
   <div class="wrapper">
     <hb-layout :active="3">
       <div v-if="lives.length==1">
-        <live :showNavBar="false"></live>
+        <live :showNavBar="false" :pliveId="lives[0].id"></live>
       </div>
       <div v-else>
         <div class="box">

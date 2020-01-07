@@ -2,7 +2,7 @@
   <div class="wapper">
     <scroll
       class="scroll"
-      :data="lives"
+      :data="images"
       pullup
       @scrollToEnd="scrollToEnd"
       listenScroll
