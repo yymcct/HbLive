@@ -75,7 +75,7 @@ const routes = [
       title: '火爆直播'
     }
   },
-  /*用户管理*/
+  /*我的*/
   {
     path: '/expo/:meetingId/user',
     component: () => import('./view/expo/user/index'),
