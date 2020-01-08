@@ -20,7 +20,7 @@ export default {
       );
     }
 
-     this.$store.dispatch("meeting/meetingId", 1);
+     //this.$store.dispatch("meeting/meetingId", 1);
   },
   mounted() {
     console.log("父组件 mounted读取query:");

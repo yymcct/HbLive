@@ -32,6 +32,27 @@ Vue.use(CellGroup);
 
 Vue.prototype.$globalFun = globalFun;
 
+router.beforeEach((to, from, next) => {
+  const title = to.meta && to.meta.title;
+  if (title) {
+    document.title = title;
+    console.log(to);
+  }
+
+  const meetingId = store.getters['meeting/meetingId'];
+  console.log('store.dispatch("meeting/meetingId", to.params.meetingId);')
+  console.log(meetingId)
+  console.log(to.params.meetingId )
+
+  console.log()
+  if (meetingId == 0 && to.params.meetingId ){
+    console.log('store.dispatch("meeting/meetingId", to.params.meetingId);')
+    store.dispatch("meeting/meetingId", to.params.meetingId);
+  }
+
+  next();
+});
+
 new Vue({
   router,
   store,

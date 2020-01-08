@@ -70,7 +70,7 @@ const routes = [
   },
   /*用户管理*/
   {
-    path: '/expo/user',
+    path: '/expo/:meetingId/user',
     component: () => import('./view/expo/user/index'),
     meta: {
       title: '登录'
@@ -119,13 +119,7 @@ const router = new Router({
   }
 });
 
-router.beforeEach((to, from, next) => {
-  const title = to.meta && to.meta.title;
-  if (title) {
-    document.title = title;
-  }
-  next();
-});
+
 
 export {
   router
