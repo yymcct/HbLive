@@ -52,8 +52,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters("meeting", {
-      meetingId: "meetingId"
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      user: "user/user"
     })
   },
 
@@ -73,7 +74,7 @@ export default {
     },
     getShortMsg() {
       api_GetMeetingShortMsg({
-        Filters: "AddUserId==" + 4,
+        Filters: "AddUserId==" + this.user.id,
         Sorts: "-id",
         Page: this.page,
         PageSize: 10
@@ -111,7 +112,7 @@ export default {
 .wrapper {
   background: #fff;
   .scroll {
-    height: 100vh;
+    overflow: hidden;
     .conlist {
       width: 90%;
       margin: 0 auto;

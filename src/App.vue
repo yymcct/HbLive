@@ -8,9 +8,13 @@
 export default {
   name: "app",
   components: {},
-
-  mounted() {
-  }
+  created() {
+    const user = this.$globalFun.userInfoAPI.get();
+    if (user) {
+      this.$store.commit("user/setUser", user.member);
+    }
+  },
+  mounted() {}
 };
 </script>
 
