@@ -78,5 +78,9 @@ export const api_GetLiveBroadCastInfo = (params) => request.get('/api/meeting/Li
 export const api_GetUserReplysByMemberId = (params) => request.get('/api/meeting/Member/GetUserReplysByMemberId', { params: params });
 export const api_GetMemberReplyReply = (params) => request.get('/api/meeting/Member/GetMemberReplyReply', { params: params });
 
+//我的足迹
+export const api_GetMemberFootPrint = (params) => request.get('/api/meeting/Member/GetMemberFootPrint', { params: params });
+
+
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);
