@@ -11,54 +11,7 @@
         </div>
         <div class="conlist">
           <template v-for="(item,index) in shortMsg">
-            <div class="detail" :key="index">
-              <div class="detail-top">
-                <img class="detail-img" :src="item.addUserPhoto" />
-                <div class="detail-left-center">
-                  <div class="detail-title">{{item.addUserName}}</div>
-                  <div class="detail-time">{{item.addTime}}</div>
-                </div>
-              </div>
-              <div class="detail-con">
-                <div class="detail-con-text">
-                  <span class="des">{{item.content}}</span>
-                </div>
-                <div class="detail-con-pic" v-if="item.picture">
-                  <van-image
-                    class="pic"
-                    v-for="(url, index) in item.listPicture"
-                    :key="index"
-                    :src="url"
-                    @click="handImagePreview(url)"
-                    fit="cover"
-                  />
-                  <div class="more" v-if="item.listPicture.length>3">+ {{item.listPicture.length-3}}</div>
-                </div>
-                <div class="detail-con-pic" v-if="item.video">
-                  <video :src="item.video" controls="false"></video>
-                </div>
-              </div>
-              <div class="detail-bottom">
-                <div class="detail-bottom-list">
-                  <img :src="require('@/assets/images/expo/see.png')" />
-                  <span>{{item.hits}}</span>
-                </div>
-                <div class="detail-bottom-list">
-                  <img :src="require('@/assets/images/expo/pinglun.png')" />
-                  <span>{{item.shareCount}}</span>
-                </div>
-                <div class="detail-bottom-list">
-                  <img
-                    :src=" item.isThumbsUp?require('@/assets/images/expo/zan1.png'):require('@/assets/images/expo/zan0.png') "
-                  />
-                  <span>{{item.thumbsUpCount}}</span>
-                </div>
-                <div class="detail-bottom-list">
-                  <img :src="require('@/assets/images/expo/share1.png')" />
-                  <button class="share">分享</button>
-                </div>
-              </div>
-            </div>
+            <shortMsg :key="index" :shortMsg="item" @imageClick="handImagePreview" />
           </template>
         </div>
         <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
@@ -71,10 +24,11 @@
 </template>
 
 <script>
-import hbLayout from "@/components/layout/hbLayout";
-import scroll from "@/components/scroll/scroll";
-import { api_GetMeetingShortMsg, api_PostMeetingHits } from "@/api/meetingApi";
 import { ImagePreview } from "vant";
+import scroll from "@/components/scroll/scroll";
+import hbLayout from "@/components/layout/hbLayout";
+import { api_GetMeetingShortMsg, api_PostMeetingHits } from "@/api/meetingApi";
+import shortMsg from "@/components/shortMsg/shortMsg";
 export default {
   name: "ShortMsgList",
   props: [""],
@@ -90,7 +44,8 @@ export default {
 
   components: {
     scroll,
-    hbLayout
+    hbLayout,
+    shortMsg
   },
 
   computed: {},
@@ -205,113 +160,6 @@ export default {
     .conlist {
       width: 90%;
       margin: 0 auto;
-      .detail {
-        display: flex;
-        flex-direction: column;
-        margin: 10px auto;
-        background: #fff;
-        .detail-top {
-          width: 96%;
-          display: flex;
-          flex-flow: row;
-          vertical-align: middle;
-          align-items: center;
-          margin: 0 auto;
-          border-bottom: 1px #f3f3f3 solid;
-          .detail-img {
-            width: 44px;
-            height: 44px;
-            margin: 5px 10px;
-            border-radius: 5px;
-          }
-          .detail-left-center {
-            line-height: 29px;
-            display: flex;
-            flex-direction: column;
-            vertical-align: middle;
-            .detail-title {
-              font-size: 15px;
-              font-weight: bold;
-              color: #000;
-            }
-            .detail-time {
-              font-size: 12px;
-              color: #888888;
-            }
-          }
-        }
-        .detail-con {
-          width: 96%;
-          margin: 10px auto;
-          border-bottom: 1px #f3f3f3 solid;
-          letter-spacing: 1px;
-          .detail-con-text {
-            font-size: 12px;
-            font-family: Microsoft Yahei;
-            width: 96%;
-            margin: 0 auto;
-            span {
-              font-size: 15px;
-              color: #000;
-              white-space: pre-wrap;
-              line-height: 22px;
-            }
-          }
-          .detail-con-pic {
-            display: flex;
-            justify-content: flex-start;
-            margin: 10px auto;
-            .pic {
-              width: 30%;
-              height: 100px;
-              margin-left: 2%;
-            }
-            .more {
-              width: 29%;
-              height: 100px;
-              line-height: 100px;
-              font-size: 21px;
-              font-weight: bold;
-              color: #fff;
-              background: rgba(0, 0, 0, 0.5);
-              text-align: center;
-              position: absolute;
-              left: 65%;
-            }
-          }
-        }
-
-        .detail-bottom {
-          width: 90%;
-          margin: 10px auto;
-          display: flex;
-          flex-flow: row;
-          justify-content: space-between;
-          height: 20px;
-          line-height: 20px;
-          .detail-bottom-list {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            img {
-              width: 14px;
-              height: 14px;
-            }
-            span {
-              font-size: 13px;
-              color: #888888;
-              margin-left: 5px;
-            }
-            button {
-              background: #fff;
-              font-size: 13px;
-              color: #888888;
-              padding-left: 5px;
-              border: 0;
-            }
-          }
-        }
-      }
     }
   }
   .fabu {
