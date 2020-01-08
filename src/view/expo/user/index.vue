@@ -4,7 +4,10 @@
       <div class="box">
         <div class="main">
           <div class="user" v-if="userinfo">
-            <div class="user-bg"></div>
+            <div
+              class="bg"
+              :style="{ background: '#fff url('+userinfo.photo+') no-repeat center center / cover'}"
+            ></div>
             <div class="user-con">
               <div class="user-l">
                 <img :src="userinfo.photo" />
@@ -98,12 +101,20 @@ export default {
   },
   components: { hbLayout },
 
-
   beforeMount() {},
 
-  mounted() {},
+  mounted() {
+    this.loadUserInfo();
+  },
 
-  methods: {},
+  methods: {
+    loadUserInfo() {
+      const userinfo = this.$globalFun.userInfoAPI.get();
+      if (userinfo) {
+        this.userinfo = userinfo.member;
+      }
+    }
+  },
 
   watch: {}
 };
@@ -122,15 +133,20 @@ export default {
         background: #fff;
         margin: 0 auto;
         overflow: hidden;
+        .bg {
+          position: relative;
+          width: 100%;
+          height: 150px;
+          filter: blur(20px);
+        }
         .user-con {
           position: absolute;
-          top: 32px;
-          left: 25px;
+          top: 40px;
+          left: 30px;
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
-          .users-l {
-            margin-left: 25px;
+          .user-l {
             img {
               width: 65px;
               height: 65px;
@@ -142,7 +158,11 @@ export default {
             width: 100%;
             height: 75px;
             margin-left: 10px;
-            line-height: 75px;
+            span {
+              font-size: 16px;
+              line-height: 70px;
+              color: #fff;
+            }
           }
         }
       }
