@@ -62,6 +62,18 @@ router.push({ path: `/user/${userId}` })
 
 this.companyId = this.$route.params.id;
 
+```
+  <van-nav-bar
+    title="发布动态"
+    left-text="返回"
+    left-arrow
+    @click-left="$router.push('/expo/shortmsg')"
+  />
+
+ text-indent:2em;
+
+```
+
 ## 微信分享
 this.$globalFun.wxShare(location.href.split("#")[0], {
         title: this.meeting.sortName,

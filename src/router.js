@@ -80,19 +80,41 @@ const routes = [
     path: '/expo/:meetingId/user',
     component: () => import('./view/expo/user/index'),
     meta: {
-      title: '登录'
+      title: '我的'
     }
   },
   {
+    path: '/expo/:meetingId/user/feedback',
+    component: () => import('./view/expo/user/feedback'),
+    meta: {
+      title: '意见反馈'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/function',
+    component: () => import('./view/expo/user/function'),
+    meta: {
+      title: '功能介绍'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/about',
+    component: () => import('./view/expo/user/about'),
+    meta: {
+      title: '关于我们'
+    }
+  },
+
+  {
     path: '/user/login',
-    component: () => import('./view/user/login/index'),
+    component: () => import('./view/expo/user/login/index'),
     meta: {
       title: '登录'
     }
   },
   {
     path: '/user/login/weixin',
-    component: () => import('./view/user/login/weixin'),
+    component: () => import('./view/expo/user/login/weixin'),
     meta: {
       title: '微信登录'
     }

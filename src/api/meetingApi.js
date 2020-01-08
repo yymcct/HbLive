@@ -73,3 +73,6 @@ export const api_PostShortMsg = (params) => request.post('/api/meeting/ShortMsg/
 export const api_GetLiveBroadCast = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCast', { params: params });
 export const api_GetLiveBroadCastInfoType = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCastInfoType', { params: params });
 export const api_GetLiveBroadCastInfo = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCastInfo', { params: params });
+
+//意见反馈
+export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);
