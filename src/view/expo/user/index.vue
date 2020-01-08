@@ -34,16 +34,48 @@
                 name="1"
                 :icon="require('@/assets/images/expo/mys.png')"
               >
-                <van-cell title-class="submenu" title="我的动态" is-link :to="`/expo/${meetingId}/user/shortmsg`" />
-                <van-cell title-class="submenu" title="我的评论/回复" is-link :to="`/expo/${meetingId}/user/comment`" />
-                <van-cell title-class="submenu" title="我的足迹" is-link :to="`/expo/${meetingId}/user/footmark`" />
-                <van-cell title-class="submenu" title="我的点赞" is-link :to="`/expo/${meetingId}/user/zan`" />
+                <van-cell
+                  title-class="submenu"
+                  title="我的动态"
+                  is-link
+                  :to="`/expo/${meetingId}/user/shortmsg`"
+                />
+                <van-cell
+                  title-class="submenu"
+                  title="我的评论/回复"
+                  is-link
+                  :to="`/expo/${meetingId}/user/comment`"
+                />
+                <van-cell
+                  title-class="submenu"
+                  title="我的足迹"
+                  is-link
+                  :to="`/expo/${meetingId}/user/footmark`"
+                />
+                <van-cell
+                  title-class="submenu"
+                  title="我的点赞"
+                  is-link
+                  :to="`/expo/${meetingId}/user/zan`"
+                />
               </van-collapse-item>
               <van-collapse-item
                 title="我的公司"
                 name="2"
                 :icon="require('@/assets/images/expo/shop.png')"
-              >我的公司</van-collapse-item>
+              >
+                <div class="list-con">
+                  <img :src="com.photo" class="list-con-l" />
+                  <div class="list-con-r">
+                    <span>{{com.name}}</span>
+                    <div>
+                      <img :src="require('@/assets/images/expo/edit.png')" />
+                      <img :src="require('@/assets/images/expo/pic.png')" />
+                      <img :src="require('@/assets/images/expo/prolist.png')" />
+                    </div>
+                  </div>
+                </div>
+              </van-collapse-item>
             </van-collapse>
           </div>
           <div class="single">
@@ -191,6 +223,44 @@ export default {
       }
     }
     .menu {
+      .mulmenu {
+        .list-con {
+          width: 90%;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 17px;
+          color: #888888;
+          border-bottom: 1px solid #ededed;
+          line-height: 50px;
+        }
+        .list-con-l {
+          width: 60px;
+          height: 60px;
+          margin: 10px 20px 10px 0;
+        }
+        .list-con-r {
+          display: flex;
+          flex-direction: column;
+          span {
+            line-height: 30px;
+            font-size: 15px;
+          }
+          div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            line-height: 30px;
+          }
+          img {
+            width: 25px;
+            height: 25px;
+            margin-right: 20px;
+          }
+        }
+      }
       .single {
         margin-top: 10px;
       }
