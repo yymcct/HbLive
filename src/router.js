@@ -17,8 +17,8 @@ const routes = [
   },
   /*展商名录 */
   {
-    path: '/expo/pro/:id',
-    component: () => import('./view/expo/proList'),
+    path: '/expo/:meetingId/pro',
+    component: () => import('./view/expo/proList/index'),
     meta: {
       title: '展品名录'
     }

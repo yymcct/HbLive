@@ -70,7 +70,7 @@ export default {
 
   watch: {
     $route() {
-      this.meetingId = this.$route.params.id;
+      this.meetingId = this.$route.params.meetingId;
     }
   },
   destroyed() {

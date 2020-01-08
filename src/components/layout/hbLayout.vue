@@ -13,7 +13,7 @@
           :src="!props.active ? require('@/assets/images/expo/home.png') : require('@/assets/images/expo/home2.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item to="/expo/pro/1">
+      <van-tabbar-item :to="`/expo/${meetingId}/pro`">
         <span>展品</span>
         <img
           class="tabbar-img"
@@ -40,7 +40,7 @@
           :src="!props.active ? require('@/assets/images/expo/zhibo.png') : require('@/assets/images/expo/zhibo2.png')"
         />
       </van-tabbar-item>
-       <van-tabbar-item  to="/expo/user">
+      <van-tabbar-item to="/expo/user">
         <span>我的</span>
         <img
           class="tabbar-img"
@@ -55,11 +55,17 @@
 
 <script>
 import { Tabbar, TabbarItem } from "vant";
+import { mapGetters } from "vuex";
 export default {
   name: "cnLayout",
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem
+  },
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
   },
   props: {
     active: null

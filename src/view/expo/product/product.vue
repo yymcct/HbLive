@@ -98,7 +98,7 @@
           <img :src="require('@/assets/images/expo/liuyan-f.png')" />
           <span>留言</span>
         </div>
-        <router-link class="foot-list" :to="`/expo/pro/${meetingId}`">
+        <router-link class="foot-list" :to="`/expo/${meetingId}/pro`">
           <img :src="require('@/assets/images/expo/zhanpin-f.png')" />
           <span>展品</span>
         </router-link>
