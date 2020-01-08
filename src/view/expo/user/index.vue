@@ -48,20 +48,20 @@
               <van-cell
                 title="意见反馈"
                 is-link
-                to="/myadver"
+                :to="`/expo/${meetingId}/user/feedback`"
                 :icon="require('@/assets/images/expo/fankui.png')"
               />
               <van-cell
                 title="功能介绍"
                 is-link
-                to="/myadver"
+                :to="`/expo/${meetingId}/user/function`"
                 :icon="require('@/assets/images/expo/jieshao.png')"
               />
               <van-cell
                 title="关于我们"
                 :icon="require('@/assets/images/expo/about.png')"
                 is-link
-                to="/myadver"
+                :to="`/expo/${meetingId}/user/about`"
               />
             </van-cell-group>
           </div>
@@ -77,6 +77,7 @@
 
 <script>
 import hbLayout from "@/components/layout/hbLayout";
+import { mapGetters } from "vuex";
 export default {
   name: "",
   props: [""],
@@ -90,10 +91,13 @@ export default {
       }
     };
   },
-
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
   components: { hbLayout },
 
-  computed: {},
 
   beforeMount() {},
 
