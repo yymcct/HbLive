@@ -38,7 +38,7 @@
               <img
                 v-if="item.productListDtos.length>0"
                 :src="item.productListDtos[0].pic"
-                @click.stop="$router.push({ path: `/expo/product/${meetingId}-${item.productListDtos[0].id}`})"
+                @click.stop="$router.push({ path: `/expo/${meetingId}/product/${item.productListDtos[0].id}`})"
               />
             </div>
           </div>

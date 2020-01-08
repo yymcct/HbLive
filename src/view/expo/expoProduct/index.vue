@@ -20,7 +20,7 @@
 <script>
 import HbLayout from "@/components/layout/hbLayout";
 import ExpoTop from "../expoCompany/components/top";
-import tabProduct from "@/components/expo/pro/tabProduct";
+import tabProduct from "./components/tabContent/index";
 import { Tab, Tabs } from "vant";
 export default {
   name: "ExpoPro",

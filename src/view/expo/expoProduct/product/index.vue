@@ -31,7 +31,7 @@
           <div class="liyuanforme">
             <img v-if="userinfo" :src="userinfo.photo" />
             <input name="liuyancon" placeholder="我也要说一句" placeholder-class="placeholdeers" />
-            <button class="submit" >提交</button>
+            <button class="submit">提交</button>
           </div>
           <div class="commentlist" v-for="(item, index) in liuyan" :key="index">
             <div class="commentlist-top">
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="com" @click="$router.push({ path: `/expo/company/${meetingId}-${company.id}`})">
+        <div class="com" @click="$router.push({ path: `/expo/${meetingId}/company/${company.id}`})">
           <img :src="company.photo" class="comlogo" />
           <div class="com-con">
             <div class="comname">{{company.name}}</div>
@@ -80,8 +80,7 @@
           <div class="prolist-title">其他展品</div>
           <div class="prolist-con">
             <template v-for="(item, index) in prolist">
-              <!-- "$router.push({ path: `/expo/product/${meetingId}-${item.id}`})" -->
-              <router-link class="pro" :key="index" :to="`/expo/product/${meetingId}-${item.id}`">
+              <router-link class="pro" :key="index" :to="`/expo/${meetingId}/product/${item.id}`">
                 <img :src="item.pic" />
                 <span>{{item.name}}</span>
               </router-link>
@@ -98,7 +97,7 @@
           <img :src="require('@/assets/images/expo/liuyan-f.png')" />
           <span>留言</span>
         </div>
-        <router-link class="foot-list" :to="`/expo/${meetingId}/pro`">
+        <router-link class="foot-list" :to="`/expo/${meetingId}/product`">
           <img :src="require('@/assets/images/expo/zhanpin-f.png')" />
           <span>展品</span>
         </router-link>

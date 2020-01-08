@@ -31,15 +31,15 @@ const routes = [
   },
   {
     path: '/expo/:meetingId/product',
-    component: () => import('./view/expo/proList/index'),
+    component: () => import('./view/expo/expoProduct/index'),
     meta: {
       title: '展品名录'
     }
   },
 
   {
-    path: '/expo/product/:meetingId-:productId',
-    component: () => import('./view/expo/product/product'),
+    path: '/expo/:meetingId/product/:productId',
+    component: () => import('./view/expo/expoProduct/product/index'),
     meta: {
       title: '参展产品'
     }

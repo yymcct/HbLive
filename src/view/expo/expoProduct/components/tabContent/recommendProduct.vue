@@ -9,7 +9,7 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <product :products="products" :meetingId="meetingId"></product>
+      <product :products="products" :meetingId="meetingId" showTop></product>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
@@ -17,13 +17,12 @@
 
 <script>
 import scroll from "@/components/scroll/scroll";
-import { api_GetMeetingAreaProduct } from "@/api/meetingApi";
-import product from "@/components/expo/pro/product";
+import { api_GetProductByRecommend } from "@/api/meetingApi";
+import product from "./product";
 export default {
-  name: "AreaProduct",
+  name: "reaCompany",
   props: {
-    meetingId: Number,
-    meetingAreaId: Number
+    meetingId: Number
   },
   data() {
     return {
@@ -38,16 +37,16 @@ export default {
     scroll,
     product
   },
-
+  created() {this.getProductByRecommend();},
   mounted() {
-    this.getMeetingAreaProduct();
+    
   },
 
   methods: {
     scrollToEnd() {
       if (!this.isEnd) {
         this.page++;
-        this.getMeetingAreaProduct();
+        this.getProductByRecommend();
       }
     },
     scroll(p) {
@@ -58,10 +57,10 @@ export default {
         this.$emit("scrollLiveTop", true);
       }
     },
-    getMeetingAreaProduct() {
-      api_GetMeetingAreaProduct({
-        Filters: `ProMeetingID==${this.meetingId},ProMeetingAreaID==${this.meetingAreaId}`,
-        Sorts: "-id",
+    getProductByRecommend() {
+      api_GetProductByRecommend({
+        Filters: "ProMeetingID==" + this.meetingId,
+        Sorts: "",
         Page: this.page,
         PageSize: 10
       }).then(res => {

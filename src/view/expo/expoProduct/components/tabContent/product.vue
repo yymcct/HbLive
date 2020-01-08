@@ -4,7 +4,7 @@
       <div
         class="procon"
         :key="index"
-        @click.stop="$router.push({ path: `/expo/product/${meetingId}-${item.id}`})"
+        @click.stop="$router.push({ path: `/expo/${meetingId}/product/${item.id}`})"
       >
         <img :src="item.pic" class="proimg" />
         <div class="procon-name">{{item.name}}</div>

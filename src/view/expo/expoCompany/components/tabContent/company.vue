@@ -38,7 +38,7 @@
                 <img
                   :key="pro.id"
                   :src="pro.pic"
-                  @click.stop="$router.push({ path: `/expo/product/${meetingId}-${pro.id}`})"
+                  @click.stop="$router.push({ path: `/expo/${meetingId}/product/${pro.id}`})"
                 />
               </template>
             </div>
