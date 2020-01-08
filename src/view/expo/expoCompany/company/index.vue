@@ -181,7 +181,7 @@ export default {
     this.getComThumbsUpMemberNick();
     this.getCompanyProduct();
     this.getCompanyReplys();
-    this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
+ //   this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
     this.postMeetingHits();
   },
 

@@ -3,7 +3,7 @@
     <hb-layout :active="1">
       <div class="box">
         <div ref="expotop" v-show="topShow">
-          <expo-top :meetingId="meetingId"></expo-top>
+          <expo-top />
         </div>
         <div>
           <tab-product
@@ -19,7 +19,7 @@
 
 <script>
 import HbLayout from "@/components/layout/hbLayout";
-import ExpoTop from "@/components/expo/top";
+import ExpoTop from "../expoCompany/components/top";
 import tabProduct from "@/components/expo/pro/tabProduct";
 import { Tab, Tabs } from "vant";
 export default {
@@ -65,7 +65,7 @@ export default {
     },
     scrollLiveTop(r) {
       this.topShow = r;
-    },
+    }
   },
 
   watch: {

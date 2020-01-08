@@ -3,7 +3,7 @@ import {api_GetMeeting} from "@/api/meetingApi";
 export default {
     namespaced: true,
     state: {
-        meetingId: '0',
+        meetingId: 0,
         meeting: null
     },
 

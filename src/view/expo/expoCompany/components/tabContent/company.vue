@@ -4,7 +4,7 @@
       <div
         style="position: relative;"
         v-bind:key="index"
-        @click="$router.push({ path: `/expo/company/${meetingId}-${item.id}`})"
+        @click="$router.push({ path: `/expo/${meetingId}/company/${item.id}`})"
       >
         <img
           :src="require('@/assets/images/expo/huangguan.png')"

@@ -9,7 +9,7 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <company :companys="companys" :meetingId="meetingId" showTop></company>
+      <company :companys="companys" :meetingId="meetingId"></company>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
@@ -17,12 +17,13 @@
 
 <script>
 import scroll from "@/components/scroll/scroll";
-import { api_GetGetCompanyByRecommend } from "@/api/meetingApi";
-import company from "@/components/expo/content/company";
+import { api_GetMeetingAreaCompany } from "@/api/meetingApi";
+import company from "./company";
 export default {
   name: "reaCompany",
   props: {
-    meetingId: Number
+    meetingId: Number,
+    meetingAreaId: Number
   },
   data() {
     return {
@@ -58,9 +59,9 @@ export default {
       }
     },
     getMeetingAreaCompanys() {
-      api_GetGetCompanyByRecommend({
-        Filters: "meetingID==" + this.meetingId,
-        Sorts: "",
+      api_GetMeetingAreaCompany({
+        Filters: "MeetingAreaId==" + this.meetingAreaId,
+        Sorts: "-id",
         Page: this.page,
         PageSize: 20
       }).then(res => {

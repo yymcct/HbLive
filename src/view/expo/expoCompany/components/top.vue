@@ -13,50 +13,20 @@
 </template>
 
 <script>
-import { api_GetMeeting } from "@/api/meetingApi";
+import { mapGetters } from "vuex";
 export default {
   name: "ExpoTop",
-  props: {
-    meetingId: Number
-  },
   data() {
-    return {
-      meeting: {
-        banner: "",
-        sortName: "",
-        address: "",
-        beginDate: "",
-        endDate: "",
-        companyCount: 0,
-        hit: 0
-      }
-    };
+    return {};
   },
-  mounted() {
-    this.getMeeting();
+  computed: {
+    ...mapGetters("meeting", {
+      meeting: "meeting"
+    })
   },
+  mounted() {},
 
-  methods: {
-    getMeeting() {
-      api_GetMeeting({ meetingid: this.meetingId }).then(res => {
-        this.meeting = res.result;
-
-        this.$globalFun.wxShare(location.href.split("#")[0], {
-          title: this.meeting.sortName,
-          desc: `${this.meeting.beginDate}至${this.meeting.endDate},${this.meeting.companyCount}家展商 | ${this.meeting.hit}位访问者`,
-          link: location.href,
-          imgUrl: this.meeting.banner,
-          success: function() {}
-        });
-      });
-    }
-  },
-
-  watch: {
-    meetingId: function() {
-      this.getMeeting();
-    }
-  }
+  methods: {}
 };
 </script>
 <style lang='scss' scoped>
@@ -97,7 +67,6 @@ export default {
     }
     .time {
       font-size: 15px;
-      /* font-weight: 800; */
     }
     .sub {
       font-size: 12px;

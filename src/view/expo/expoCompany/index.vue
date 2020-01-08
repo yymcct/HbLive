@@ -4,9 +4,8 @@
     <hb-layout :active="0">
       <div class="box">
         <div ref="expotop" v-show="topShow">
-          <expo-top :meetingId="meetingId"></expo-top>
+          <expo-top />
         </div>
-
         <div ref="toptuijian">
           <top-tuijian :meetingId="meetingId"></top-tuijian>
         </div>
@@ -24,9 +23,9 @@
 
 <script>
 import HbLayout from "@/components/layout/hbLayout";
-import ExpoTop from "@/components/expo/top";
-import TopTuijian from "@/components/expo/topTuijian";
-import ExpoContent from "@/components/expo/content";
+import ExpoTop from "./components/top";
+import TopTuijian from "./components/topTuijian";
+import ExpoContent from "./components/tabContent/index";
 import { Tab, Tabs } from "vant";
 export default {
   name: "ExpoIndex",

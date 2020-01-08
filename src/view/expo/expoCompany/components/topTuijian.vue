@@ -5,7 +5,7 @@
         <div
           class="tuijian-com"
           :key="item.id"
-          @click="$router.push({ path: `/expo/company/${meetingId}-${item.id}`})"
+          @click="$router.push({ path: `/expo/${meetingId}/company/${item.id}`})"
         >
           <div class="com-top">
             <div class="com-top-left">

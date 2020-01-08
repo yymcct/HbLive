@@ -13,7 +13,7 @@
           :src="!props.active ? require('@/assets/images/expo/home.png') : require('@/assets/images/expo/home2.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item :to="`/expo/${meetingId}/pro`">
+      <van-tabbar-item :to="`/expo/${meetingId}/product`">
         <span>展品</span>
         <img
           class="tabbar-img"

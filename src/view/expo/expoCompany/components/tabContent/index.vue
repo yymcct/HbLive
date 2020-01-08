@@ -27,8 +27,8 @@
 <script>
 import { Tab, Tabs } from "vant";
 import { api_GetMeetingArea } from "@/api/meetingApi";
-import areaCompany from "@/components/expo/content/areaCompany";
-import recommendCompany from "@/components/expo/content/recommendCompany";
+import areaCompany from "./areaCompany";
+import recommendCompany from "./recommendCompany";
 export default {
   name: "ExpoContent",
   props: {

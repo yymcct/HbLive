@@ -40,14 +40,14 @@ router.beforeEach((to, from, next) => {
   }
 
   const meetingId = store.getters['meeting/meetingId'];
-  console.log('store.dispatch("meeting/meetingId", to.params.meetingId);')
+  console.log('11store.dispatch("meeting/meetingId", to.params.meetingId);')
   console.log(meetingId)
   console.log(to.params.meetingId )
 
   console.log()
   if (meetingId == 0 && to.params.meetingId ){
-    console.log('store.dispatch("meeting/meetingId", to.params.meetingId);')
-    store.dispatch("meeting/meetingId", to.params.meetingId);
+    console.log('22store.dispatch("meeting/meetingId", to.params.meetingId);')
+    store.dispatch("meeting/meetingId", Number(to.params.meetingId));
   }
 
   next();

@@ -14,7 +14,7 @@ const routes = [
       title: '火爆云展'
     }
   },
-  /*展商名录 */
+  /*展商 */
   {
     path: '/expo/:meetingId/company',
     component: () => import('./view/expo/expoCompany/index'),
@@ -23,19 +23,20 @@ const routes = [
     }
   },
   {
-    path: '/expo/:meetingId/pro',
+    path: '/expo/:meetingId/company/:companyId',
+    component: () => import('./view/expo/expoCompany/company/index'),
+    meta: {
+      title: '参展企业'
+    }
+  },
+  {
+    path: '/expo/:meetingId/product',
     component: () => import('./view/expo/proList/index'),
     meta: {
       title: '展品名录'
     }
   },
-  {
-    path: '/expo/company/:meetingId-:companyId',
-    component: () => import('./view/expo/company/company'),
-    meta: {
-      title: '参展企业'
-    }
-  },
+
   {
     path: '/expo/product/:meetingId-:productId',
     component: () => import('./view/expo/product/product'),
@@ -46,7 +47,7 @@ const routes = [
 
   // 动态
   {
-    path: '/expo/shortmsg',
+    path: '/expo/:meetingId/shortmsg',
     component: () => import('./view/expo/shortMsg/shortmsgList'),
     meta: {
       title: '动态'
@@ -100,7 +101,7 @@ const routes = [
     path: '*',
     redirect: '/expo/'
   },
-  
+
 ];
 
 // add route path
