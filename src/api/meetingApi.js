@@ -74,5 +74,9 @@ export const api_GetLiveBroadCast = (params) => request.get('/api/meeting/LiveBr
 export const api_GetLiveBroadCastInfoType = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCastInfoType', { params: params });
 export const api_GetLiveBroadCastInfo = (params) => request.get('/api/meeting/LiveBroadCast/GetLiveBroadCastInfo', { params: params });
 
+//我的评论
+export const api_GetUserReplysByMemberId = (params) => request.get('/api/meeting/Member/GetUserReplysByMemberId', { params: params });
+export const api_GetMemberReplyReply = (params) => request.get('/api/meeting/Member/GetMemberReplyReply', { params: params });
+
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);
