@@ -80,6 +80,8 @@ export const api_GetMemberReplyReply = (params) => request.get('/api/meeting/Mem
 
 //我的足迹
 export const api_GetMemberFootPrint = (params) => request.get('/api/meeting/Member/GetMemberFootPrint', { params: params });
+//我的点赞
+export const api_GetMemberThumbsUp = (params) => request.get('/api/meeting/Member/GetMemberThumbsUp', { params: params });
 
 
 //意见反馈
