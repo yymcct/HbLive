@@ -34,10 +34,10 @@
                 name="1"
                 :icon="require('@/assets/images/expo/mys.png')"
               >
-                <van-cell title-class="submenu" title="我的动态" is-link to="/myadver" />
-                <van-cell title-class="submenu" title="我的评论/回复" is-link to="/myadver" />
-                <van-cell title-class="submenu" title="我的足迹" is-link to="/myadver" />
-                <van-cell title-class="submenu" title="我的点赞" is-link to="/myadver" />
+                <van-cell title-class="submenu" title="我的动态" is-link :to="`/expo/${meetingId}/user/shortmsg`" />
+                <van-cell title-class="submenu" title="我的评论/回复" is-link :to="`/expo/${meetingId}/user/comment`" />
+                <van-cell title-class="submenu" title="我的足迹" is-link :to="`/expo/${meetingId}/user/footmark`" />
+                <van-cell title-class="submenu" title="我的点赞" is-link :to="`/expo/${meetingId}/user/zan`" />
               </van-collapse-item>
               <van-collapse-item
                 title="我的公司"

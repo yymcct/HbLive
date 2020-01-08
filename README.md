@@ -64,10 +64,9 @@ this.companyId = this.$route.params.id;
 
 ```
   <van-nav-bar
-    title="发布动态"
-    left-text="返回"
+    :title="$route.meta.title"
     left-arrow
-    @click-left="$router.push('/expo/shortmsg')"
+    @click-left="$router.push(`/expo/${meetingId}/user`)"
   />
 
  text-indent:2em;

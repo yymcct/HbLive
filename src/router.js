@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 
-
 Vue.use(Router);
 
 const routes = [
@@ -81,6 +80,34 @@ const routes = [
     component: () => import('./view/expo/user/index'),
     meta: {
       title: '我的'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/shortmsg',
+    component: () => import('./view/expo/user/shortMsg'),
+    meta: {
+      title: '我的动态'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/comment',
+    component: () => import('./view/expo/user/comment'),
+    meta: {
+      title: '我的评论/回复'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/footmark',
+    component: () => import('./view/expo/user/footMark'),
+    meta: {
+      title: '我的足迹'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/zan',
+    component: () => import('./view/expo/user/zan'),
+    meta: {
+      title: '我的点赞'
     }
   },
   {
