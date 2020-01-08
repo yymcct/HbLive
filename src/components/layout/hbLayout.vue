@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <van-tabbar v-model="activeNum" active-color="#07c160" route>
-      <van-tabbar-item to="/expo/1">
+      <van-tabbar-item :to="`/expo/${meetingId}/company`">
         <span>展商</span>
         <img
           class="tabbar-img"
@@ -22,7 +22,7 @@
           :src="!props.active ? require('@/assets/images/expo/zhanpin.png') : require('@/assets/images/expo/zhanpin2.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item to="/expo/shortmsg">
+      <van-tabbar-item :to="`/expo/${meetingId}/shortmsg`">
         <span>动态</span>
         <img
           class="tabbar-img"
@@ -31,7 +31,7 @@
           :src="!props.active ? require('@/assets/images/expo/dongtai.png') : require('@/assets/images/expo/dongtai1.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item to="/expo/1/live">
+      <van-tabbar-item :to="`/expo/${meetingId}/live`">
         <span>直播</span>
         <img
           class="tabbar-img"
@@ -40,7 +40,7 @@
           :src="!props.active ? require('@/assets/images/expo/zhibo.png') : require('@/assets/images/expo/zhibo2.png')"
         />
       </van-tabbar-item>
-      <van-tabbar-item to="/expo/user">
+      <van-tabbar-item :to="`/expo/${meetingId}/user`">
         <span>我的</span>
         <img
           class="tabbar-img"

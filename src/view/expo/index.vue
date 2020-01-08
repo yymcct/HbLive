@@ -1,87 +1,124 @@
- <template>
-  <div>
-    <hb-layout :active="0">
-      <div class="box">
-        <div ref="expotop" v-show="topShow">
-          <expo-top :meetingId="meetingId"></expo-top>
-        </div>
-
-        <div ref="toptuijian" >
-          <top-tuijian :meetingId="meetingId"></top-tuijian>
-        </div>
-        <div>
-          <expo-content
-            :meetingId="meetingId"
-            :height="contentStyleObj.height"
-            @scrollLiveTop="scrollLiveTop"
-          ></expo-content>
-        </div>
+<template>
+  <div class="box">
+    <div class="banner">
+      <img src="https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg" />
+    </div>
+    <scroll class="scroll" :data="Meeting" pullup @scrollToEnd="scrollToEnd">
+      <div class="now">
+        <template v-for="item in Meeting">
+          <div class="list" :key="item.id" @click="$router.push(`/expo/${item.id}/company`)">
+            <div class="pic">
+              <img :src="item.coverPictureUrl" />
+            </div>
+            <div class="name">{{item.sortName}}</div>
+            <div class="date">时间：{{item.beginDate}}至{{item.endDate}}</div>
+          </div>
+        </template>
       </div>
-    </hb-layout>
+      <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
+    </scroll>
   </div>
 </template>
 
 <script>
-import HbLayout from "@/components/layout/hbLayout";
-import ExpoTop from "@/components/expo/top";
-import TopTuijian from "@/components/expo/topTuijian";
-import ExpoContent from "@/components/expo/content";
-import { Tab, Tabs } from "vant";
+import { api_GetMeetingList } from "@/api/meetingApi";
+import scroll from "@/base/scroll/scroll";
+
 export default {
-  name: "ExpoIndex",
-  props: {},
+  name: "Index",
   data() {
     return {
-      meetingId: 1,
-      contentStyleObj: {
-        height: "370px"
-      },
-      topShow: true,
-      timer: 0
+      Meeting: [],
+      page: 1,
+      isEnd: false
     };
   },
+  components: { scroll },
 
-  components: {
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
-    HbLayout,
-    ExpoTop,
-    TopTuijian,
-    ExpoContent
-  },
-
- 
   mounted() {
-    this.meetingId = 1;
-    this.timer = setInterval(() => {
-      this.setContentHeight();
-    }, 100);
+    this.getMeetingListByPage(this.page);
+    this.$globalFun.wxShare(location.href.split("#")[0], {
+      title: `火爆云展`,
+      desc: `提供全国最新行业展会信息，详细介绍展会时间、地点、场馆、展商及更多展会相关服务`,
+      link: location.href,
+      imgUrl:
+        "https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg",
+      success: function() {}
+    });
   },
 
   methods: {
-    setContentHeight() {
-      let expotopHight = this.$refs.expotop.offsetHeight;
-      let toptuijianHight = this.$refs.toptuijian.offsetHeight;
-      let tmphight =
-        window.innerHeight - expotopHight - toptuijianHight - 50 + "px";
-      if (this.contentStyleObj.height != tmphight) {
-        this.contentStyleObj.height = tmphight;
+    scrollToEnd() {
+      if (!this.isEnd) {
+        this.page++;
+        this.getMeetingListByPage(this.page);
       }
     },
-    scrollLiveTop(r) {
-      this.topShow = r;
-    }
+    getMeetingListByPage(page) {
+      api_GetMeetingList({
+        page: page,
+        pageSize: 10,
+        filters: "",
+        sorts: "-id"
+      }).then(res => {
+        if (res.result.length == 0) {
+          this.isEnd = true;
+        }
+        this.Meeting = this.Meeting.concat(res.result);
+      });
+    },
+
+    MeetingInfo: function() {}
   },
 
-  watch: {
-    $route() {
-      this.meetingId = this.$route.params.id;
-    }
-  },
-  destroyed() {
-    window.clearInterval(this.timer);
-  }
+  watch: {}
 };
 </script>
 <style lang='scss' scoped>
+.box {
+  background: #fff;
+  .banner {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
+  .now {
+    width: 90%;
+    margin: 20px auto;
+    .list {
+      display: flex;
+      flex-direction: column;
+      align-content: space-between;
+      margin-bottom: 20px;
+      .pic {
+        img {
+          width: 100%;
+        }
+      }
+      .name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 5px 0;
+        font-size: 15px;
+        font-weight: bold;
+        margin-left: 5px;
+      }
+      .date {
+        font-size: 13px;
+        color: #666;
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .nomore {
+    color: #666;
+    text-align: center;
+    font-size: 13px;
+    margin: 10px;
+  }
+}
 </style>
