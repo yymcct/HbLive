@@ -41,6 +41,7 @@ export const userInfoAPI = {
       }
     }
   },
+
   getLoginFrom() {
     const from = localStorage.getItem(LOGINFROM_KEY);
     this.clearLoginFrom();

@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    
+    this.$globalFun.userInfoAPI.ifLogin(null, true);
   },
 
   methods: {
@@ -74,7 +74,6 @@ export default {
           return imgStr;
         })
         .then(res => {
-          this.shortMsg.picture = res;
           return api_PostUserFaceBack({
             Content: this.content,
             Images: res,
@@ -89,7 +88,7 @@ export default {
         .catch(() => {
           this.btnPosting = false;
         })
-        .finally((res) => {
+        .finally(res => {
           console.log(res);
           this.btnPosting = false;
           this.$router.push(`/expo/${this.meetingId}/user`);
