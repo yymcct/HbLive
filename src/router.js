@@ -132,15 +132,15 @@ const routes = [
     }
   },
   {
-    path: '/expo/:meetingId/user/zhanshang/regcompany',
-    component: () => import('./view/expo/user/zhanShang/regCompany'),
+    path: '/expo/:meetingId/user/zhanshang/company/:companyId',
+    component: () => import('./view/expo/user/zhanShang/company'),
     meta: {
       title: '添加公司'
     }
   },
   {
-    path: '/expo/:meetingId/user/zhanshang/regproduct',
-    component: () => import('./view/expo/user/zhanShang/regProduct'),
+    path: '/expo/:meetingId/user/zhanshang/product/:companyId/:productId',
+    component: () => import('./view/expo/user/zhanShang/product'),
     meta: {
       title: '添加产品'
     }

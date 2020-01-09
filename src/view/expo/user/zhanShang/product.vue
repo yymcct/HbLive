@@ -14,7 +14,7 @@
           <van-uploader
             v-model="fileList"
             :max-count="1"
-            upload-text="公司LOGO"
+            upload-text="产品图片"
             :before-read="beforeRead"
           />
         </van-col>
@@ -22,16 +22,16 @@
     </div>
     <div>
       <van-cell-group>
-        <van-field v-model="company.name" required label="公司名称" placeholder="请输入公司名称" />
+        <van-field v-model="product.name" required label="产品名称" placeholder="请输入产品名称" />
         <van-field
-          v-model="company.description"
-          label="公司简介"
-          placeholder="请输入公司简介"
+          v-model="product.description"
+          label="产品详情"
+          placeholder="请输入产品详情"
           rows="5"
           type="textarea"
           autosize
           required
-          maxlength="500"
+          maxlength="1000"
           show-word-limit
         />
       </van-cell-group>
@@ -40,7 +40,7 @@
       <van-button
         type="info"
         class="btn"
-        :disabled="company.name.length==0 || company.description.length==0 || fileList.length==0 || btnPosting==true"
+        :disabled="product.name.length==0 || product.description.length==0 || fileList.length==0 || btnPosting==true"
         @click="post"
         :loading="btnPosting"
         loading-text="发布中..."
@@ -51,24 +51,20 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {
-  api_PostAddCompanyInfo,
-  api_PostImgWithWater,
-  api_GetMemberCompanyinfo
-} from "@/api/meetingApi";
+import { api_PostMeetingProduct, api_PostImgWithWater } from "@/api/meetingApi";
 export default {
   name: "",
   props: [""],
   data() {
     return {
       isEditImg: false, //标识添加是否编辑了图片, 如果编辑了重新上传图片
-      company: {
+      product: {
         id: 0,
+        companyId: 0,
         name: "",
-        photo: "",
-        description: "",
-        site: "",
-        banner: ""
+        pic: "",
+        video: "",
+        description:""
       },
       fileList: [],
       btnPosting: false
@@ -86,21 +82,20 @@ export default {
   beforeMount() {},
 
   mounted() {
-    if (this.$route.params.companyId != 0) {
-      this.$route.meta.title='编辑公司';
-      api_GetMemberCompanyinfo().then(res => {
-        if (res.result.id != 0) {
-          this.company.id = res.result.id;
-          this.company.name = res.result.name;
-          this.company.photo = res.result.photo.replace(/^http:\/\/[^/]+/, "");
-          this.fileList.push({
-            url: res.result.photo
-          });
-          this.company.description = res.result.description;
-        }
-      });
-    }
-    console.log(this.fileList);
+    this.product.companyId = this.$route.params.companyId;
+    // if (this.$route.params.companyId != 0) {
+    //   api_GetMemberCompanyinfo().then(res => {
+    //     if (res.result.id != 0) {
+    //       this.product.id = res.result.id;
+    //       this.product.name = res.result.name;
+    //       this.product.photo = res.result.photo.replace(/^http:\/\/[^/]+/, "");
+    //       this.fileList.push({
+    //         url: res.result.photo
+    //       });
+    //       this.product.description = res.result.description;
+    //     }
+    //   });
+    // }
   },
 
   methods: {
@@ -123,12 +118,12 @@ export default {
             return imgStr;
           })
           .then(res => {
-            this.company.photo = res;
-            return api_PostAddCompanyInfo(this.company);
+            this.product.pic = res;
+            return api_PostMeetingProduct(this.product);
           })
           .then(() => {
             this.$toast(
-              this.$route.params.companyId == 0 ? "发布成功" : "编辑成功"
+              this.$route.params.productId == 0 ? "发布成功" : "编辑成功"
             );
             this.$router.push(`/expo/${this.meetingId}/user`);
           })
@@ -140,10 +135,10 @@ export default {
             this.$router.push(`/expo/${this.meetingId}/user`);
           });
       } else {
-        api_PostAddCompanyInfo(this.company)
+        api_PostMeetingProduct(this.product)
           .then(() => {
             this.$toast(
-              this.$route.params.companyId == 0 ? "发布成功" : "编辑成功"
+              this.$route.params.productId == 0 ? "发布成功" : "编辑成功"
             );
             this.$router.push(`/expo/${this.meetingId}/user`);
           })

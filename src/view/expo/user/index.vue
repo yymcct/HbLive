@@ -73,8 +73,14 @@
                   <div class="list-con-r">
                     <span>{{company.name}}</span>
                     <div>
-                      <img :src="require('@/assets/images/expo/edit.png')" />
-                      <img :src="require('@/assets/images/expo/pic.png')" />
+                      <img
+                        :src="require('@/assets/images/expo/edit.png')"
+                        @click="$router.push(`/expo/${meetingId}/user/zhanshang/company/${company.id}`)"
+                      />
+                      <img
+                        :src="require('@/assets/images/expo/pic.png')"
+                        @click="$router.push(`/expo/${meetingId}/user/zhanshang/product/${company.id}/0`)"
+                      />
                       <img :src="require('@/assets/images/expo/prolist.png')" />
                     </div>
                   </div>
@@ -152,8 +158,10 @@ export default {
     },
     canZhan() {
       this.$globalFun.userInfoAPI.ifLogin(null);
-      let path = this.company ? '':'';//TODO
-      this.$router.push({ path: path});
+      let path = this.company
+        ? ""
+        : `/expo/${this.meetingId}/user/zhanshang/company/0`; //TODO
+      this.$router.push({ path: path });
     }
   },
 

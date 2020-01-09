@@ -85,6 +85,8 @@ export const api_GetMemberThumbsUp = (params) => request.get('/api/meeting/Membe
 export const api_GetMemberCompanyinfo = (params) => request.get('/api/meeting/Member/GetMemberCompanyinfoByToken', { params: params });
 //展商添加公司
 export const api_PostAddCompanyInfo = (params) => request.post('/api/meeting/Company/PostAddCompanyInfo', params);
+//展商添加产品
+export const api_PostMeetingProduct = (params) => request.post('/api/meeting/Product/PostProduct', params);
 
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);
