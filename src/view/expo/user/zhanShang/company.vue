@@ -51,12 +51,17 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { api_PostAddCompanyInfo, api_PostImgWithWater } from "@/api/meetingApi";
+import {
+  api_PostAddCompanyInfo,
+  api_PostImgWithWater,
+  api_GetMemberCompanyinfo
+} from "@/api/meetingApi";
 export default {
   name: "",
   props: [""],
   data() {
     return {
+      isEditImg: false, //标识添加是否编辑了图片, 如果编辑了重新上传图片
       company: {
         id: 0,
         name: "",
@@ -80,7 +85,22 @@ export default {
 
   beforeMount() {},
 
-  mounted() {},
+  mounted() {
+    if (this.$route.params.companyId != 0) {
+      api_GetMemberCompanyinfo().then(res => {
+        if (res.result.id != 0) {
+          this.company.id = res.result.id;
+          this.company.name = res.result.name;
+          this.company.photo = res.result.photo.replace(/^http:\/\/[^/]+/, "");
+          this.fileList.push({
+            url: res.result.photo
+          });
+          this.company.description = res.result.description;
+        }
+      });
+    }
+    console.log(this.fileList);
+  },
 
   methods: {
     beforeRead(file) {
@@ -88,30 +108,52 @@ export default {
         this.$toast("请上传 jpg 格式图片");
         return false;
       }
+      this.isEditImg = true;
       return true;
     },
     post() {
       this.btnPosting = true;
-      api_PostImgWithWater(this.fileList)
-        .then(res => {
-          let imgStr = this.$globalFun.other.ImagesPathToStr(res.result.files);
-          return imgStr;
-        })
-        .then(res => {
-          this.company.photo = res;
-          return api_PostAddCompanyInfo(this.company);
-        })
-        .then(() => {
-          this.$toast("发布成功");
-          this.$router.push(`/expo/${this.meetingId}/user`);
-        })
-        .catch(() => {
-          this.btnPosting = false;
-        })
-        .finally(() => {
-          this.btnPosting = false;
-          this.$router.push(`/expo/${this.meetingId}/user`);
-        });
+      if (this.isEditImg) {
+        api_PostImgWithWater(this.fileList)
+          .then(res => {
+            let imgStr = this.$globalFun.other.ImagesPathToStr(
+              res.result.files
+            );
+            return imgStr;
+          })
+          .then(res => {
+            this.company.photo = res;
+            return api_PostAddCompanyInfo(this.company);
+          })
+          .then(() => {
+            this.$toast(
+              this.$route.params.companyId == 0 ? "发布成功" : "编辑成功"
+            );
+            this.$router.push(`/expo/${this.meetingId}/user`);
+          })
+          .catch(() => {
+            this.btnPosting = false;
+          })
+          .finally(() => {
+            this.btnPosting = false;
+            this.$router.push(`/expo/${this.meetingId}/user`);
+          });
+      } else {
+        api_PostAddCompanyInfo(this.company)
+          .then(() => {
+            this.$toast(
+              this.$route.params.companyId == 0 ? "发布成功" : "编辑成功"
+            );
+            this.$router.push(`/expo/${this.meetingId}/user`);
+          })
+          .catch(() => {
+            this.btnPosting = false;
+          })
+          .finally(() => {
+            this.btnPosting = false;
+            this.$router.push(`/expo/${this.meetingId}/user`);
+          });
+      }
     }
   },
 
