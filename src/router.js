@@ -139,13 +139,19 @@ const routes = [
     }
   },
   {
-    path: '/expo/:meetingId/user/zhanshang/product/:companyId/:productId',
+    path: '/expo/:meetingId/user/zhanshang/:companyId/product/:productId',
     component: () => import('./view/expo/user/zhanShang/product'),
     meta: {
       title: '添加产品'
     }
   },
-
+  {
+    path: '/expo/:meetingId/user/zhanshang/:companyId/products',
+    component: () => import('./view/expo/user/zhanShang/productList'),
+    meta: {
+      title: '管理产品'
+    }
+  },
   {
     path: '/user/login',
     component: () => import('./view/expo/user/login/index'),

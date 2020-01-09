@@ -79,9 +79,12 @@
                       />
                       <img
                         :src="require('@/assets/images/expo/pic.png')"
-                        @click="$router.push(`/expo/${meetingId}/user/zhanshang/product/${company.id}/0`)"
+                        @click="$router.push(`/expo/${meetingId}/user/zhanshang/${company.id}/product/0`)"
                       />
-                      <img :src="require('@/assets/images/expo/prolist.png')" />
+                      <img
+                        :src="require('@/assets/images/expo/prolist.png')"
+                        @click="$router.push(`/expo/${meetingId}/user/zhanshang/${company.id}/products`)"
+                      />
                     </div>
                   </div>
                 </div>

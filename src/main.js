@@ -3,7 +3,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import { router } from './router';
 import {
-  Field, Dialog, Toast, Loading, Uploader, Checkbox,
+  Field, Dialog, Toast, Loading, Uploader, Checkbox,CheckboxGroup, 
   Button, NavBar, Image, ImagePreview, Tab, Tabs,
   Collapse, CollapseItem, Icon ,Cell, CellGroup,Row,Col
 } from "vant";
@@ -18,6 +18,7 @@ Vue.use(Dialog);
 Vue.use(Toast);
 Vue.use(Loading);
 Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
 Vue.use(Button);
 Vue.use(NavBar);
 Vue.use(Image);
