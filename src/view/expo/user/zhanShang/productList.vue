@@ -20,7 +20,7 @@
             @click="checkAll ? $refs.checkboxGroup.toggleAll(false):$refs.checkboxGroup.toggleAll(true)"
           >全选</van-checkbox>
         </div>
-        <img :src="require('@/assets/images/expo/delete.png')" />
+        <img :src="require('@/assets/images/expo/delete.png')" @click="delProducts" />
       </div>
       <van-checkbox-group v-model="checkResult" ref="checkboxGroup">
         <div class="selectlist">
@@ -47,7 +47,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { api_GetProductByIteam } from "@/api/meetingApi";
+import {
+  api_GetProductByIteam,
+  api_DeleteMeetingProduct
+} from "@/api/meetingApi";
 export default {
   name: "",
   props: ["ProductList"],
@@ -70,17 +73,39 @@ export default {
   beforeMount() {},
 
   mounted() {
-    const companyId = this.$route.params.companyId;
-
-    api_GetProductByIteam({
-      Filters: "CompanyId==" + companyId,
-      PageSize: 50
-    }).then(res => {
-      this.products = res.result;
-    });
+    this.getProductByIteam();
   },
 
-  methods: {},
+  methods: {
+    getProductByIteam() {
+      api_GetProductByIteam({
+        Filters: "CompanyId==" + this.$route.params.companyId,
+        PageSize: 50
+      }).then(res => {
+        this.products = res.result;
+      });
+    },
+    delProducts() {
+      if (this.checkResult.length == 0) {
+        this.$toast("请选中要删除的产品");
+        return;
+      }
+      this.$dialog
+        .confirm({
+          title: "危险操作",
+          message: "确定要删除选中的产品?"
+        })
+        .then(() => {
+          api_DeleteMeetingProduct({
+            ids: this.checkResult
+          }).then(() => {
+            this.$toast("删除成功");
+             this.getProductByIteam();
+          });
+         
+        });
+    }
+  },
 
   watch: {}
 };

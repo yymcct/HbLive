@@ -87,6 +87,10 @@ export const api_GetMemberCompanyinfo = (params) => request.get('/api/meeting/Me
 export const api_PostAddCompanyInfo = (params) => request.post('/api/meeting/Company/PostAddCompanyInfo', params);
 //展商添加产品
 export const api_PostMeetingProduct = (params) => request.post('/api/meeting/Product/PostProduct', params);
+//获取产品详情
+export const api_GetProductContentById = (params) => request.get('/api/meeting/Product/GetProductContentById', { params: params });
+//删除产品
+export const api_DeleteMeetingProduct = (params) => request.post('/api/meeting/Product/DeleteProduct', params);
 
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);

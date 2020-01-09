@@ -2,11 +2,7 @@
   <!-- 展商添加公司 -->
   <div class="wrapper">
     <div class="bar">
-      <van-nav-bar
-        :title="$route.meta.title"
-        left-arrow
-        @click-left="$router.push(`/expo/${meetingId}/user`)"
-      />
+      <van-nav-bar :title="$route.meta.title" left-arrow @click-left="$router.go(-1)" />
     </div>
     <div class="content">
       <van-row type="flex" justify="center">
@@ -51,7 +47,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { api_PostMeetingProduct, api_PostImgWithWater } from "@/api/meetingApi";
+import {
+  api_PostMeetingProduct,
+  api_PostImgWithWater,
+  api_GetProductContentById
+} from "@/api/meetingApi";
 export default {
   name: "",
   props: [""],
@@ -64,7 +64,7 @@ export default {
         name: "",
         pic: "",
         video: "",
-        description:""
+        description: ""
       },
       fileList: [],
       btnPosting: false
@@ -83,19 +83,23 @@ export default {
 
   mounted() {
     this.product.companyId = this.$route.params.companyId;
-    // if (this.$route.params.companyId != 0) {
-    //   api_GetMemberCompanyinfo().then(res => {
-    //     if (res.result.id != 0) {
-    //       this.product.id = res.result.id;
-    //       this.product.name = res.result.name;
-    //       this.product.photo = res.result.photo.replace(/^http:\/\/[^/]+/, "");
-    //       this.fileList.push({
-    //         url: res.result.photo
-    //       });
-    //       this.product.description = res.result.description;
-    //     }
-    //   });
-    // }
+    if (this.$route.params.productId != 0) {
+      api_GetProductContentById({
+        id: this.$route.params.productId
+      }).then(res => {
+        if (res.result.id != 0) {
+          this.product.id = res.result.id;
+          this.product.companyId = res.result.companyId;
+          this.product.name = res.result.name;
+          this.product.pic = res.result.pic.replace(/^http:\/\/[^/]+/, "");
+          this.product.video = res.result.video;
+          this.fileList.push({
+            url: res.result.pic
+          });
+          this.product.description = res.result.description;
+        }
+      });
+    }
   },
 
   methods: {
@@ -125,14 +129,14 @@ export default {
             this.$toast(
               this.$route.params.productId == 0 ? "发布成功" : "编辑成功"
             );
-            this.$router.push(`/expo/${this.meetingId}/user`);
+            this.$router.go(-1);
           })
           .catch(() => {
             this.btnPosting = false;
           })
           .finally(() => {
             this.btnPosting = false;
-            this.$router.push(`/expo/${this.meetingId}/user`);
+            this.$router.go(-1);
           });
       } else {
         api_PostMeetingProduct(this.product)
@@ -140,14 +144,14 @@ export default {
             this.$toast(
               this.$route.params.productId == 0 ? "发布成功" : "编辑成功"
             );
-            this.$router.push(`/expo/${this.meetingId}/user`);
+            this.$router.go(-1);
           })
           .catch(() => {
             this.btnPosting = false;
           })
           .finally(() => {
             this.btnPosting = false;
-            this.$router.push(`/expo/${this.meetingId}/user`);
+            this.$router.go(-1);
           });
       }
     }
