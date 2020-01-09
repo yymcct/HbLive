@@ -77,12 +77,14 @@ export const api_GetLiveBroadCastInfo = (params) => request.get('/api/meeting/Li
 //我的评论
 export const api_GetUserReplysByMemberId = (params) => request.get('/api/meeting/Member/GetUserReplysByMemberId', { params: params });
 export const api_GetMemberReplyReply = (params) => request.get('/api/meeting/Member/GetMemberReplyReply', { params: params });
-
 //我的足迹
 export const api_GetMemberFootPrint = (params) => request.get('/api/meeting/Member/GetMemberFootPrint', { params: params });
 //我的点赞
 export const api_GetMemberThumbsUp = (params) => request.get('/api/meeting/Member/GetMemberThumbsUp', { params: params });
-
+//获取我的公司
+export const api_GetMemberCompanyinfo = (params) => request.get('/api/meeting/Member/GetMemberCompanyinfoByToken', { params: params });
+//展商添加公司
+export const api_PostAddCompanyInfo = (params) => request.post('/api/meeting/Company/PostAddCompanyInfo', params);
 
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);

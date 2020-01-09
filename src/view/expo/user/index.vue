@@ -3,17 +3,17 @@
     <hb-layout :active="4">
       <div class="box">
         <div class="main">
-          <div class="user" v-if="userinfo">
+          <div class="user" v-if="user">
             <div
               class="bg"
-              :style="{ background: '#fff url('+userinfo.photo+') no-repeat center center / cover'}"
+              :style="{ background: '#fff url('+user.photo+') no-repeat center center / cover'}"
             ></div>
             <div class="user-con">
               <div class="user-l">
-                <img :src="userinfo.photo" />
+                <img :src="user.photo" />
               </div>
               <div class="user-r">
-                <span>{{userinfo.nick}}</span>
+                <span>{{user.nick}}</span>
               </div>
             </div>
           </div>
@@ -22,7 +22,11 @@
               <img :src="require('@/assets/images/expo/user.png')" />
             </div>
             <div class="users-r">
-              <van-button type="default" size="small">授权登录</van-button>
+              <van-button
+                type="default"
+                size="small"
+                @click="$globalFun.userInfoAPI.ifLogin(null);"
+              >授权登录</van-button>
             </div>
           </div>
         </div>
@@ -64,10 +68,10 @@
                 name="2"
                 :icon="require('@/assets/images/expo/shop.png')"
               >
-                <div class="list-con">
-                  <img :src="com.photo" class="list-con-l" />
+                <div class="list-con" v-if="company">
+                  <img :src="company.photo" class="list-con-l" />
                   <div class="list-con-r">
-                    <span>{{com.name}}</span>
+                    <span>{{company.name}}</span>
                     <div>
                       <img :src="require('@/assets/images/expo/edit.png')" />
                       <img :src="require('@/assets/images/expo/pic.png')" />
@@ -103,7 +107,7 @@
         </div>
 
         <div class="bind">
-          <van-button type="primary">我要参展</van-button>
+          <van-button type="primary" @click="canZhan">我要参展</van-button>
         </div>
       </div>
     </hb-layout>
@@ -111,24 +115,23 @@
 </template>
 
 <script>
-import hbLayout from "@/components/layout/hbLayout";
 import { mapGetters } from "vuex";
+import hbLayout from "@/components/layout/hbLayout";
+import { api_GetMemberCompanyinfo } from "@/api/meetingApi";
 export default {
   name: "",
   props: [""],
   data() {
     return {
       activeNames: ["1"],
-      userinfo: null,
-      com: {
-        photo: "",
-        name: ""
-      }
+
+      company: null
     };
   },
   computed: {
-    ...mapGetters("meeting", {
-      meetingId: "meetingId"
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      user: "user/user"
     })
   },
   components: { hbLayout },
@@ -136,15 +139,21 @@ export default {
   beforeMount() {},
 
   mounted() {
-    this.loadUserInfo();
+    if (this.user) {
+      this.getMemberCompanyinfo();
+    }
   },
 
   methods: {
-    loadUserInfo() {
-      const userinfo = this.$globalFun.userInfoAPI.get();
-      if (userinfo) {
-        this.userinfo = userinfo.member;
-      }
+    getMemberCompanyinfo() {
+      api_GetMemberCompanyinfo().then(res => {
+        if (res.result.id != 0) this.company = res.result;
+      });
+    },
+    canZhan() {
+      this.$globalFun.userInfoAPI.ifLogin(null);
+      let path = this.company ? '':'';//TODO
+      this.$router.push({ path: path});
     }
   },
 

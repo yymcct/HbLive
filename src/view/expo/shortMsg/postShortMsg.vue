@@ -53,7 +53,7 @@ export default {
         video: ""
       },
       fileList: [],
-      isReadMZSM: true,
+      isReadMZSM: true,//已阅读免责声明
       btnPosting: false
     };
   },

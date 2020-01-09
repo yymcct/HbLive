@@ -5,7 +5,7 @@ import { router } from './router';
 import {
   Field, Dialog, Toast, Loading, Uploader, Checkbox,
   Button, NavBar, Image, ImagePreview, Tab, Tabs,
-  Collapse, CollapseItem, Icon ,Cell, CellGroup
+  Collapse, CollapseItem, Icon ,Cell, CellGroup,Row,Col
 } from "vant";
 import globalFun from '@/utils/globalFun'
 import store from './store'
@@ -29,6 +29,8 @@ Vue.use(CollapseItem);
 Vue.use(Icon);
 Vue.use(Cell);
 Vue.use(CellGroup);
+Vue.use(Row);
+Vue.use(Col);
 
 Vue.prototype.$globalFun = globalFun;
 

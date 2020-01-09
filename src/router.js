@@ -131,6 +131,20 @@ const routes = [
       title: '关于我们'
     }
   },
+  {
+    path: '/expo/:meetingId/user/zhanshang/regcompany',
+    component: () => import('./view/expo/user/zhanShang/regCompany'),
+    meta: {
+      title: '添加公司'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/zhanshang/regproduct',
+    component: () => import('./view/expo/user/zhanShang/regProduct'),
+    meta: {
+      title: '添加产品'
+    }
+  },
 
   {
     path: '/user/login',
