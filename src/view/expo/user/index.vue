@@ -162,8 +162,8 @@ export default {
     canZhan() {
       this.$globalFun.userInfoAPI.ifLogin(null);
       let path = this.company
-        ? ""
-        : `/expo/${this.meetingId}/user/zhanshang/company/0`; //TODO
+        ? `/expo/${this.meetingId}/user/meeting/company/${this.company.id}`
+        : `/expo/${this.meetingId}/user/zhanshang/company/0`;
       this.$router.push({ path: path });
     }
   },

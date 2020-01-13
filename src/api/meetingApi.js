@@ -92,5 +92,13 @@ export const api_GetProductContentById = (params) => request.get('/api/meeting/P
 //删除产品
 export const api_DeleteMeetingProduct = (params) => request.post('/api/meeting/Product/DeleteProduct', params);
 
+//获取公司参展情况
+export const api_GetCompanyMeeting = (params) => request.get('/api/meeting/Company/GetCompanyMeeting', { params: params });
+//获取验证码
+export const api_GetSmsCheck = (params) => request.post('/api/meeting/Member/GetSmsCheck', params);
+
+//添加参展公司
+export const api_PostCompanyMeeting = (params) => request.post('/api/meeting/Company/PostCompanyMeeting', params);
+
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);

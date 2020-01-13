@@ -135,7 +135,7 @@ const routes = [
     path: '/expo/:meetingId/user/zhanshang/company/:companyId',
     component: () => import('./view/expo/user/zhanShang/company'),
     meta: {
-      title: '添加公司'
+      title: '添加企业'
     }
   },
   {
@@ -150,6 +150,13 @@ const routes = [
     component: () => import('./view/expo/user/zhanShang/productList'),
     meta: {
       title: '管理产品'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/meeting/company/:companyId',
+    component: () => import('./view/expo/user/meeting/company'),
+    meta: {
+      title: '参展企业'
     }
   },
   {

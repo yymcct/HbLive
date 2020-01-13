@@ -4,7 +4,7 @@ import App from './App.vue'
 import { router } from './router';
 import {
   Field, Dialog, Toast, Loading, Uploader, Checkbox,CheckboxGroup, 
-  Button, NavBar, Image, ImagePreview, Tab, Tabs,
+  Button, NavBar, Image, ImagePreview, Tab, Tabs,Picker ,Popup ,
   Collapse, CollapseItem, Icon ,Cell, CellGroup,Row,Col
 } from "vant";
 import globalFun from '@/utils/globalFun'
@@ -32,6 +32,8 @@ Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Row);
 Vue.use(Col);
+Vue.use(Picker);
+Vue.use(Popup);
 
 Vue.prototype.$globalFun = globalFun;
 
