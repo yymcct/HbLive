@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import {
   api_PostProductMemberHits,
   api_GetProductContent,
@@ -120,7 +121,6 @@ export default {
   props: [""],
   data() {
     return {
-      meetingId: 0,
       productId: 0,
       product: {
         pic: "",
@@ -142,12 +142,15 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
 
   beforeMount() {},
 
   mounted() {
-    this.meetingId = this.$route.params.meetingId;
     this.productId = this.$route.params.productId;
 
     this.getProductContent(res => {
@@ -229,7 +232,6 @@ export default {
       }
     },
     $route() {
-      this.meetingId = this.$route.params.meetingId;
       this.productId = this.$route.params.productId;
       this.getProductContent();
       this.getProductReplys();

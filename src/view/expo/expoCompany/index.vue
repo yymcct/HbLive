@@ -7,11 +7,10 @@
           <expo-top />
         </div>
         <div ref="toptuijian">
-          <top-tuijian :meetingId="meetingId"></top-tuijian>
+          <top-tuijian />
         </div>
         <div>
           <expo-content
-            :meetingId="meetingId"
             :height="contentStyleObj.height"
             @scrollLiveTop="scrollLiveTop"
           ></expo-content>
@@ -22,17 +21,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import HbLayout from "@/components/layout/hbLayout";
 import ExpoTop from "./components/top";
 import TopTuijian from "./components/topTuijian";
 import ExpoContent from "./components/tabContent/index";
-import { Tab, Tabs } from "vant";
 export default {
   name: "ExpoIndex",
   props: {},
   data() {
     return {
-      meetingId: 1,
       contentStyleObj: {
         height: "370px"
       },
@@ -42,16 +40,17 @@ export default {
   },
 
   components: {
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
     HbLayout,
     ExpoTop,
     TopTuijian,
     ExpoContent
   },
-
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
   mounted() {
-    this.meetingId = 1;
     this.timer = setInterval(() => {
       this.setContentHeight();
     }, 100);
@@ -72,11 +71,6 @@ export default {
     }
   },
 
-  watch: {
-    $route() {
-      this.meetingId = this.$route.params.id;
-    }
-  },
   destroyed() {
     window.clearInterval(this.timer);
   }

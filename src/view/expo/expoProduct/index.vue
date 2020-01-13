@@ -6,11 +6,7 @@
           <expo-top />
         </div>
         <div>
-          <tab-product
-            :meetingId="meetingId"
-            :height="contentStyleObj.height"
-            @scrollLiveTop="scrollLiveTop"
-          ></tab-product>
+          <tab-product :height="contentStyleObj.height" @scrollLiveTop="scrollLiveTop"></tab-product>
         </div>
       </div>
     </hb-layout>
@@ -18,16 +14,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import HbLayout from "@/components/layout/hbLayout";
 import ExpoTop from "../expoCompany/components/top";
 import tabProduct from "./components/tabContent/index";
-import { Tab, Tabs } from "vant";
+
 export default {
   name: "ExpoPro",
   props: {},
   data() {
     return {
-      meetingId: 1,
       contentStyleObj: {
         height: "370px"
       },
@@ -37,19 +33,20 @@ export default {
   },
 
   components: {
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
     HbLayout,
     ExpoTop,
     tabProduct
   },
 
-  computed: {},
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
 
   beforeMount() {},
 
   mounted() {
-    this.meetingId = 1;
     this.timer = setInterval(() => {
       this.setContentHeight();
     }, 100);
@@ -65,12 +62,6 @@ export default {
     },
     scrollLiveTop(r) {
       this.topShow = r;
-    }
-  },
-
-  watch: {
-    $route() {
-      this.meetingId = this.$route.params.meetingId;
     }
   },
   destroyed() {

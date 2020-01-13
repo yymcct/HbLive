@@ -49,13 +49,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import scroll from "@/components/scroll/scroll";
 import { api_GetCompanyByTopRecommend } from "@/api/meetingApi";
 export default {
   name: "TopTuijian",
-  props: {
-    meetingId: Number
-  },
   data() {
     return {
       companys: [],
@@ -67,7 +65,11 @@ export default {
   components: {
     scroll
   },
-
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
   mounted() {
     this.getCompanys();
   },
@@ -92,13 +94,6 @@ export default {
           this.companys = this.companys.concat(res.result);
         }
       });
-    }
-  },
-
-  watch: {
-    meetingId: function() {
-      this.page = 1;
-      this.getCompanys();
     }
   }
 };

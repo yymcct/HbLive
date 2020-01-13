@@ -9,20 +9,19 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <company :companys="companys" :meetingId="meetingId"></company>
+      <company :companys="companys" />
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
 </template>
 
 <script>
+import company from "./company";
 import scroll from "@/components/scroll/scroll";
 import { api_GetMeetingAreaCompany } from "@/api/meetingApi";
-import company from "./company";
 export default {
   name: "reaCompany",
   props: {
-    meetingId: Number,
     meetingAreaId: Number
   },
   data() {
@@ -33,12 +32,10 @@ export default {
       isEnd: false
     };
   },
-
   components: {
     scroll,
     company
   },
-
   mounted() {
     this.getMeetingAreaCompanys();
   },

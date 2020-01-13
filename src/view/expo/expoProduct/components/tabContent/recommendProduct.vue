@@ -16,14 +16,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import scroll from "@/components/scroll/scroll";
 import { api_GetProductByRecommend } from "@/api/meetingApi";
 import product from "./product";
 export default {
   name: "reaCompany",
-  props: {
-    meetingId: Number
-  },
+
   data() {
     return {
       probeType: 2,
@@ -37,9 +36,15 @@ export default {
     scroll,
     product
   },
-  created() {this.getProductByRecommend();},
+
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
+  created() {},
   mounted() {
-    
+    this.getProductByRecommend();
   },
 
   methods: {

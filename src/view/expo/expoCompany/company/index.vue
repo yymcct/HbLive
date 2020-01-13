@@ -137,7 +137,6 @@ import {
 
 export default {
   name: "Company",
-  props: [""],
   data() {
     return {
       userinfo: null,

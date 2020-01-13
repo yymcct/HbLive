@@ -9,20 +9,20 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <product :products="products" :meetingId="meetingId"></product>
+      <product :products="products"></product>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import scroll from "@/components/scroll/scroll";
 import { api_GetMeetingAreaProduct } from "@/api/meetingApi";
 import product from "./product";
 export default {
   name: "AreaProduct",
   props: {
-    meetingId: Number,
     meetingAreaId: Number
   },
   data() {
@@ -38,7 +38,11 @@ export default {
     scroll,
     product
   },
-
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
   mounted() {
     this.getMeetingAreaProduct();
   },

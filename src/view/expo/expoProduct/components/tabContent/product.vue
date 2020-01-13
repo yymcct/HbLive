@@ -28,10 +28,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "MeetingProduct",
   props: {
-    meetingId: Number,
     products: Array,
     showTop: {
       type: Boolean,
@@ -44,7 +44,11 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
 
   beforeMount() {},
 

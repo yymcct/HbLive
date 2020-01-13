@@ -64,10 +64,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "MeetingCompany",
   props: {
-    meetingId: Number,
     companys: Array,
     showTop: {
       type: Boolean,
@@ -78,17 +78,11 @@ export default {
     return {};
   },
 
-  components: {},
-
-  computed: {},
-
-  beforeMount() {},
-
-  mounted() {},
-
-  methods: {},
-
-  watch: {}
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  }
 };
 </script>
 <style lang='scss' scoped>

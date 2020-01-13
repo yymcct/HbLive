@@ -3,7 +3,6 @@
     <van-tabs v-model="active" animated title-active-color="#06a65e" color="#06a65e" swipeable>
       <van-tab title="推荐" class="tab">
         <recommend-product
-          :meetingId="meetingId"
           class="product"
           :style="{height:height}"
           @scrollLiveTop="scrollLiveTop"
@@ -13,7 +12,6 @@
         <van-tab :title="iteam.name" v-bind:key="iteam.id" class="tab">
           <area-product
             :meetingAreaId="iteam.id"
-            :meetingId="meetingId"
             class="product"
             :style="{height:height}"
             @scrollLiveTop="scrollLiveTop"
@@ -25,14 +23,13 @@
 </template>
 
 <script>
-import { Tab, Tabs } from "vant";
+import { mapGetters } from "vuex";
 import { api_GetMeetingArea } from "@/api/meetingApi";
 import areaProduct from "./areaProduct";
 import recommendProduct from "./recommendProduct";
 export default {
   name: "TabContent",
   props: {
-    meetingId: Number,
     height: String
   },
   data() {
@@ -43,15 +40,15 @@ export default {
   },
 
   components: {
-    [Tab.name]: Tab,
-    [Tabs.name]: Tabs,
     areaProduct,
     recommendProduct
   },
 
-  computed: {},
-
-  beforeMount() {},
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
+  },
 
   mounted() {
     this.getMeetingArea();

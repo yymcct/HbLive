@@ -9,21 +9,20 @@
       @scroll="scroll"
       :probeType="probeType"
     >
-      <company :companys="companys" :meetingId="meetingId" showTop></company>
+      <company :companys="companys" showTop></company>
       <div class="nomore" v-show="isEnd">---&nbsp;没有更多&nbsp;---</div>
     </scroll>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import scroll from "@/components/scroll/scroll";
 import { api_GetGetCompanyByRecommend } from "@/api/meetingApi";
 import company from "./company";
 export default {
   name: "reaCompany",
-  props: {
-    meetingId: Number
-  },
+
   data() {
     return {
       probeType: 2,
@@ -36,6 +35,12 @@ export default {
   components: {
     scroll,
     company
+  },
+  
+  computed: {
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
+    })
   },
 
   mounted() {
