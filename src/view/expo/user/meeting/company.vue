@@ -6,7 +6,7 @@
         :title="$route.meta.title"
         left-arrow
         right-text="参展产品"
-        @click-left="$router.push(`/expo/${meetingId}/user`)"
+        @click-left="$router.go(-1)"
         @click-right="$router.push(`/expo/${meetingId}/user/meeting/${company.id}/products`)"
       />
     </div>

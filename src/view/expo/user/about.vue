@@ -4,7 +4,7 @@
       <van-nav-bar
         :title="$route.meta.title"
         left-arrow
-        @click-left="$router.push(`/expo/${meetingId}/user`)"
+        @click-left="$router.go(-1)"
       />
     </div>
     <div class="box">

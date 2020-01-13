@@ -4,7 +4,7 @@
       title="发布动态"
       left-text="返回"
       left-arrow
-      @click-left="$router.push('/expo/shortmsg')"
+      @click-left="$router.go(-1)"
     />
     <div class="content">
       <van-field

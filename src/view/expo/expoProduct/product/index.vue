@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div class="bar">
+      <van-nav-bar :title="product.name" left-arrow @click-left="$router.go(-1)" />
+    </div>
     <div class="box">
       <div class="swiper">
         <img :src="product.pic" mode="widthFix" />
@@ -231,13 +234,20 @@ export default {
         this.getCompanyContent();
       }
     },
-    $route() {
-      this.productId = this.$route.params.productId;
-      this.getProductContent();
-      this.getProductReplys();
-      this.getCompanyOtherProduct();
-      this.postMeetingHits();
-      this.PostProductMemberHits();
+    $route(val) {
+      console.log("111111111111", val);
+      if (val.params.hasOwnProperty("productId")) {
+        const productId = val.params.productId;
+        if (productId != null && productId != this.productId) {
+          this.productId = this.$route.params.productId;
+          this.getProductContent();
+          this.getProductReplys();
+          this.getCompanyOtherProduct();
+          this.postMeetingHits();
+          this.PostProductMemberHits();
+          console.log("222val");
+        }
+      }
     }
   }
 };
