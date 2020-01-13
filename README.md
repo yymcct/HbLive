@@ -87,9 +87,8 @@ this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
 ## 引用vuex
 import { mapGetters } from 'vuex'
   computed: {
-    ...mapGetters({
-      meetingId: "meeting/meetingId",
-      user: "user/user"
+    ...mapGetters("meeting", {
+      meetingId: "meetingId"
     })
   },
 this.$store.getters['meeting/meetingId']

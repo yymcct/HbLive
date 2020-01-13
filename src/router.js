@@ -160,6 +160,13 @@ const routes = [
     }
   },
   {
+    path: '/expo/:meetingId/user/meeting/:companyId/products',
+    component: () => import('./view/expo/user/meeting/product'),
+    meta: {
+      title: '参展企业'
+    }
+  },
+  {
     path: '/user/login',
     component: () => import('./view/expo/user/login/index'),
     meta: {

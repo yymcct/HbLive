@@ -5,7 +5,9 @@
       <van-nav-bar
         :title="$route.meta.title"
         left-arrow
+        right-text="参展产品"
         @click-left="$router.push(`/expo/${meetingId}/user`)"
+        @click-right="$router.push(`/expo/${meetingId}/user/meeting/${company.id}/products`)"
       />
     </div>
     <div class="content">
