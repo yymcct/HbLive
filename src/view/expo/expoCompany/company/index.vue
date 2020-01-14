@@ -11,7 +11,9 @@
       <span>展位：{{company.meetingPlace}}</span>
     </div>
     <div class="exponame">{{meeting.sortName}}</div>
-    <div class="expotime">{{meeting.beginDate.replace(/-/g,'.')}}-{{meeting.endDate.substr(8,2)}} {{meeting.address}}</div>
+    <div
+      class="expotime"
+    >{{meeting.beginDate.replace(/-/g,'.')}}-{{meeting.endDate.substr(8,2)}} {{meeting.address}}</div>
     <!-- 公司描述 -->
     <div class="comdesc">
       <img :src="require('@/assets/images/expo/baijiantou.png')" class="baijiantou" />
@@ -34,7 +36,11 @@
       </div>
       <div class="prolist">
         <template v-for="(item,index) in pro">
-          <div class="procon" :key="index" @click="router.push({ path: `/expo/${meetingId}/product/${item.id}` })">
+          <div
+            class="procon"
+            :key="index"
+            @click="router.push({ path: `/expo/${meetingId}/product/${item.id}` })"
+          >
             <img :src="item.pic" />
             <span>{{item.name}}</span>
           </div>
@@ -109,10 +115,11 @@
         <img :src="require('@/assets/images/expo/kefu.png')" />
         <span>客服</span>
       </a>
-      <div class="zhanshang" @click="$router.push({ path: `/expo/${meetingId}`})">
+      <router-link class="zhanshang" :to="{ path: `/expo/${meetingId}/company`}">
         <img :src="require('@/assets/images/expo/zhanshang.png')" />
         <span>展商名录</span>
-      </div>
+      </router-link>
+
       <div class="goliuyan">给TA留言</div>
       <div class="accept">接收邀请</div>
     </div>
@@ -184,7 +191,7 @@ export default {
     this.getComThumbsUpMemberNick();
     this.getCompanyProduct();
     this.getCompanyReplys();
- //   this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
+    //   this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
     this.postMeetingHits();
   },
 

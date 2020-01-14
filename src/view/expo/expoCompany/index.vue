@@ -10,11 +10,9 @@
           <top-tuijian />
         </div>
         <div>
-          <expo-content
-            :height="contentStyleObj.height"
-            @scrollLiveTop="scrollLiveTop"
-          ></expo-content>
+          <expo-content :height="contentStyleObj.height" @scrollLiveTop="scrollLiveTop"></expo-content>
         </div>
+        <new-addition class="piaofu-1" />
       </div>
     </hb-layout>
   </div>
@@ -22,10 +20,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import HbLayout from "@/components/layout/hbLayout";
 import ExpoTop from "./components/top";
 import TopTuijian from "./components/topTuijian";
 import ExpoContent from "./components/tabContent/index";
+import HbLayout from "@/components/layout/hbLayout";
+import newAddition from "@/components/expo/newAddition";
+
 export default {
   name: "expoCompany",
   props: {},
@@ -43,7 +43,8 @@ export default {
     HbLayout,
     ExpoTop,
     TopTuijian,
-    ExpoContent
+    ExpoContent,
+    newAddition
   },
   computed: {
     ...mapGetters("meeting", {
@@ -77,4 +78,11 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.box {
+  .piaofu-1 {
+    position: fixed;
+    left: 1%;
+    bottom: 90px;
+  }
+}
 </style>

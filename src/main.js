@@ -5,7 +5,7 @@ import { router } from './router';
 import {
   Field, Dialog, Toast, Loading, Uploader, Checkbox,CheckboxGroup, 
   Button, NavBar, Image, ImagePreview, Tab, Tabs,Picker ,Popup ,
-  Collapse, CollapseItem, Icon ,Cell, CellGroup,Row,Col
+  Collapse, CollapseItem, Icon ,Cell, CellGroup,Row,Col,Swipe, SwipeItem
 } from "vant";
 import globalFun from '@/utils/globalFun'
 import store from './store'
@@ -34,6 +34,8 @@ Vue.use(Row);
 Vue.use(Col);
 Vue.use(Picker);
 Vue.use(Popup);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 
 Vue.prototype.$globalFun = globalFun;
 

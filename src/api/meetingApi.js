@@ -59,6 +59,9 @@ export const api_GetCompanyReplys = (params) => request.get('/api/meeting/Compan
 export const api_PostMeetingHits = (params) => request.post('/api/meeting/Meeting/PostMeetingHits', params);
 export const api_PostCompanyReply = (params) => request.post('/api/meeting/Company/PostCompanyReply', params);
 
+//小组件
+export const api_GetNewAddition = (params) => request.get('/api/meeting/Company/GetNewAddition', { params: params });
+
 //产品详情页
 export const api_PostProductMemberHits = (params) => request.post('/api/meeting/Product/PostProductMemberHits', params);
 export const api_GetProductContent = (params) => request.get('/api/meeting/Product/GetProductContent', { params: params });

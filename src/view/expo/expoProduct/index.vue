@@ -8,6 +8,7 @@
         <div>
           <tab-product :height="contentStyleObj.height" @scrollLiveTop="scrollLiveTop"></tab-product>
         </div>
+        <new-addition class="piaofu-1" />
       </div>
     </hb-layout>
   </div>
@@ -18,7 +19,7 @@ import { mapGetters } from "vuex";
 import HbLayout from "@/components/layout/hbLayout";
 import ExpoTop from "../expoCompany/components/top";
 import tabProduct from "./components/tabContent/index";
-
+import newAddition from "@/components/expo/newAddition";
 export default {
   name: "expoProduct",
   props: {},
@@ -35,7 +36,8 @@ export default {
   components: {
     HbLayout,
     ExpoTop,
-    tabProduct
+    tabProduct,
+    newAddition
   },
 
   computed: {
@@ -70,4 +72,11 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.box {
+  .piaofu-1 {
+    position: fixed;
+    left: 1%;
+    bottom: 90px;
+  }
+}
 </style>
