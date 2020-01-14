@@ -163,7 +163,14 @@ const routes = [
     path: '/expo/:meetingId/user/meeting/:companyId/products',
     component: () => import('./view/expo/user/meeting/product'),
     meta: {
-      title: '参展企业'
+      title: '参展展品'
+    }
+  },
+  {
+    path: '/expo/:meetingId/user/meeting/customer',
+    component: () => import('./view/expo/user/meeting/customer'),
+    meta: {
+      title: '注册参观'
     }
   },
   {

@@ -103,5 +103,8 @@ export const api_GetSmsCheck = (params) => request.post('/api/meeting/Member/Get
 //添加参展公司
 export const api_PostCompanyMeeting = (params) => request.post('/api/meeting/Company/PostCompanyMeeting', params);
 
+//观众注册
+export const api_PostMemberInfo = (params) => request.post('/api/meeting/Member/PostMemberInfo', params);
+
 //意见反馈
 export const api_PostUserFaceBack = (params) => request.post('/api/v0.1/Member/PostUserFaceBack', params);

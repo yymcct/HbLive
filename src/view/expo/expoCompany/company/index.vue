@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div class="bar">
+      <van-nav-bar :title="$route.meta.title" left-arrow @click-left="$router.go(-1)" />
+    </div>
     <div class="maintop">
       <img :src="require('@/assets/images/expo/combg.png')" class="combg" />
       <img :src="company.photo" class="logo" />
@@ -19,7 +22,7 @@
       <img :src="require('@/assets/images/expo/baijiantou.png')" class="baijiantou" />
       <div class="desctitle">公司简介</div>
       <div class="desccon">
-        <div>
+        <div v-if="company.description">
           {{company.description.substring(0,100)}}......
           <span
             @click="$dialog.alert({title: '公司介绍', message: company.description})"
@@ -39,7 +42,7 @@
           <div
             class="procon"
             :key="index"
-            @click="router.push({ path: `/expo/${meetingId}/product/${item.id}` })"
+            @click="$router.push({ path: `/expo/${meetingId}/product/${item.id}` })"
           >
             <img :src="item.pic" />
             <span>{{item.name}}</span>
@@ -62,19 +65,14 @@
       </div>
     </div>
     <!-- 留言榜 -->
-    <div class="liuyan">
+    <div class="liuyan" id="liuyan">
       <div class="liuyantitle">
         <span class="biaoti">留言榜</span>
         <span class="liuyancount">共{{company.replyCount}}条</span>
       </div>
-      <div class="liyuanforme" id="liuyan" v-if="user">
+      <div class="liyuanforme" v-if="user">
         <img :src="user.photo" />
-        <input
-          name="liuyancon"
-          placeholder="我也要说一句"
-          placeholder-class="placeholdeers"
-          v-model="liuyanContent"
-        />
+        <van-field name="liuyancon" v-model="liuyanContent" border placeholder="我也要说一句" />
         <button class="submit" @click="postCompanyReply()">提交</button>
       </div>
       <div class="commentlist" v-for="(item,index) in liuyan" :key="index">
@@ -108,7 +106,12 @@
       查看全部
       <img :src="require('@/assets/images/expo/heijiantou.png')" />
     </div>
-    <div class="create">免费创建一个火爆云展邀请函</div>
+    <div class="create">
+      <router-link
+        class="a"
+        :to="{ path: `/expo/${this.meetingId}/user/zhanshang/company/0`}"
+      >免费创建一个火爆云展邀请函</router-link>
+    </div>
     <!-- 底部 -->
     <div class="foot">
       <a class="kefu" :href="'tel:'+company.phone">
@@ -120,8 +123,9 @@
         <span>展商名录</span>
       </router-link>
 
-      <div class="goliuyan">给TA留言</div>
-      <div class="accept">接收邀请</div>
+      <div class="goliuyan" @click="goLiuyan">给TA留言</div>
+      <!-- <div class="accept" >接收邀请</div> -->
+      <router-link class="accept" :to="{ path: `/expo/${meetingId}/user/meeting/customer`}">接收邀请</router-link>
     </div>
     <!-- 访客 -->
     <div class="hits">
@@ -177,44 +181,55 @@ export default {
   beforeMount() {},
 
   mounted() {
-    this.companyId = this.$route.params.companyId;
-    this.getCompanyContent(res => {
+    this.loadData().then(() => {
       this.$globalFun.wxShare(location.href.split("#")[0], {
-        title: res.name,
-        desc: res.description.substring(0, 100),
+        title: this.company.name,
+        desc: this.company.description.substr(0, 100),
         link: location.href,
-        imgUrl: res.photo,
+        imgUrl: this.company.photo,
         success: function() {}
       });
     });
+
     this.getComThumbsUpMemberPic();
     this.getComThumbsUpMemberNick();
-    this.getCompanyProduct();
-    this.getCompanyReplys();
     //   this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
-    this.postMeetingHits();
   },
 
   methods: {
-    // 点赞
-    postCompanyMemberHits() {
-      api_PostCompanyMemberHits({
-        meetingId: this.meetingId,
-        companyId: this.companyId
+    async loadData() {
+      const companyId = this.$route.params.companyId;
+      const meetingId = this.meetingId;
+
+      const company = await api_GetCompanyContent({ meetingId, Id: companyId });
+      this.companyId = companyId;
+      this.company = company.result;
+      this.$route.meta.title = company.result.name;
+
+      const product = await api_GetProductByIteam({
+        Filters: `CompanyId==${companyId}`,
+        sorts: "-id",
+        page: 1,
+        pagesize: 3
       });
-    },
-    // 获取公司详情
-    getCompanyContent(callback) {
-      api_GetCompanyContent({
-        meetingId: this.meetingId,
-        Id: this.companyId
-      }).then(res => {
-        this.company = res.result;
-        if (callback) {
-          callback(this.company);
-        }
+      this.pro = product.result;
+
+      const replys = await api_GetCompanyReplys({
+        Filters: `CompanyId==${companyId}`,
+        sorts: "-addTime",
+        page: 1,
+        pagesize: 50
       });
+      this.liuyan = replys.result;
+
+      //点赞
+      if (this.user) {
+        api_PostCompanyMemberHits({ meetingId, companyId });
+      }
+
+      api_PostMeetingHits({ id: meetingId });
     },
+
     //获取点赞用户图像
     getComThumbsUpMemberPic() {
       if (this.memberpicPage > 0) {
@@ -251,35 +266,6 @@ export default {
         });
       }
     },
-    //获取公司产品
-    getCompanyProduct() {
-      api_GetProductByIteam({
-        Filters: `CompanyId==${this.companyId}`,
-        sorts: "-id",
-        page: 1,
-        pagesize: 3
-      }).then(res => {
-        // this.memberpic = this.memberpic.concat(res.result);
-        this.pro = res.result;
-      });
-    },
-    //获取公司评论
-    getCompanyReplys() {
-      api_GetCompanyReplys({
-        Filters: `CompanyId==${this.companyId}`,
-        sorts: "-addTime",
-        page: 1,
-        pagesize: 50
-      }).then(res => {
-        this.liuyan = res.result;
-      });
-    },
-    //点赞会议
-    postMeetingHits() {
-      api_PostMeetingHits({
-        id: this.meetingId
-      });
-    },
     //提交公司评论
     postCompanyReply() {
       if (!this.liuyanContent.trim()) {
@@ -294,6 +280,12 @@ export default {
         this.$toast("提交成功!");
         this.getCompanyReplys();
         this.getCompanyContent();
+      });
+    },
+    goLiuyan() {
+      //this.$globalFun.userInfoAPI.ifLogin(null);
+      this.$nextTick(() => {
+        document.getElementById("liuyan").scrollIntoView();
       });
     }
   },
@@ -542,21 +534,24 @@ export default {
         height: 40px;
         border-radius: 50%;
       }
-      input {
-        border: 0.5px solid #e6e6e6;
+      .liuyancon {
+        border: 1px solid #999;
         height: 40px;
         margin-left: 5px;
         padding-left: 7.5px;
         background: #f4f4f4;
+        font-size: 14px;
+        width: auto;
       }
+  
       .submit {
         height: 43px;
         line-height: 43px;
         border-radius: 0px;
-        border: 0.5px solid #e6e6e6;
-        font-size: 13px;
-        padding: 0 20px;
+        border: 1px solid #e6e6e6;
+        font-size: 13px;      
         background-color: #fff;
+        width: 100px;
       }
       .submit::after {
         border: none;
@@ -659,10 +654,12 @@ export default {
   }
   .create {
     margin: 5px 0 75px 0;
-    font-size: 16px;
-    font-weight: bold;
     color: #999;
     text-align: center;
+    .a {
+      font-size: 16px;
+      font-weight: bold;
+    }
   }
   .foot {
     width: 100%;
