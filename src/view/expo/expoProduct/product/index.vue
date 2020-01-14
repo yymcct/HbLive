@@ -26,15 +26,20 @@
             <span v-else :key="index">{{item.nick}},</span>
           </template>
         </div>
-        <div class="liuyan">
+        <div class="liuyan" id="liuyan">
           <div class="liuyantitle">
             <span class="biaoti">留言榜</span>
             <span class="liuyancount">共{{product.replyCount}}条</span>
           </div>
           <div class="liyuanforme">
-            <img v-if="userinfo" :src="userinfo.photo" />
-            <input name="liuyancon" placeholder="我也要说一句" placeholder-class="placeholdeers" />
-            <button class="submit">提交</button>
+            <img v-if="user" :src="user.photo" />
+            <input
+              name="liuyancon"
+              v-model="liuyanContent"
+              placeholder="我也要说一句"
+              placeholder-class="placeholdeers"
+            />
+            <button class="submit" @click="postProductReply()">提交</button>
           </div>
           <div class="commentlist" v-for="(item, index) in liuyan" :key="index">
             <div class="commentlist-top">
@@ -96,7 +101,7 @@
           <img :src="require('@/assets/images/expo/kefu.png')" />
           <span>客服</span>
         </div>
-        <div class="foot-list" bindtap="goLiuyan">
+        <div class="foot-list" @click="goLiuyan">
           <img :src="require('@/assets/images/expo/liuyan-f.png')" />
           <span>留言</span>
         </div>
@@ -117,7 +122,8 @@ import {
   api_GetCompanyContent,
   api_GetProductReplys,
   api_GetCompanyOtherProduct,
-  api_PostMeetingHits
+  api_PostMeetingHits,
+  api_PostProductReply
 } from "@/api/meetingApi";
 export default {
   name: "",
@@ -139,15 +145,17 @@ export default {
       },
       liuyan: [], //产品评论
       prolist: [], //其他产品
-      userinfo: null
+      liuyanContent: ""
     };
   },
 
   components: {},
 
   computed: {
-    ...mapGetters("meeting", {
-      meetingId: "meetingId"
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting",
+      user: "user/user"
     })
   },
 
@@ -225,6 +233,27 @@ export default {
       api_PostMeetingHits({
         id: this.meetingId
       });
+    },
+    postProductReply() {
+      if (!this.liuyanContent.trim()) {
+        this.$toast("内容不能为空!");
+        return;
+      }
+      api_PostProductReply({
+        id: this.productId,
+        content: this.liuyanContent,
+        meetingid: this.meetingId
+      }).then(() => {
+        this.liuyanContent = "";
+        this.$toast("提交成功!");
+        this.getProductReplys();
+      });
+    },
+    goLiuyan() {
+      //this.$globalFun.userInfoAPI.ifLogin(null);
+      this.$nextTick(() => {
+        document.getElementById("liuyan").scrollIntoView();
+      });
     }
   },
 
@@ -235,7 +264,6 @@ export default {
       }
     },
     $route(val) {
-      console.log("111111111111", val);
       if (val.params.hasOwnProperty("productId")) {
         const productId = val.params.productId;
         if (productId != null && productId != this.productId) {

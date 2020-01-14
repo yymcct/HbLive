@@ -67,6 +67,8 @@ export const api_PostProductMemberHits = (params) => request.post('/api/meeting/
 export const api_GetProductContent = (params) => request.get('/api/meeting/Product/GetProductContent', { params: params });
 export const api_GetProductReplys = (params) => request.get('/api/meeting/Product/GetProductReplys', { params: params });
 export const api_GetCompanyOtherProduct = (params) => request.get('/api/meeting/Product/GetCompanyOtherProduct', { params: params });
+//公司评论
+export const api_PostProductReply = (params) => request.post('/api/meeting/Product/PostProductReply', params);
 
 //动态
 export const api_GetMeetingShortMsg = (params) => request.get('/api/meeting/ShortMsg/GetShortMsg', { params: params });

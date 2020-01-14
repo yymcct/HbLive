@@ -214,13 +214,7 @@ export default {
       });
       this.pro = product.result;
 
-      const replys = await api_GetCompanyReplys({
-        Filters: `CompanyId==${companyId}`,
-        sorts: "-addTime",
-        page: 1,
-        pagesize: 50
-      });
-      this.liuyan = replys.result;
+      this.getCompanyReplys();
 
       //点赞
       if (this.user) {
@@ -229,7 +223,16 @@ export default {
 
       api_PostMeetingHits({ id: meetingId });
     },
-
+    getCompanyReplys() {
+      api_GetCompanyReplys({
+        Filters: `CompanyId==${this.companyId}`,
+        sorts: "-addTime",
+        page: 1,
+        pagesize: 50
+      }).then(res => {
+        this.liuyan = res.result;
+      });
+    },
     //获取点赞用户图像
     getComThumbsUpMemberPic() {
       if (this.memberpicPage > 0) {
@@ -277,9 +280,9 @@ export default {
         content: this.liuyanContent,
         meetingid: this.meetingId
       }).then(() => {
+        this.liuyanContent = "";
         this.$toast("提交成功!");
         this.getCompanyReplys();
-        this.getCompanyContent();
       });
     },
     goLiuyan() {
@@ -535,21 +538,21 @@ export default {
         border-radius: 50%;
       }
       .liuyancon {
-        border: 1px solid #999;
-        height: 40px;
-        margin-left: 5px;
-        padding-left: 7.5px;
-        background: #f4f4f4;
-        font-size: 14px;
+        // border: 1px solid #999;
+        // height: 40px;
+        // margin-left: 5px;
+        // padding-left: 7.5px;
+        // background: #f4f4f4;
+        // font-size: 14px;
         width: auto;
       }
-  
+
       .submit {
         height: 43px;
         line-height: 43px;
         border-radius: 0px;
         border: 1px solid #e6e6e6;
-        font-size: 13px;      
+        font-size: 13px;
         background-color: #fff;
         width: 100px;
       }
