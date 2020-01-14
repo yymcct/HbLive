@@ -25,7 +25,7 @@ import { api_GetMeetingList } from "@/api/meetingApi";
 import scroll from "@/base/scroll/scroll";
 
 export default {
-  name: "Index",
+  name: "",
   data() {
     return {
       Meeting: [],

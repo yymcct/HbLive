@@ -30,7 +30,7 @@ import hbLayout from "@/components/layout/hbLayout";
 import { api_GetMeetingShortMsg, api_PostMeetingHits } from "@/api/meetingApi";
 import shortMsg from "@/components/shortMsg/shortMsg";
 export default {
-  name: "ShortMsgList",
+  name: "expoShortmsg",
   props: [""],
   data() {
     return {

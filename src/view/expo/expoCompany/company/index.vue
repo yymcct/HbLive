@@ -10,8 +10,8 @@
       <img :src="require('@/assets/images/expo/dingwei-bai.png')" />
       <span>展位：{{company.meetingPlace}}</span>
     </div>
-    <div class="exponame">2019第35届植保信息交流暨农药械交易会</div>
-    <div class="expotime">2019.11.22-24 福州海峡国际会展中心</div>
+    <div class="exponame">{{meeting.sortName}}</div>
+    <div class="expotime">{{meeting.beginDate.replace(/-/g,'.')}}-{{meeting.endDate.substr(8,2)}} {{meeting.address}}</div>
     <!-- 公司描述 -->
     <div class="comdesc">
       <img :src="require('@/assets/images/expo/baijiantou.png')" class="baijiantou" />
@@ -34,7 +34,7 @@
       </div>
       <div class="prolist">
         <template v-for="(item,index) in pro">
-          <div class="procon" :key="index">
+          <div class="procon" :key="index" @click="router.push({ path: `/expo/${meetingId}/product/${item.id}` })">
             <img :src="item.pic" />
             <span>{{item.name}}</span>
           </div>
@@ -61,8 +61,8 @@
         <span class="biaoti">留言榜</span>
         <span class="liuyancount">共{{company.replyCount}}条</span>
       </div>
-      <div class="liyuanforme" id="liuyan" v-if="userinfo">
-        <img :src="userinfo.photo" />
+      <div class="liyuanforme" id="liuyan" v-if="user">
+        <img :src="user.photo" />
         <input
           name="liuyancon"
           placeholder="我也要说一句"
@@ -125,6 +125,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import {
   api_PostCompanyMemberHits,
   api_GetCompanyContent,
@@ -139,8 +140,6 @@ export default {
   name: "Company",
   data() {
     return {
-      userinfo: null,
-      meetingId: 0,
       companyId: 0,
       company: {
         photo: "",
@@ -160,12 +159,17 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting",
+      user: "user/user"
+    })
+  },
 
   beforeMount() {},
 
   mounted() {
-    this.meetingId = this.$route.params.meetingId;
     this.companyId = this.$route.params.companyId;
     this.getCompanyContent(res => {
       this.$globalFun.wxShare(location.href.split("#")[0], {

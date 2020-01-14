@@ -38,7 +38,7 @@ import hbLayout from "@/components/layout/hbLayout";
 import live from "./live";
 //import { mapGetters } from "vuex";
 export default {
-  name: "LiveIndex",
+  name: "expoLive",
   data() {
     return {
       lives: [],

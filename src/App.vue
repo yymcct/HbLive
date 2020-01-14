@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive include="expoCompany,expoProduct,expoShortmsg,expoLive,expoUser">
       <router-view />
     </keep-alive>
   </div>

@@ -20,7 +20,7 @@ import ExpoTop from "../expoCompany/components/top";
 import tabProduct from "./components/tabContent/index";
 
 export default {
-  name: "ExpoPro",
+  name: "expoProduct",
   props: {},
   data() {
     return {

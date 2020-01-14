@@ -27,7 +27,7 @@ import ExpoTop from "./components/top";
 import TopTuijian from "./components/topTuijian";
 import ExpoContent from "./components/tabContent/index";
 export default {
-  name: "ExpoIndex",
+  name: "expoCompany",
   props: {},
   data() {
     return {

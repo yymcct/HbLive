@@ -128,8 +128,7 @@ import { mapGetters } from "vuex";
 import hbLayout from "@/components/layout/hbLayout";
 import { api_GetMemberCompanyinfo } from "@/api/meetingApi";
 export default {
-  name: "",
-  props: [""],
+  name: "expoUser",
   data() {
     return {
       activeNames: ["1"],
