@@ -74,21 +74,37 @@ this.companyId = this.$route.params.id;
 ```
 
 ## 微信分享
-this.$globalFun.wxShare(location.href.split("#")[0], {
-        title: this.meeting.sortName,
-        desc: `${this.meeting.beginDate}至${this.meeting.endDate},${this.meeting.companyCount}家展商 | ${this.meeting.hit}位访问者`,
-        link: location.href,
-        imgUrl: this.meeting.banner,
-        success: function() {}
+ wxShare() {
+  if (this.meeting == null) {
+    setTimeout(() => {
+      this.wxShare();
+    }, 500);
+  } else {
+    const meeting = this.meeting;
+    console.log("weixin", meeting);
+    this.$globalFun.wxShare(location.href.split("#")[0], {
+      title: meeting.sortName + this.$route.meta.title,
+      desc: `${meeting.beginDate}至${meeting.endDate.substr(8, 2)}日,${
+        meeting.address
+      }`,
+      link: location.href,
+      imgUrl: meeting.wxSharePicture
+        ? meeting.wxSharePicture
+        : meeting.banner,
+      success: function() {}
     });
+  }
+}
 ## 检查是否登录
 this.$globalFun.userInfoAPI.ifLogin(this.postCompanyMemberHits);
 
 ## 引用vuex
 import { mapGetters } from 'vuex'
   computed: {
-    ...mapGetters("meeting", {
-      meetingId: "meetingId"
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting",
+      user: "user/user"
     })
   },
 this.$store.getters['meeting/meetingId']

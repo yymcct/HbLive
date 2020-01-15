@@ -139,6 +139,7 @@ export default {
   computed: {
     ...mapGetters({
       meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting",
       user: "user/user"
     })
   },
@@ -150,6 +151,7 @@ export default {
     if (this.user) {
       this.getMemberCompanyinfo();
     }
+    this.wxShare();
   },
 
   methods: {
@@ -164,6 +166,27 @@ export default {
         ? `/expo/${this.meetingId}/user/meeting/company/${this.company.id}`
         : `/expo/${this.meetingId}/user/zhanshang/company/0`;
       this.$router.push({ path: path });
+    },
+    wxShare() {
+      if (this.meeting == null) {
+        setTimeout(() => {
+          this.wxShare();
+        }, 500);
+      } else {
+        const meeting = this.meeting;
+        console.log("weixin", meeting);
+        this.$globalFun.wxShare(location.href.split("#")[0], {
+          title: meeting.sortName + this.$route.meta.title,
+          desc: `${meeting.beginDate}至${meeting.endDate.substr(8, 2)}日,${
+            meeting.address
+          }`,
+          link: location.href,
+          imgUrl: meeting.wxSharePicture
+            ? meeting.wxSharePicture
+            : meeting.banner,
+          success: function() {}
+        });
+      }
     }
   },
 

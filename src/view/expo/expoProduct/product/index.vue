@@ -164,52 +164,34 @@ export default {
   mounted() {
     this.productId = this.$route.params.productId;
 
-    this.getProductContent(res => {
-      this.$globalFun.wxShare(location.href.split("#")[0], {
-        title: res.name,
-        desc: res.description,
-        link: location.href,
-        imgUrl: res.pic,
-        success: function() {}
-      });
+    this.LoadData().then(() => {
+      this.wxShare();
     });
-    this.getProductReplys();
-    this.getCompanyOtherProduct();
-    this.postMeetingHits();
-    this.PostProductMemberHits();
   },
 
   methods: {
-    // 点赞
-    PostProductMemberHits() {
-      api_PostProductMemberHits({
-        meetingId: this.meetingId,
+    async LoadData() {
+      const meetingId = this.meetingId;
+
+      const product = await api_GetProductContent({
+        meetingId,
         id: this.productId
       });
-    },
-    //获取产品详情
-    getProductContent(callback) {
-      api_GetProductContent({
-        meetingId: this.meetingId,
-        id: this.productId
-      }).then(res => {
-        this.product = res.result;
-        if (callback) {
-          callback(this.product);
-        }
+      this.product = product.result;
+
+      const company = await api_GetCompanyContent({
+        meetingId,
+        Id: product.result.companyId
       });
-    },
-    // 获取公司详情
-    getCompanyContent() {
-      api_GetCompanyContent({
-        meetingId: this.meetingId,
-        Id: this.product.companyId
+      this.company = company.result;
+
+      api_GetCompanyOtherProduct({
+        meetingId,
+        Id: this.productId
       }).then(res => {
-        this.company = res.result;
+        this.prolist = res.result;
       });
-    },
-    // 产品评论
-    getProductReplys() {
+
       api_GetProductReplys({
         Filters: "productid==" + this.productId,
         sorts: "-addTime",
@@ -218,22 +200,12 @@ export default {
       }).then(res => {
         this.liuyan = res.result;
       });
+
+      api_PostProductMemberHits({ meetingId, id: this.productId });
+
+      api_PostMeetingHits({ id: meetingId });
     },
-    // 获取公司其他产品
-    getCompanyOtherProduct() {
-      api_GetCompanyOtherProduct({
-        meetingId: this.meetingId,
-        Id: this.productId
-      }).then(res => {
-        this.prolist = res.result;
-      });
-    },
-    //点赞会议
-    postMeetingHits() {
-      api_PostMeetingHits({
-        id: this.meetingId
-      });
-    },
+
     postProductReply() {
       if (!this.liuyanContent.trim()) {
         this.$toast("内容不能为空!");
@@ -254,26 +226,36 @@ export default {
       this.$nextTick(() => {
         document.getElementById("liuyan").scrollIntoView();
       });
+    },
+    wxShare() {
+      if (this.meeting == null) {
+        setTimeout(() => {
+          this.wxShare();
+        }, 500);
+      } else {
+        const meeting = this.meeting;
+        const company = this.company;
+        const product = this.product;
+        this.$globalFun.wxShare(location.href.split("#")[0], {
+          title: `【${product.name}】${meeting.sortName}欢迎您！`,
+          desc: `${product.name}${meeting.sortName}展位号：${company.meetingPlace}`,
+          link: location.href,
+          imgUrl: product.wxSharePicture ? product.wxSharePicture : product.pic,
+          success: function() {}
+        });
+      }
     }
   },
 
   watch: {
-    product: function() {
-      if (this.product.companyId) {
-        this.getCompanyContent();
-      }
-    },
     $route(val) {
       if (val.params.hasOwnProperty("productId")) {
         const productId = val.params.productId;
         if (productId != null && productId != this.productId) {
           this.productId = this.$route.params.productId;
-          this.getProductContent();
-          this.getProductReplys();
-          this.getCompanyOtherProduct();
-          this.postMeetingHits();
-          this.PostProductMemberHits();
-          console.log("222val");
+          this.LoadData().then(() => {
+            this.wxShare();
+          });
         }
       }
     }

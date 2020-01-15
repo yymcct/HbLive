@@ -182,13 +182,7 @@ export default {
 
   mounted() {
     this.loadData().then(() => {
-      this.$globalFun.wxShare(location.href.split("#")[0], {
-        title: this.company.name,
-        desc: this.company.description.substr(0, 100),
-        link: location.href,
-        imgUrl: this.company.photo,
-        success: function() {}
-      });
+      this.wxShare();
     });
 
     this.getComThumbsUpMemberPic();
@@ -290,6 +284,25 @@ export default {
       this.$nextTick(() => {
         document.getElementById("liuyan").scrollIntoView();
       });
+    },
+    wxShare() {
+      if (this.meeting == null) {
+        setTimeout(() => {
+          this.wxShare();
+        }, 500);
+      } else {
+        const meeting = this.meeting;
+        const company = this.company;
+        this.$globalFun.wxShare(location.href.split("#")[0], {
+          title: `【${company.name}】${meeting.sortName}欢迎您！`,
+          desc: `${company.name}${meeting.sortName}展位号：${company.meetingPlace}`,
+          link: location.href,
+          imgUrl: company.wxSharePicture
+            ? company.wxSharePicture
+            : company.photo,
+          success: function() {}
+        });
+      }
     }
   },
 

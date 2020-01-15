@@ -49,7 +49,7 @@ const routes = [
     path: '/expo/:meetingId/shortmsg',
     component: () => import('./view/expo/shortMsg/shortmsgList'),
     meta: {
-      title: '动态'
+      title: '展会动态'
     }
   },
   {
@@ -64,7 +64,7 @@ const routes = [
     path: '/expo/:meetingId/live',
     component: () => import('./view/expo/live/index'),
     meta: {
-      title: '火爆直播'
+      title: '展会直播'
     }
   },
   {

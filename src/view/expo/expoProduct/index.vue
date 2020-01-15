@@ -41,8 +41,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters("meeting", {
-      meetingId: "meetingId"
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting",
+      user: "user/user"
     })
   },
 
@@ -52,6 +54,8 @@ export default {
     this.timer = setInterval(() => {
       this.setContentHeight();
     }, 100);
+
+    this.wxShare();
   },
 
   methods: {
@@ -64,6 +68,27 @@ export default {
     },
     scrollLiveTop(r) {
       this.topShow = r;
+    },
+    wxShare() {
+      if (this.meeting == null) {
+        setTimeout(() => {
+          this.wxShare();
+        }, 500);
+      } else {
+        const meeting = this.meeting;
+        console.log("weixin", meeting);
+        this.$globalFun.wxShare(location.href.split("#")[0], {
+          title: meeting.sortName + this.$route.meta.title,
+          desc: `${meeting.beginDate}至${meeting.endDate.substr(8, 2)}日,${
+            meeting.address
+          }`,
+          link: location.href,
+          imgUrl: meeting.wxSharePicture
+            ? meeting.wxSharePicture
+            : meeting.banner,
+          success: function() {}
+        });
+      }
     }
   },
   destroyed() {

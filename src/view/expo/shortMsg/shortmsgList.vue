@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { ImagePreview } from "vant";
 import scroll from "@/components/scroll/scroll";
 import hbLayout from "@/components/layout/hbLayout";
@@ -48,7 +49,13 @@ export default {
     shortMsg
   },
 
-  computed: {},
+  computed: {
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting",
+      user: "user/user"
+    })
+  },
 
   beforeMount() {},
 
@@ -62,6 +69,8 @@ export default {
       imgUrl: "https://m.1988.tv/images/bg.jpg",
       success: function() {}
     });
+
+    this.wxShare();
   },
 
   methods: {
@@ -109,6 +118,27 @@ export default {
           // do something
         }
       });
+    },
+    wxShare() {
+      if (this.meeting == null) {
+        setTimeout(() => {
+          this.wxShare();
+        }, 500);
+      } else {
+        const meeting = this.meeting;
+        console.log("weixin", meeting);
+        this.$globalFun.wxShare(location.href.split("#")[0], {
+          title: meeting.sortName + this.$route.meta.title,
+          desc: `${meeting.beginDate}至${meeting.endDate.substr(8, 2)}日,${
+            meeting.address
+          }`,
+          link: location.href,
+          imgUrl: meeting.wxSharePicture
+            ? meeting.wxSharePicture
+            : meeting.banner,
+          success: function() {}
+        });
+      }
     }
   },
 
