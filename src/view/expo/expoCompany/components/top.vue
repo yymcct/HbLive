@@ -1,5 +1,5 @@
 <template>
-  <div class="top" v-cloak v-bind:style="{backgroundImage:'url('+ meeting.banner+')'}">
+  <div v-if="meeting" class="top" v-cloak v-bind:style="{backgroundImage:'url('+ meeting.banner+')'}">
     <div class="top-main">
       <div class="title">{{meeting.sortName}}</div>
       <div class="addr">
