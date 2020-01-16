@@ -5,26 +5,33 @@
 </template>
 
 <script>
-import { api_loginByWeixin } from "@/api/weixin";
+import { mapGetters } from "vuex";
 import { userInfoAPI } from "@/utils/auth";
+import { api_loginByWeixin } from "@/api/weixin";
 export default {
   name: "WeixinLogin",
   data() {
     return {};
   },
-
+  computed: {
+    ...mapGetters({
+      meetingId: "meeting/meetingId",
+      meeting: "meeting/meeting"
+    })
+  },
   created() {
+    const categoryIteam = 1;
     const { code, state } = this.getUrlCode();
-
     if (!code || state !== "weixin") {
-      const appid = "wxd1e722c69feb8990";
+      const appid = this.meeting.wxLogInAppId;
       const scope = "snsapi_userinfo";
       const redirectUri = location.href;
+
       window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(
         redirectUri
       )}&response_type=code&scope=${scope}&state=weixin#wechat_redirect`;
     } else {
-      api_loginByWeixin(code).then(res => {
+      api_loginByWeixin({ code, categoryIteam }).then(res => {
         userInfoAPI.set(res.result);
         const from = userInfoAPI.getLoginFrom();
         if (from) {

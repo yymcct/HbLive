@@ -143,13 +143,6 @@ export default {
         margin-bottom: 10px;
       }
     }
-    //
-    .nomore {
-      color: #666;
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 50px;
-    }
   }
 }
 </style>

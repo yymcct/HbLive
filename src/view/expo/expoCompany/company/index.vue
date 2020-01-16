@@ -502,7 +502,8 @@ export default {
         background: #fff;
         padding: 15px;
         img {
-          width: 8%;
+          width: 25px;
+          height: 25px;
           margin: 2.5px 1%;
           border-radius: 50%;
         }

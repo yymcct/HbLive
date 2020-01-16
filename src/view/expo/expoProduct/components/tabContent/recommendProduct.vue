@@ -86,11 +86,5 @@ export default {
   .scroll {
     height: 100%;
   }
-  .nomore {
-    color: #666;
-    text-align: center;
-    font-size: 13px;
-    margin: 10px;
-  }
 }
 </style>

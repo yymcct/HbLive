@@ -1,9 +1,15 @@
 <template>
   <div class="box">
-    <div class="banner">
+    <div class="banner" ref="banner">
       <img src="https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg" />
     </div>
-    <scroll class="scroll" :data="Meeting" pullup @scrollToEnd="scrollToEnd">
+    <scroll
+      class="scroll"
+      :style="{height:contentHeight}"
+      :data="Meeting"
+      pullup
+      @scrollToEnd="scrollToEnd"
+    >
       <div class="now">
         <template v-for="item in Meeting">
           <div class="list" :key="item.id" @click="$router.push(`/expo/${item.id}/company`)">
@@ -30,7 +36,9 @@ export default {
     return {
       Meeting: [],
       page: 1,
-      isEnd: false
+      isEnd: false,
+      timer: 0,
+      contentHeight: "750px"
     };
   },
   components: { scroll },
@@ -45,9 +53,20 @@ export default {
         "https://hbyz.huobaowang.com/UpLoad/jpg/2019-12-11/20191211194112195000.jpg",
       success: function() {}
     });
+
+    this.timer = setInterval(() => {
+      this.setContentHeight();
+    }, 100);
   },
 
   methods: {
+    setContentHeight() {
+      let bannerHight = this.$refs.banner.offsetHeight;
+      let tmphight = window.innerHeight - bannerHight + "px";
+      if (this.contentHeight != tmphight) {
+        this.contentHeight = tmphight;
+      }
+    },
     scrollToEnd() {
       if (!this.isEnd) {
         this.page++;
@@ -66,12 +85,12 @@ export default {
         }
         this.Meeting = this.Meeting.concat(res.result);
       });
-    },
-
-    MeetingInfo: function() {}
+    }
   },
 
-  watch: {}
+  destroyed() {
+    window.clearInterval(this.timer);
+  }
 };
 </script>
 <style lang='scss' scoped>
@@ -83,42 +102,38 @@ export default {
       width: 100%;
     }
   }
-  .now {
-    width: 90%;
-    margin: 20px auto;
-    .list {
-      display: flex;
-      flex-direction: column;
-      align-content: space-between;
-      margin-bottom: 20px;
-      .pic {
-        img {
-          width: 100%;
+  .scroll {
+    overflow: hidden;
+    .now {
+      width: 96%;
+      margin: 20px auto;
+      .list {
+        display: flex;
+        flex-direction: column;
+        align-content: space-between;
+        margin-bottom: 20px;
+        .pic {
+          img {
+            width: 100%;
+          }
+        }
+        .name {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          margin: 5px 0;
+          font-size: 15px;
+          font-weight: bold;
+          // margin-left: 5px;
+        }
+        .date {
+          font-size: 13px;
+          color: #666;
+          margin: 5px 0;
         }
       }
-      .name {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        margin: 5px 0;
-        font-size: 15px;
-        font-weight: bold;
-        margin-left: 5px;
-      }
-      .date {
-        font-size: 13px;
-        color: #666;
-        margin: 5px 0;
-      }
     }
-  }
-
-  .nomore {
-    color: #666;
-    text-align: center;
-    font-size: 13px;
-    margin: 10px;
   }
 }
 </style>
