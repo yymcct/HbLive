@@ -3,9 +3,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import { router } from './router';
 import {
-  Field, Dialog, Toast, Loading, Uploader, Checkbox,CheckboxGroup, 
-  Button, NavBar, Image, ImagePreview, Tab, Tabs,Picker ,Popup ,
-  Collapse, CollapseItem, Icon ,Cell, CellGroup,Row,Col,Swipe, SwipeItem
+  Field, Dialog, Toast, Loading, Uploader, Checkbox, CheckboxGroup,
+  Button, NavBar, Image, ImagePreview, Tab, Tabs, Picker, Popup,
+  Collapse, CollapseItem, Icon, Cell, CellGroup, Row, Col, Swipe, SwipeItem
 } from "vant";
 import globalFun from '@/utils/globalFun'
 import store from './store'
@@ -47,8 +47,10 @@ router.beforeEach((to, from, next) => {
   }
 
   const meetingId = store.getters['meeting/meetingId'];
-  if (meetingId == 0 && to.params.meetingId ){
-    store.dispatch("meeting/meetingId", Number(to.params.meetingId));
+  if (to.params.meetingId) {
+    if (meetingId == 0 || meetingId != to.params.meetingId){
+      store.dispatch("meeting/meetingId", Number(to.params.meetingId));
+    }
   }
 
   next();

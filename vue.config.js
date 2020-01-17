@@ -7,7 +7,7 @@ module.exports = {
     devServer: {
         port: 80,
         disableHostCheck: true,
-        proxy: 'http://localhost:8222'//'http://192.168.0.34' 'https://app.huobaowang.com' //
+        proxy: 'https://app.huobaowang.com'//'http://localhost:8222'//'http://192.168.0.34'  //
     },
     css: {
         loaderOptions: {

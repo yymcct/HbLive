@@ -195,7 +195,7 @@ export default {
       const companyId = this.$route.params.companyId;
       const meetingId = this.meetingId;
 
-      const company = await api_GetCompanyContent({ meetingId, Id: companyId });
+      const company = await api_GetCompanyContent({ meetingId, Id: companyId }).catch();
       this.companyId = companyId;
       this.company = company.result;
       this.$route.meta.title = company.result.name;
@@ -274,9 +274,9 @@ export default {
         content: this.liuyanContent,
         meetingid: this.meetingId
       }).then(() => {
-        this.liuyanContent = "";
-        this.$toast("提交成功!");
+        this.liuyanContent = "";        
         this.getCompanyReplys();
+        this.$toast("提交成功!");
       });
     },
     goLiuyan() {
